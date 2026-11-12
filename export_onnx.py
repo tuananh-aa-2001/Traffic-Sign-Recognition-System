@@ -3,6 +3,12 @@ ONNX Export Script
 Export trained PyTorch model to ONNX format for deployment
 """
 
+import sys
+
+# Windows consoles/log files default to cp1252, which cannot print the emoji status lines
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 import torch
 import onnx
 import onnxruntime as ort
@@ -35,7 +41,10 @@ def export_to_onnx(model, onnx_path, input_shape=(1, 3, 48, 48)):
         dummy_input,
         onnx_path,
         export_params=True,
-        opset_version=14,
+        opset_version=17,
+        # torch>=2.9 defaults to the dynamo exporter (needs the extra package
+        # onnxscript); the classic TorchScript exporter is enough for a CNN
+        dynamo=False,
         do_constant_folding=True,
         input_names=['input'],
         output_names=['output'],
@@ -163,7 +172,8 @@ def main(args):
         raise FileNotFoundError(f"Checkpoint not found: {checkpoint_path}")
     
     print(f"Loading checkpoint: {checkpoint_path}")
-    checkpoint = torch.load(checkpoint_path, map_location=device)
+    # weights_only=False: own trusted checkpoint that also stores config/optimizer
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint['model_state_dict'])
     print(f"✅ Model loaded")
     

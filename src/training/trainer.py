@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
-from torch.cuda.amp import GradScaler, autocast
+from torch.amp import GradScaler, autocast
 import os
 from tqdm import tqdm
 from typing import Dict, Tuple
@@ -59,9 +59,9 @@ class Trainer:
         # Learning rate scheduler
         self.scheduler = self._create_scheduler()
         
-        # Mixed precision training
-        self.use_amp = config['mixed_precision']['enabled']
-        self.scaler = GradScaler() if self.use_amp else None
+        # Mixed precision training (FP16 autocast only makes sense on a CUDA GPU)
+        self.use_amp = config['mixed_precision']['enabled'] and device.type == 'cuda'
+        self.scaler = GradScaler('cuda') if self.use_amp else None
         
         # Early stopping
         early_stop_config = config['early_stopping']
@@ -85,7 +85,7 @@ class Trainer:
         self.val_losses = []
         self.train_accs = []
         self.val_accs = []
-        self.best_val_acc = 0.0
+        self.best_val_acc = -1.0  # so the first epoch always produces a checkpoint
     
     def _create_optimizer(self) -> optim.Optimizer:
         """Create optimizer"""
@@ -148,7 +148,7 @@ class Trainer:
             
             # Forward pass with mixed precision
             if self.use_amp:
-                with autocast():
+                with autocast('cuda'):
                     outputs = self.model(images)
                     loss = self.criterion(outputs, labels)
                 
@@ -224,7 +224,7 @@ class Trainer:
             'epoch': epoch,
             'model_state_dict': self.model.state_dict(),
             'optimizer_state_dict': self.optimizer.state_dict(),
-            'val_acc': val_acc,
+            'val_acc': float(val_acc),
             'config': self.config
         }
         
