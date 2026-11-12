@@ -76,3 +76,6 @@ Thumbs.db
 *.tmp
 *.bak
 *.log
+
+# Colab-Ergebnisse (Modelle, Logs) lokal halten
+gtsrb_ergebnisse/
