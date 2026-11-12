@@ -8,7 +8,7 @@
 
 ## 🌟 Goal
 
-Target: **≥ 98% accuracy on the official GTSRB test set** with real-time inference (< 20 ms per sign on a laptop CPU via ONNX Runtime). Measured numbers are filled in under [Results](#results) after training.
+**99.36% accuracy on the official GTSRB test set** (target ≥ 98%) and **17 ms per sign on a laptop CPU** via ONNX Runtime (target < 20 ms). Details under [Results](#results).
 
 ---
 
@@ -807,28 +807,30 @@ predictions = outputs[0]
 
 ### Performance Metrics
 
-Not measured yet: run `notebooks/train_colab.ipynb`, then fill in this table from `evaluate.py` and `export_onnx.py --benchmark`.
+Measured on 12 Nov 2026 (training on Google Colab, Tesla T4; early stopping after 27 epochs, best checkpoint epoch 25, 23.3 min).
 
 | Metric | Value |
 |--------|-------|
-| **Test Accuracy** (GTSRB Final_Test) | tbd |
-| **Macro Precision / Recall / F1** | tbd |
-| **Inference Time, ONNX, laptop CPU** | tbd |
-| **Inference Time, PyTorch, Colab T4** | tbd |
+| **Test Accuracy** (GTSRB Final_Test, 12,630 images) | **99.36%** |
+| **Validation Accuracy** (track-based split, 3,930 images) | 99.69% |
+| **Macro Precision / Recall / F1** | 98.61% / 98.75% / 98.60% |
+| **Inference Time, PyTorch, Colab T4** (batch 1) | 3.6 ms (median 3.5 ms) |
+| **Inference Time, ONNX Runtime, laptop CPU** (AMD, batch 1) | 17.5 ms (median 17.1 ms) |
+| **ONNX vs. PyTorch max. output difference** | 9.5e-7 |
+
+Hardest classes: 42 *End of no passing by vehicles over 3.5 t* (71.1%, mostly predicted as 41 *End of no passing*), 6 *End of speed limit 80* (90.0%), 27 *Pedestrians* (96.7%). All three are grey "end of restriction" or rare signs with few training images.
 
 ### Training Curves
 
-Training and validation curves show:
-- Smooth convergence
-- No overfitting (train/val gap < 1%)
-- Best validation accuracy achieved around epoch 35-40
+- Validation accuracy fluctuates strongly until epoch 14 (91–99%) and stabilises once the learning rate is halved after epoch 14 (99.5% from epoch 15 on)
+- Train/val gap at the end < 0.3 percentage points; validation (99.69%) and test (99.36%) agree closely thanks to the track-based split
+- Loss settles around 0.70 instead of near 0 because of label smoothing 0.1
 
 ### Confusion Matrix
 
-The confusion matrix shows:
-- Strong diagonal (correct predictions)
-- Minimal confusion between classes
-- Slight confusion between similar speed limit signs
+- Strong diagonal for 40 of 43 classes
+- The only systematic confusion: class 42 → class 41 (both "end of no passing" signs, differing only in the small truck symbol)
+- Speed limits are hardly confused with each other (class 3 *60 km/h*: 97.8%)
 
 ---
 
