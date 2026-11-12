@@ -3,6 +3,12 @@ Main Training Script for GTSRB
 Run this script to train the traffic sign recognition model
 """
 
+import sys
+
+# Windows consoles/log files default to cp1252, which cannot print the emoji status lines
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 import torch
 import yaml
 import argparse
@@ -13,6 +19,7 @@ import numpy as np
 from src.data import get_data_loaders
 from src.models import create_model
 from src.training import Trainer
+from src.utils.download_dataset import dataset_ready, download_gtsrb
 
 
 def set_seed(seed: int):
@@ -63,6 +70,11 @@ def main(args):
     if torch.cuda.is_available():
         print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"{'='*80}\n")
+    
+    # Download GTSRB on first run
+    if not dataset_ready(config['data']['root_dir']):
+        print("GTSRB not found, downloading...")
+        download_gtsrb(config['data']['root_dir'])
     
     # Create data loaders
     print("Loading dataset...")

@@ -53,6 +53,7 @@ events.out.tfevents.*
 # Jupyter Notebook
 .ipynb_checkpoints
 *.ipynb
+!notebooks/*.ipynb
 
 # Virtual environments
 venv/

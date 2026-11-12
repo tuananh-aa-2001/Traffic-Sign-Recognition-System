@@ -6,9 +6,9 @@ data:
   processed_dir: "data/processed"
   image_size: 48  # Resize all images to 48x48
   num_classes: 43
-  train_split: 0.8
+  # Validation = this share of whole GTSRB tracks (no frame of a track in both
+  # train and val). Test = the official GTSRB Final_Test set (12,630 images).
   val_split: 0.1
-  test_split: 0.1
 
 # Model settings
 model:

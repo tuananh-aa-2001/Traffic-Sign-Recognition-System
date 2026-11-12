@@ -1,14 +1,14 @@
 # Traffic Sign Recognition System (GTSRB)
 
-🎯 **A production-ready Deep Convolutional Neural Network for classifying 43 types of German traffic signs with 98.5% accuracy and ~4ms inference latency.**
+🎯 **A Deep Convolutional Neural Network for classifying 43 types of German traffic signs, with an ONNX-based live demo for video and webcam on a CPU-only Windows laptop.**
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 🌟 Key Achievement
+## 🌟 Goal
 
-Optimized the model to achieve **98.5% test accuracy** while maintaining a low inference latency of **~4ms per frame** on a standard GPU, making it suitable for real-time ADAS (Advanced Driver Assistance Systems) applications.
+Target: **≥ 98% accuracy on the official GTSRB test set** with real-time inference (< 20 ms per sign on a laptop CPU via ONNX Runtime). Measured numbers are filled in under [Results](#results) after training.
 
 ---
 
@@ -268,11 +268,13 @@ python src/utils/download_dataset.py --data_dir data/raw
 
 **Dataset split** (configured in `configs/config.yaml`):
 
-| Split      | Percentage | Purpose                          |
-|------------|------------|----------------------------------|
-| Training   | 80%        | Update model weights each epoch  |
-| Validation | 10%        | Monitor overfitting in real time |
-| Test       | 10%        | Final unbiased accuracy report   |
+| Split      | Source                                   | Purpose                          |
+|------------|------------------------------------------|----------------------------------|
+| Training   | 90% of the GTSRB training *tracks*       | Update model weights each epoch  |
+| Validation | 10% of the GTSRB training *tracks*       | Model selection, early stopping  |
+| Test       | Official GTSRB `Final_Test` (12,630 img) | Final unbiased accuracy report   |
+
+GTSRB stores ~30 frames of the same physical sign per *track* (`<track>_<frame>.ppm`). The split is done per track, so near-identical frames never appear in both training and validation (a random per-image split would inflate validation accuracy).
 
 > **Beginner tip**: Never use test data during training. The test set is a "locked box" you open only once — at the very end — to get an honest accuracy number.
 
@@ -434,9 +436,9 @@ GPU: NVIDIA GeForce RTX 3080
 
 Loading dataset...
 ✅ Dataset loaded successfully
-   Training samples: 31,367
-   Validation samples:  3,921
-   Test samples:        3,921
+   Training samples: ~35,300
+   Validation samples: ~3,900
+   Test samples:       12,630
 
 Creating model...
 Model: resnet18
@@ -544,18 +546,15 @@ import cv2
 # Load the exported model
 session = ort.InferenceSession('models/onnx/gtsrb_model.onnx')
 
-# Preprocess your image (must match training pipeline)
-img = cv2.imread('my_traffic_sign.jpg')
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-img = cv2.resize(img, (48, 48))
-img = img.astype(np.float32) / 255.0
-img = (img - [0.485, 0.456, 0.406]) / [0.229, 0.224, 0.225]  # ImageNet normalization
-img = img.transpose(2, 0, 1)            # HWC → CHW
-img = np.expand_dims(img, axis=0)       # Add batch dimension → (1, 3, 48, 48)
+from src.data.preprocessing import preprocess_for_inference
+
+# Preprocess exactly like training: BGR->RGB, CLAHE on the full crop, resize, normalize
+img = preprocess_for_inference(cv2.imread('my_traffic_sign.jpg'))   # (1, 3, 48, 48)
 
 # Run inference
 outputs = session.run(None, {'input': img})
-probabilities = np.exp(outputs[0]) / np.exp(outputs[0]).sum()   # Softmax
+logits = outputs[0] - outputs[0].max()                              # numerically stable softmax
+probabilities = np.exp(logits) / np.exp(logits).sum()
 predicted_class = int(np.argmax(probabilities))
 confidence = float(probabilities[0, predicted_class])
 
@@ -597,6 +596,24 @@ data/
 | `best_model.pth` not found | Training not completed | Run `python train.py` first, then evaluate |
 | TensorBoard shows no data | Wrong log directory | Make sure to point to `results/tensorboard` |
 | ONNX verify fails | Mismatched model version | Re-export: delete old `.onnx` file and rerun `export_onnx.py` |
+
+---
+
+## 🎥 Live Demo (video or webcam)
+
+```bash
+python demo_video.py --source my_video.mp4                     # smartphone video
+python demo_video.py --source 0                                # webcam
+python demo_video.py --source my_video.mp4 --save results/demo.mp4 --no-window
+```
+
+Per frame: red/blue HSV mask + contours propose candidate regions → each crop goes through `preprocess_for_inference()` → ONNX model → a small IoU tracker keeps a majority vote over the last `--smooth` frames to stop labels from flickering. Default `--conf 0.5`: with label smoothing 0.1 a confident prediction peaks around 0.9, so higher thresholds discard correct detections.
+
+---
+
+## ☁️ Training on Google Colab
+
+Open `notebooks/train_colab.ipynb` in Colab, select a T4 GPU and run all cells. Checkpoints and results are stored in Google Drive; the last cell downloads `gtsrb_model.onnx` and `best_model.pth`.
 
 ---
 
@@ -790,14 +807,14 @@ predictions = outputs[0]
 
 ### Performance Metrics
 
+Not measured yet: run `notebooks/train_colab.ipynb`, then fill in this table from `evaluate.py` and `export_onnx.py --benchmark`.
+
 | Metric | Value |
 |--------|-------|
-| **Test Accuracy** | **98.5%** |
-| **Precision** | 98.4% |
-| **Recall** | 98.3% |
-| **F1-Score** | 98.3% |
-| **Inference Time (GPU)** | **~4ms** |
-| **Inference Time (CPU)** | ~15ms |
+| **Test Accuracy** (GTSRB Final_Test) | tbd |
+| **Macro Precision / Recall / F1** | tbd |
+| **Inference Time, ONNX, laptop CPU** | tbd |
+| **Inference Time, PyTorch, Colab T4** | tbd |
 
 ### Training Curves
 

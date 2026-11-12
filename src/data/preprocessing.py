@@ -44,6 +44,10 @@ class CLAHEPreprocessor:
             return self.clahe.apply(image)
 
 
+# One shared instance: creating a CLAHE object per image is wasted work
+_CLAHE = CLAHEPreprocessor()
+
+
 def resize_image(image: np.ndarray, size: Tuple[int, int] = (48, 48)) -> np.ndarray:
     """
     Resize image to target size
@@ -97,10 +101,9 @@ def preprocess_image(image: np.ndarray,
     Returns:
         Preprocessed image
     """
-    # Apply CLAHE if requested
+    # Apply CLAHE if requested (on the full-resolution image, BEFORE resizing)
     if apply_clahe:
-        clahe = CLAHEPreprocessor()
-        image = clahe(image)
+        image = _CLAHE(image)
     
     # Resize
     image = resize_image(image, size)
@@ -110,3 +113,28 @@ def preprocess_image(image: np.ndarray,
         image = normalize_image(image)
     
     return image
+
+
+def preprocess_for_inference(bgr_image: np.ndarray,
+                             size: Tuple[int, int] = (48, 48),
+                             apply_clahe: bool = True) -> np.ndarray:
+    """
+    Turn one BGR image (e.g. an OpenCV video crop) into a model input.
+
+    Mirrors the evaluation path of the training pipeline exactly:
+    BGR->RGB, CLAHE on the full-size crop, resize (INTER_AREA),
+    scale to [0, 1], ImageNet normalisation, HWC->NCHW.
+    Use this in every demo/ONNX script so inference sees the same
+    pixels as training did.
+
+    Args:
+        bgr_image: Image as returned by cv2 (BGR, uint8)
+        size: Target size (must match config data.image_size)
+        apply_clahe: Must match config augmentation.apply_clahe
+
+    Returns:
+        float32 array of shape (1, 3, H, W)
+    """
+    rgb = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2RGB)
+    rgb = preprocess_image(rgb, size=size, apply_clahe=apply_clahe, normalize=True)
+    return np.ascontiguousarray(rgb.transpose(2, 0, 1)[np.newaxis], dtype=np.float32)
