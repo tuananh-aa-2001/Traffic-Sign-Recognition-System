@@ -19,7 +19,8 @@ def download_file(url: str, destination: str, chunk_size: int = 8192) -> None:
         destination: Local file path to save to
         chunk_size: Download chunk size in bytes
     """
-    response = requests.get(url, stream=True)
+    response = requests.get(url, stream=True, timeout=60)
+    response.raise_for_status()
     total_size = int(response.headers.get('content-length', 0))
     
     os.makedirs(os.path.dirname(destination), exist_ok=True)
@@ -48,6 +49,16 @@ def extract_zip(zip_path: str, extract_to: str) -> None:
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(extract_to)
     print(f"Extraction complete!")
+
+
+def dataset_ready(data_dir: str = "data/raw") -> bool:
+    """True if training images, test images and test labels are all in place."""
+    gtsrb_dir = os.path.join(data_dir, "GTSRB")
+    return (
+        os.path.isdir(os.path.join(gtsrb_dir, "Final_Training", "Images"))
+        and os.path.isdir(os.path.join(gtsrb_dir, "Final_Test", "Images"))
+        and os.path.exists(os.path.join(gtsrb_dir, "GT-final_test.csv"))
+    )
 
 
 def download_gtsrb(data_dir: str = "data/raw") -> None:
@@ -92,14 +103,24 @@ def download_gtsrb(data_dir: str = "data/raw") -> None:
     else:
         print("Test labels already downloaded.")
     
-    # Extract files
-    if not os.path.exists(os.path.join(data_dir, "GTSRB")):
+    # Extract files (each part separately, so an interrupted run can resume)
+    gtsrb_dir = os.path.join(data_dir, "GTSRB")
+    if not os.path.isdir(os.path.join(gtsrb_dir, "Final_Training", "Images")):
         extract_zip(train_zip, data_dir)
+    if not os.path.isdir(os.path.join(gtsrb_dir, "Final_Test", "Images")):
         extract_zip(test_zip, data_dir)
+
+    # The label archive extracts GT-final_test.csv into data_dir itself,
+    # but the data loader expects it inside GTSRB/. Move it there.
+    labels_csv = os.path.join(gtsrb_dir, "GT-final_test.csv")
+    if not os.path.exists(labels_csv):
         extract_zip(test_labels_zip, data_dir)
-        print("\n✅ GTSRB dataset downloaded and extracted successfully!")
-    else:
-        print("Dataset already extracted.")
+        extracted_csv = os.path.join(data_dir, "GT-final_test.csv")
+        if os.path.exists(extracted_csv):
+            os.replace(extracted_csv, labels_csv)
+    if not os.path.exists(labels_csv):
+        raise FileNotFoundError(f"Test labels missing after extraction: {labels_csv}")
+    print("\n✅ GTSRB dataset ready.")
     
     # Print dataset info
     print("\n" + "="*60)

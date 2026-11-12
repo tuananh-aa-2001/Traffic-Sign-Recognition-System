@@ -77,35 +77,38 @@ class GTSRBDataset(Dataset):
                     f"Please run: python src/utils/download_dataset.py"
                 )
             
-            # Collect all samples from class folders
-            all_samples = []
+            # Collect all samples from class folders, grouped by track.
+            # GTSRB filenames are "<track>_<frame>.ppm": the ~30 frames of one
+            # track show the same physical sign, so they must never be split
+            # between train and val (otherwise val accuracy is inflated).
+            tracks = {}
             for class_id in range(43):
                 class_dir = os.path.join(train_dir, f'{class_id:05d}')
                 if not os.path.exists(class_dir):
                     continue
-                
+
                 # Read CSV annotation file
                 csv_file = os.path.join(class_dir, f'GT-{class_id:05d}.csv')
                 if os.path.exists(csv_file):
                     df = pd.read_csv(csv_file, sep=';')
-                    for _, row in df.iterrows():
-                        img_path = os.path.join(class_dir, row['Filename'])
-                        all_samples.append((img_path, class_id))
-            
-            # Split into train/val
-            np.random.seed(self.config.get('seed', 42))
-            indices = np.random.permutation(len(all_samples))
-            
-            train_split = self.config.get('data', {}).get('train_split', 0.8)
+                    for filename in df['Filename']:
+                        img_path = os.path.join(class_dir, filename)
+                        track_id = (class_id, filename.split('_')[0])
+                        tracks.setdefault(track_id, []).append((img_path, class_id))
+
+            # Split whole tracks into train/val (official Final_Test is the test set)
+            track_ids = sorted(tracks)
+            rng = np.random.RandomState(self.config.get('seed', 42))
+            order = rng.permutation(len(track_ids))
+
             val_split = self.config.get('data', {}).get('val_split', 0.1)
-            
-            train_size = int(len(all_samples) * train_split)
-            val_size = int(len(all_samples) * val_split)
-            
-            if self.split == 'train':
-                samples = [all_samples[i] for i in indices[:train_size]]
-            else:  # val
-                samples = [all_samples[i] for i in indices[train_size:train_size + val_size]]
+            val_count = int(round(len(track_ids) * val_split))
+            val_tracks = {track_ids[i] for i in order[:val_count]}
+
+            want_val = (self.split == 'val')
+            for track_id in track_ids:
+                if (track_id in val_tracks) == want_val:
+                    samples.extend(tracks[track_id])
         
         else:  # test
             # Test data has a different structure
@@ -118,18 +121,17 @@ class GTSRBDataset(Dataset):
                     f"Please run: python src/utils/download_dataset.py"
                 )
             
-            if os.path.exists(csv_file):
-                df = pd.read_csv(csv_file, sep=';')
-                for _, row in df.iterrows():
-                    img_path = os.path.join(test_dir, row['Filename'])
-                    samples.append((img_path, row['ClassId']))
-            else:
-                # If CSV doesn't exist, just load images without labels
-                print("Warning: Test labels not found. Loading images only.")
-                for img_file in sorted(os.listdir(test_dir)):
-                    if img_file.endswith('.ppm'):
-                        img_path = os.path.join(test_dir, img_file)
-                        samples.append((img_path, -1))  # -1 for unknown label
+            if not os.path.exists(csv_file):
+                # Without labels the test metrics would be meaningless
+                raise FileNotFoundError(
+                    f"Test labels not found: {csv_file}\n"
+                    f"Please run: python src/utils/download_dataset.py"
+                )
+
+            df = pd.read_csv(csv_file, sep=';')
+            for filename, class_id in zip(df['Filename'], df['ClassId']):
+                img_path = os.path.join(test_dir, filename)
+                samples.append((img_path, int(class_id)))
         
         return samples
     
@@ -179,7 +181,8 @@ def get_data_loaders(config: dict) -> Tuple[DataLoader, DataLoader, DataLoader]:
     root_dir = config['data']['root_dir']
     batch_size = config['training']['batch_size']
     num_workers = config['training']['num_workers']
-    pin_memory = config['training']['pin_memory']
+    # pin_memory only helps (and only works without warnings) with a GPU
+    pin_memory = config['training']['pin_memory'] and torch.cuda.is_available()
     
     # Create datasets
     train_dataset = GTSRBDataset(
