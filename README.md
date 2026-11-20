@@ -19,7 +19,8 @@ Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholv
 | Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft) |
 | Architektur A | trainiert auf Colab (15 Epochen, T4): Zielgruppe korrekt 94,6 % auf dem echten Test ([Ergebnisse](#ergebnisse)) |
 | E1 (Synset gegen GTSRB) | fertig: Synset-Modell verliert auf GTSRB 6,5 Pp., GTSRB-Modell auf Synset 13 Pp. ([Ergebnisse](#ergebnisse)) |
-| E4 Lernkurve, Grad-CAM-Beispiele, Demo | offen |
+| E4 Lernkurve | Code fertig (`experiment_e4.py`, Notebook Abschnitt 10b), Probelauf erfolgreich; Lauf auf Colab steht aus |
+| Grad-CAM-Beispiele, Demo | offen |
 | Architektur B (U-Net, zweistufig) | optional (Ausblick); trainiert, auf dem echten Test deutlich schwächer als A |
 
 ---
@@ -131,6 +132,17 @@ python experiment_e1.py                     # auf Colab: Abschnitt 9 im Notebook
 ```
 
 Trainiert die GTSRB-Architektur (ResNet-18, 48×48) auf den 43 Synset-Klassen, die den GTSRB-Klassen entsprechen (Label 0–42, Namen geprüft), und vergleicht mit dem GTSRB-Modell in einer 2×2-Tabelle (trainiert auf Synset/GTSRB × getestet auf Synset/GTSRB). Ergebnis: `results/e1/ergebnis.json`.
+
+---
+
+### 7. Experiment E4 (Lernkurve)
+
+```bash
+python experiment_e4.py --smoke                                          # Probelauf
+python experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4   # auf Colab: Abschnitt 10b
+```
+
+Trainiert A je Stufe neu mit höchstens 0 / 25 / 50 / 100 / 150 / allen echten Trainingsausschnitten je Zusatzzeichen („keins“ zählt als Klasse; 418 / 743 / 1.340 / 1.571 / 3.353 Ausschnitte), 8 Epochen je Stufe. Ergebnis: `results/e4/lernkurve.json` und `lernkurve.png`.
 
 ---
 

@@ -20,6 +20,7 @@ import os
 import random
 import sys
 import time
+from collections import Counter
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -110,6 +111,23 @@ def fmt(res):
 
 # ---------------------------------------------------------------- Daten
 
+def begrenze_je_klasse(records, n, seed):
+    """E4: höchstens n echte Trainingsausschnitte je Zusatzzeichen-Klasse ("keins" zählt als Klasse).
+
+    Zufällige Reihenfolge (fester Seed), ein Ausschnitt wird nur genommen, wenn keine seiner Klassen
+    das Limit schon erreicht hat. So bleibt jede Klasse <= n, seltene Klassen behalten alle Beispiele.
+    """
+    rng = random.Random(seed)
+    reihe = list(records)
+    rng.shuffle(reihe)
+    zahl, auswahl = Counter(), []
+    for r in reihe:
+        if n > 0 and all(zahl[k] < n for k in r["klassen"]):
+            auswahl.append(r)
+            zahl.update(r["klassen"])
+    return auswahl
+
+
 def build_data(cfg, smoke):
     d = cfg["data"]
     size, clahe = d["image_size"], d["clahe"]
@@ -120,6 +138,9 @@ def build_data(cfg, smoke):
         "val": [r for r in records if r["split"] == "train" and r["region"] in val_reg],
         "test": [r for r in records if r["split"] == "test" and r["geprueft"]],
     }
+    if d.get("echte_je_klasse") is not None:
+        real["train"] = begrenze_je_klasse(real["train"], d["echte_je_klasse"], cfg["seed"])
+        print(f"E4: höchstens {d['echte_je_klasse']} echte Trainingsausschnitte je Zusatzzeichen")
     print("Echte Ausschnitte: " + ", ".join(f"{k} {len(v)}" for k, v in real.items())
           + f" (davon geprüft im Training: {sum(r['geprueft'] for r in real['train'])})")
 
@@ -171,6 +192,11 @@ def main(args):
         cfg["output"]["results_dir"] = os.path.join("results", "multitask_smoke")
     if args.epochen:
         cfg["training"]["num_epochs"] = args.epochen
+    if args.echte_je_klasse is not None:
+        cfg["data"]["echte_je_klasse"] = args.echte_je_klasse
+    if args.ausgabe:
+        cfg["output"]["results_dir"] = args.ausgabe
+        cfg["output"]["checkpoint"] = os.path.join(args.ausgabe, "modell.pth")
     set_seed(cfg["seed"])
     device = torch.device("cuda" if torch.cuda.is_available() and not args.smoke else "cpu")
     print(f"Gerät: {device}")
@@ -235,7 +261,8 @@ def main(args):
 
     state = torch.load(ckpt_path, map_location=device)
     model.load_state_dict(state["model"])
-    ergebnis = {"epoche": state["epoche"],
+    ergebnis = {"epoche": state["epoche"], "echte_je_klasse": cfg["data"].get("echte_je_klasse"),
+                "n_echt_train": len(sets["real_train"]),
                 "echt_test": evaluate(model, eval_loader(sets["real_test"], cfg, args.smoke), device, max_eval)
                 if len(sets["real_test"]) else {},
                 "synset_val": evaluate(model, eval_loader(sets["syn_val"], cfg, args.smoke), device, max_eval)
@@ -254,4 +281,7 @@ if __name__ == "__main__":
     p.add_argument("--smoke", action="store_true", help="kurzer Probelauf auf der CPU")
     p.add_argument("--epochen", type=int, default=None)
     p.add_argument("--nur-auswerten", action="store_true")
+    p.add_argument("--echte-je-klasse", type=int, default=None,
+                   help="E4: höchstens so viele echte Trainingsausschnitte je Zusatzzeichen (0 = nur Synset)")
+    p.add_argument("--ausgabe", default=None, help="Ergebnisordner (Checkpoint landet darin)")
     main(p.parse_args())
