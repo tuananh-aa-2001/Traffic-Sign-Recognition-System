@@ -18,7 +18,7 @@ Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholv
 | Synset-Stichprobe | fertig: Zusatzschild in 170 von 170 Bildern unten abgeschnitten (siehe [Daten](#daten)) |
 | Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft) |
 | Architektur A | trainiert auf Colab (15 Epochen, T4): Zielgruppe korrekt 94,6 % auf dem echten Test ([Ergebnisse](#ergebnisse)) |
-| E1 (Synset gegen GTSRB) | Synset → GTSRB gelaufen (92,4 %); Gegenrichtung GTSRB → Synset steht aus |
+| E1 (Synset gegen GTSRB) | fertig: Synset-Modell verliert auf GTSRB 6,5 Pp., GTSRB-Modell auf Synset 13 Pp. ([Ergebnisse](#ergebnisse)) |
 | E4 Lernkurve, Grad-CAM-Beispiele, Demo | offen |
 | Architektur B (U-Net, zweistufig) | optional (Ausblick); trainiert, auf dem echten Test deutlich schwächer als A |
 
@@ -163,7 +163,14 @@ Rohdaten: [`multitask_ergebnisse/`](multitask_ergebnisse/) (JSON, Logs, Verlaufs
 
 Häufige Zusatzzeichen (Rad frei, LKW/Bus/Anhänger, PKW, Schwerbehinderte) erreichen F1 ≥ 0,94; seltene (Straßenbahn, Umweltzone, Text, Bei Nässe, Zeitangabe, Abschleppen; je 1–7 Testbeispiele) F1 = 0. Auf den echten Validierungsregionen mit vielen seltenen Zielgruppen liegt „Zielgruppe korrekt“ nur bei 0,70; das motiviert E4.
 
-**E1**, ResNet-18 auf Synset (Klassen 0–42): 98,9 % auf der Synset-Validierung, 92,4 % (Makro-F1 0,89) auf dem GTSRB-Test. Größter Abfall: Fußgänger (−46 Pp.), Ende Überholverbot 3,5 t (−29 Pp.).
+**E1**, ResNet-18 (48×48) auf den 43 gemeinsamen Klassen, Accuracy (Makro-F1):
+
+| trainiert auf ↓ / getestet auf → | Synset-Validierung (n = 4.300) | GTSRB-Test (n = 12.630) |
+|---|---|---|
+| Synset | 98,9 % (0,99) | 92,4 % (0,89) |
+| GTSRB | 86,4 % (0,87) | 99,4 % (0,99) |
+
+Synthetisches Training überträgt sich besser auf echte Bilder (−6,5 Pp.) als echtes auf synthetische (−13,0 Pp.). Größter Abfall Synset → GTSRB: Fußgänger (−46 Pp.), Ende Überholverbot 3,5 t (−29 Pp.); GTSRB → Synset vor allem Gefahrzeichen: Fußgänger (−33 Pp.), Radfahrer kreuzen (−32 Pp.), Doppelkurve (−28 Pp.).
 
 **Architektur B** (optional): U-Net mIoU 0,89 auf Synset, Klassifikator 89 % auf echten Einzelschildern, als Pipeline auf dem echten Test aber nur Zusatz exakt 46 %, Zielgruppe 49 % (Fehler beim Übergang Maske → Boxen auf echten Fotos).
 
