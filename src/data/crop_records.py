@@ -91,6 +91,8 @@ def build_records(allow_unreviewed=False):
     for r in rows:
         if set(r["zusatzzeichen"].split("|")) <= IGNORIERTE_WERTE:
             continue
+        if not os.path.exists(r["crop"].replace("\\", "/")):     # Zeile ohne Bilddatei (z. B. abgebrochener Lauf)
+            continue
         region, lon, lat = loc.get(r["original"], ("", "", ""))
         split = split_of(region, lon, lat, boxes)
         rev = reviews.get(r["crop"])
