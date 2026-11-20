@@ -110,7 +110,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--config',
         type=str,
-        default='configs/config.yaml',
+        default='configs/gtsrb.yaml',
         help='Path to configuration file'
     )
     

@@ -91,7 +91,7 @@ def main():
     parser = argparse.ArgumentParser(description="Live-Verkehrszeichenerkennung mit ONNX")
     parser.add_argument("--source", default="0", help="Videodatei oder Kamera-Index (z. B. 0)")
     parser.add_argument("--model", default="models/onnx/gtsrb_model.onnx")
-    parser.add_argument("--config", default="configs/config.yaml")
+    parser.add_argument("--config", default="configs/gtsrb.yaml")
     # Mit label_smoothing=0.1 liegt die Konfidenz eines sicheren Treffers bei ca. 0.9,
     # eine Schwelle von 0.85 würde viele richtige Treffer verwerfen.
     parser.add_argument("--conf", type=float, default=0.5, help="Mindest-Softmax-Wahrscheinlichkeit")

@@ -77,5 +77,18 @@ Thumbs.db
 *.bak
 *.log
 
-# Colab-Ergebnisse (Modelle, Logs) lokal halten
-gtsrb_ergebnisse/
+# Mapillary-Fotos und Ausschnitte (CC BY-SA, viele MB): lokal bzw. per pack_colab_data.py
+real_world_mapillary/
+crops/
+
+# Zugangsdaten
+mapillary_token.txt
+
+# Vorbereitete Synset-Daten (prepare_synset.py)
+data/synset/
+
+# Kursunterlagen (Vorlagen, Bewertungsbogen) – nicht Teil der Abgabe
+kurs/
+
+# Zuordnung Mapillary -> Synset ist Konfiguration, nicht Daten
+!configs/mapillary_to_synset.csv

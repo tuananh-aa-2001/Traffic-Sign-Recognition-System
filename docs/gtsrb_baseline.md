@@ -1,3 +1,5 @@
+> **Hinweis:** Dies ist die ursprüngliche README der **GTSRB-Baseline** (ResNet-18, 43 Klassen, 48×48), mit der das Projekt begann. Das aktuelle Projekt – Kontexterkennung von Schildkombinationen – beschreibt die [README im Hauptordner](../README.md). Die Messergebnisse unten (99,36 % auf GTSRB) gelten für diese Baseline; Logs und Bilder liegen lokal in `results/gtsrb/`.
+
 # Traffic Sign Recognition System (GTSRB)
 
 🎯 **A Deep Convolutional Neural Network for classifying 43 types of German traffic signs, with an ONNX-based live demo for video and webcam on a CPU-only Windows laptop.**
@@ -160,7 +162,7 @@ python src/utils/download_dataset.py --data_dir data/raw
 ### 1. Train the Model
 
 ```bash
-python train.py --config configs/config.yaml
+python train_gtsrb.py --config configs/gtsrb.yaml
 ```
 
 Training will automatically:
@@ -177,7 +179,7 @@ Training will automatically:
 ### 2. Evaluate the Model
 
 ```bash
-python evaluate.py --save_cm --benchmark
+python evaluate_gtsrb.py --save_cm --benchmark
 ```
 
 This will:
@@ -189,7 +191,7 @@ This will:
 ### 3. Export to ONNX
 
 ```bash
-python export_onnx.py --verify --benchmark
+python export_onnx_gtsrb.py --verify --benchmark
 ```
 
 This will:
@@ -259,14 +261,14 @@ CUDA available: False  ⚠️  (CPU training, ~20-30 hours)
 **Why it matters**: The dataset contains ~51,839 images across 43 traffic sign classes under realistic conditions: varying brightness, motion blur, low resolution (15×15 to 250×250 px), and partial occlusion.
 
 ```bash
-# Automatic (happens on first train.py run) — recommended
-python train.py
+# Automatic (happens on first train_gtsrb.py run) — recommended
+python train_gtsrb.py
 
 # Manual download (if automatic fails)
 python src/utils/download_dataset.py --data_dir data/raw
 ```
 
-**Dataset split** (configured in `configs/config.yaml`):
+**Dataset split** (configured in `configs/gtsrb.yaml`):
 
 | Split      | Source                                   | Purpose                          |
 |------------|------------------------------------------|----------------------------------|
@@ -298,7 +300,7 @@ CLAHE is applied to the L (Lightness) channel in LAB color space. It locally boo
 **After CLAHE**: Sign edges and colors clearly defined.
 
 ```python
-# Configured in configs/config.yaml:
+# Configured in configs/gtsrb.yaml:
 augmentation:
   apply_clahe: true   # Enable/disable CLAHE globally
 ```
@@ -327,7 +329,7 @@ All images are bicubically downsampled (or upsampled) to **48×48 pixels** using
 
 > **Augmentation only applies to training data.** Validation and test images are passed through unchanged (only resized and normalized) so your accuracy numbers are realistic.
 
-All augmentation parameters can be tuned in `configs/config.yaml` under the `augmentation` key.
+All augmentation parameters can be tuned in `configs/gtsrb.yaml` under the `augmentation` key.
 
 ---
 
@@ -371,7 +373,7 @@ An alternative **LightweightCNN** (4 conv blocks) is also implemented in the sam
 
 ---
 
-### Stage 6 — Training (`train.py` + `src/training/trainer.py`)
+### Stage 6 — Training (`train_gtsrb.py` + `src/training/trainer.py`)
 
 **What happens**: The model iteratively processes training batches, computes loss, and adjusts weights via backpropagation over up to 50 epochs.
 
@@ -379,10 +381,10 @@ An alternative **LightweightCNN** (4 conv blocks) is also implemented in the sam
 
 ```bash
 # Default configuration
-python train.py
+python train_gtsrb.py
 
 # Custom configuration file
-python train.py --config configs/config.yaml
+python train_gtsrb.py --config configs/gtsrb.yaml
 ```
 
 #### What the Trainer does each epoch
@@ -396,7 +398,7 @@ python train.py --config configs/config.yaml
 7. **LR Scheduling** — If validation accuracy stops improving for 5 consecutive epochs (`patience: 5`), the learning rate is halved (`factor: 0.5`), allowing finer weight adjustments.
 8. **Early Stopping** — Training stops automatically if no improvement is seen for 10 consecutive epochs (`patience: 10`), avoiding wasted compute and overfitting.
 
-#### Key Training Hyperparameters (in `configs/config.yaml`)
+#### Key Training Hyperparameters (in `configs/gtsrb.yaml`)
 
 ```yaml
 training:
@@ -491,16 +493,16 @@ You will see interactive graphs for:
 
 ---
 
-### Stage 8 — Evaluation (`evaluate.py`)
+### Stage 8 — Evaluation (`evaluate_gtsrb.py`)
 
 **What happens**: The saved best model is loaded and measured against the held-out test set. This is your "official" performance score.
 
 ```bash
 # Basic accuracy report
-python evaluate.py
+python evaluate_gtsrb.py
 
 # Full report: confusion matrix + speed benchmark
-python evaluate.py --save_cm --benchmark
+python evaluate_gtsrb.py --save_cm --benchmark
 ```
 
 #### What the Report Includes
@@ -520,7 +522,7 @@ The confusion matrix is a 43×43 grid. The brighter the diagonal, the better —
 
 ---
 
-### Stage 9 — ONNX Export (`export_onnx.py`)
+### Stage 9 — ONNX Export (`export_onnx_gtsrb.py`)
 
 **What happens**: The trained PyTorch model is converted to the ONNX (Open Neural Network Exchange) format — a universal, hardware-agnostic model format.
 
@@ -528,10 +530,10 @@ The confusion matrix is a 43×43 grid. The brighter the diagonal, the better —
 
 ```bash
 # Export + verify + benchmark in one command
-python export_onnx.py --verify --benchmark
+python export_onnx_gtsrb.py --verify --benchmark
 
 # Export to a custom path
-python export_onnx.py --output models/onnx/gtsrb_model.onnx
+python export_onnx_gtsrb.py --output models/onnx/gtsrb_model.onnx
 ```
 
 `--verify` checks that the ONNX model produces numerically identical outputs to PyTorch (max difference < 1e-5). If this check fails, the export is invalid.
@@ -589,13 +591,13 @@ data/
 
 | Problem | Cause | Fix |
 |---|---|---|
-| `CUDA out of memory` | `batch_size` too large | Set `batch_size: 64` (or `32`) in `config.yaml` |
+| `CUDA out of memory` | `batch_size` too large | Set `batch_size: 64` (or `32`) in `gtsrb.yaml` |
 | Dataset download fails | Firewall / network | Manually download from [https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/](https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/) and extract to `data/raw/GTSRB/` |
 | `ModuleNotFoundError` | Virtual env not activated | Run `venv\Scripts\activate` (Windows) or `source venv/bin/activate` |
 | Training extremely slow | Running on CPU | Use Google Colab with free GPU (Runtime → T4 GPU) |
-| `best_model.pth` not found | Training not completed | Run `python train.py` first, then evaluate |
+| `best_model.pth` not found | Training not completed | Run `python train_gtsrb.py` first, then evaluate |
 | TensorBoard shows no data | Wrong log directory | Make sure to point to `results/tensorboard` |
-| ONNX verify fails | Mismatched model version | Re-export: delete old `.onnx` file and rerun `export_onnx.py` |
+| ONNX verify fails | Mismatched model version | Re-export: delete old `.onnx` file and rerun `export_onnx_gtsrb.py` |
 
 ---
 
@@ -613,7 +615,7 @@ Per frame: red/blue HSV mask + contours propose candidate regions → each crop 
 
 ## ☁️ Training on Google Colab
 
-Open `notebooks/train_colab.ipynb` in Colab, select a T4 GPU and run all cells. Checkpoints and results are stored in Google Drive; the last cell downloads `gtsrb_model.onnx` and `best_model.pth`.
+Open `notebooks/train_gtsrb_colab.ipynb` in Colab, select a T4 GPU and run all cells. Checkpoints and results are stored in Google Drive; the last cell downloads `gtsrb_model.onnx` and `best_model.pth`.
 
 ---
 
@@ -622,7 +624,7 @@ Open `notebooks/train_colab.ipynb` in Colab, select a T4 GPU and run all cells. 
 ```
 Traffic Sign Recognition System (GTSRB)/
 ├── configs/
-│   └── config.yaml              # Training configuration
+│   └── gtsrb.yaml              # Training configuration
 ├── data/
 │   ├── raw/                     # Downloaded GTSRB dataset
 │   ├── processed/               # Preprocessed images
@@ -650,11 +652,11 @@ Traffic Sign Recognition System (GTSRB)/
 │       ├── class_names.py       # Class name mappings
 │       ├── visualization.py     # Visualization utilities
 │       └── download_dataset.py  # Dataset downloader
-├── train.py                     # Main training script
-├── evaluate.py                  # Evaluation script
-├── export_onnx.py               # ONNX export script
+├── train_gtsrb.py                     # Main training script
+├── evaluate_gtsrb.py                  # Evaluation script
+├── export_onnx_gtsrb.py               # ONNX export script
 ├── requirements.txt             # Python dependencies
-└── README.md                    # This file
+└── README.md                    # Projekt-README (dieses Dokument: docs/gtsrb_baseline.md)
 ```
 
 ---
@@ -698,7 +700,7 @@ Output (43,)
 
 ### Configuration
 
-Edit `configs/config.yaml` to customize training:
+Edit `configs/gtsrb.yaml` to customize training:
 
 ```yaml
 training:
@@ -735,19 +737,19 @@ Then open http://localhost:6006 in your browser.
 ### Basic Evaluation
 
 ```bash
-python evaluate.py
+python evaluate_gtsrb.py
 ```
 
 ### With Confusion Matrix
 
 ```bash
-python evaluate.py --save_cm
+python evaluate_gtsrb.py --save_cm
 ```
 
 ### With Inference Benchmark
 
 ```bash
-python evaluate.py --benchmark
+python evaluate_gtsrb.py --benchmark
 ```
 
 ### Evaluation Metrics
@@ -767,13 +769,13 @@ The evaluation script provides:
 ### Export Model
 
 ```bash
-python export_onnx.py --output models/onnx/gtsrb_model.onnx
+python export_onnx_gtsrb.py --output models/onnx/gtsrb_model.onnx
 ```
 
 ### Verify ONNX Model
 
 ```bash
-python export_onnx.py --verify
+python export_onnx_gtsrb.py --verify
 ```
 
 This ensures ONNX outputs match PyTorch (max difference < 1e-5).
@@ -781,7 +783,7 @@ This ensures ONNX outputs match PyTorch (max difference < 1e-5).
 ### Benchmark ONNX Inference
 
 ```bash
-python export_onnx.py --benchmark
+python export_onnx_gtsrb.py --benchmark
 ```
 
 ### Using ONNX Model
