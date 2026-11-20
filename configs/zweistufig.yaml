@@ -1,0 +1,36 @@
+# Architektur B: U-Net (Synset) + Zusatz-Klassifikator (echte Zusatzschilder)
+
+data:
+  image_size: 128               # U-Net-Eingabe, wie Architektur A
+  zusatz_size: 96               # einzelnes Zusatzschild
+  clahe: true
+  synset_train: train           # prepare_synset.py --split train --segmentierung
+  synset_val: validation
+  real_val_regionen: [bonn, duesseldorf, muenster, zg_berlin, zg_muenchen, zg_hamburg]
+  ungepruefte_trainingsausschnitte: true
+
+unet:
+  pretrained: true
+  batch_size: 32
+  num_epochs: 10
+  learning_rate: 0.0005
+  epoch_bilder: 20000
+  klassen_gewichte: [0.5, 1.0, 4.0, 3.0]   # Hintergrund, Hauptschild, andere Schilder, Mast (selten)
+
+klassifikator:
+  pretrained: true
+  batch_size: 64
+  num_epochs: 25
+  learning_rate: 0.0003
+  label_smoothing: 0.1
+
+training:
+  num_workers: 2
+  weight_decay: 0.0001
+
+output:
+  unet: models/checkpoints/b_unet.pth
+  klassifikator: models/checkpoints/b_zusatz.pth
+  results_dir: results/zweistufig
+
+seed: 42
