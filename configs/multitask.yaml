@@ -1,0 +1,35 @@
+# Architektur A: Multi-Task-Training (Hauptschild, Zusatzschild vorhanden, Zusatzzeichen)
+
+data:
+  image_size: 128                 # größer als GTSRB (48), damit das Zusatzschild lesbar bleibt
+  clahe: true                     # wie die Vorverarbeitung des GTSRB-Modells
+  synset_train: train             # data/synset/train_* (prepare_synset.py --split train)
+  synset_val: validation          # data/synset/validation_*
+  # Echte Ausschnitte: Test = Aachen, Eifel, Köln (nur geprüfte). Validierung = diese
+  # Trainingsregionen, damit das Modell nie auf dem Test ausgewählt wird.
+  real_val_regionen: [bonn, duesseldorf, muenster, zg_berlin, zg_muenchen, zg_hamburg]
+  ungepruefte_trainingsausschnitte: true   # ungeprüfte Trainingsausschnitte mit Mapillary-Vorschlag nutzen
+  real_anteil: 0.3                # Anteil echter Ausschnitte je Batch (Übersampling, da viel weniger als Synset)
+  epoch_bilder: 30000             # Bilder pro Epoche (Synset hat 84.400; eine Epoche = Stichprobe)
+
+model:
+  pretrained: true                # ImageNet-Gewichte
+  dropout: 0.3
+
+training:
+  batch_size: 64
+  num_epochs: 15
+  learning_rate: 0.0003
+  weight_decay: 0.0001
+  num_workers: 2
+
+loss:
+  gewichte: [1.0, 1.0, 1.0]       # Hauptschild, da, Zusatzzeichen
+  label_smoothing: 0.1
+  focal_gamma: 2.0                # Focal Loss im Zusatz-Kopf gegen seltene Klassen (0 = BCE)
+
+output:
+  checkpoint: models/checkpoints/multitask_best.pth
+  results_dir: results/multitask
+
+seed: 42

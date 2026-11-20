@@ -1,0 +1,34 @@
+"""
+Echte Daten für Colab verpacken (sie liegen wegen .gitignore nicht im Repo).
+
+Packt in colab_daten.zip:
+  crops/                            Ausschnitte, labels.csv, geprueft.csv (ohne Kontrollbilder)
+  real_world_mapillary/labels.csv   Orte der Fotos (für den Split nach Region)
+  configs/mapillary_to_synset.csv   Zuordnung Mapillary -> Synset
+
+Die ZIP danach in Google Drive nach MyDrive/dlacv_gtsrb/ hochladen.
+
+  python pack_colab_data.py
+"""
+
+import os
+import zipfile
+
+ZIEL = "colab_daten.zip"
+DATEIEN = [os.path.join("real_world_mapillary", "labels.csv"), os.path.join("configs", "mapillary_to_synset.csv")]
+
+with zipfile.ZipFile(ZIEL, "w", zipfile.ZIP_STORED) as z:     # JPEGs sind schon komprimiert
+    n = 0
+    for root, _, files in os.walk("crops"):
+        if os.path.basename(root).startswith("_"):            # _kontrolle, _kontrolle_gerettet
+            continue
+        for name in files:
+            z.write(os.path.join(root, name))
+            n += 1
+    for path in DATEIEN:
+        if os.path.exists(path):
+            z.write(path)
+            n += 1
+        else:
+            print(f"Warnung: {path} fehlt")
+print(f"{ZIEL}: {n} Dateien, {os.path.getsize(ZIEL) / 1e6:.1f} MB")

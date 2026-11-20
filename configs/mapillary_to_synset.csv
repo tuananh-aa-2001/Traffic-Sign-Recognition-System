@@ -1,0 +1,117 @@
+mapillary_wert,art,anzahl,synset_feld,synset_wert,stvo_nr,sicherheit,begruendung
+none,zusatzzeichen,539,lower_sign,None,,sicher,"Kein Zusatzzeichen = Synset-Wert ""None"" (in lower_sign und upper_sign vorhanden)."
+complementary--distance--g1,zusatzzeichen,111,lower_sign,LaengeEinerStrecke2,1001-31,wahrscheinlich,"Länge einer Strecke zwischen Pfeilen, gemischt ""↑4 km↑"" und ""↑600 m↑""; km überwiegt, daher LaengeEinerStrecke2 (↑3 km↑, per HF-Bild verifiziert); Alternative LaengeEinerStrecke1 (↑800 m↑, 1001-30, verifiziert). Nicht in upper_sign."
+regulatory--yield--g1,hauptschild,64,class_name,VorfahrtGewaehren,205,sicher,"Vorfahrt gewähren, eindeutig."
+complementary--turn-right--g2,zusatzzeichen,57,lower_sign,RichtungsangabeDurchPfeile5,1000-21,sicher,Abknickender Pfeil rechts; Variante 5 per HF-Bild verifiziert. Nicht in upper_sign (dort nur RichtungsangabeDurchPfeile9).
+warning--other-danger--g1,hauptschild,52,class_name,Gefahrenstelle,101,sicher,Allgemeine Gefahrstelle (Ausrufezeichen).
+regulatory--priority-road--g1,hauptschild,51,class_name,Vorfahrtsstrasse,306,sicher,Vorfahrtstraße (gelbe Raute).
+regulatory--keep-right--g1,hauptschild,41,class_name,VorgeschriebeneVorbeifahrtRechts,222-10,sicher,Rechts vorbei.
+complementary--distance--g2,zusatzzeichen,39,lower_sign,Entfernungsangaben1,1004-30,sicher,"Entfernung ohne Pfeile (""800 m"", ""600 m"") = Entfernungsangaben1 (""100 m""); Alternative Entfernungsangaben2 (""2 km"", 1004-31). Nicht in upper_sign."
+information--general-directions--g1,hauptschild,39,-,,,kein_gegenstueck,"Wegweiser (Ausschnitte: Pfeilwegweiser ""Ausfahrt/Exit""); keine Wegweiser-Klasse in Synset."
+warning--roadworks--g1,hauptschild,35,class_name,Arbeitsstelle,123,sicher,Arbeitsstelle.
+complementary--except-bicycles--g1,zusatzzeichen,33,lower_sign,EinspurigeFahrzeugeFrei1,1022-10,wahrscheinlich,"Fahrrad + ""frei"" = Radverkehr frei (Synset-Bild 770); Variantennummer aus der Reihenfolge der Synset-Website abgeleitet, nicht einzeln verifiziert. Nicht in upper_sign."
+regulatory--no-overtaking--g1,hauptschild,32,class_name,Ueberholverbot,276,sicher,Überholverbot für Kfz aller Art; Label 9 = Ueberholverbot über HF-Datensatzzeilen geprüft.
+regulatory--pedestrians-only--g1,hauptschild,32,class_name,Gehweg,239,sicher,Sonderweg Fußgänger.
+complementary--turn-left--g2,zusatzzeichen,31,lower_sign,RichtungsangabeDurchPfeile2,1000-11,sicher,Abknickender Pfeil links; Variante 2 per HF-Bild verifiziert. Nicht in upper_sign.
+regulatory--shared-path-pedestrians-and-bicycles--g1,hauptschild,30,class_name,GemeinsamerGehUndRadweg,240,sicher,Gemeinsamer Geh- und Radweg (horizontal geteilt).
+regulatory--height-limit--g1,hauptschild,25,class_name,TatsaechlicheHoehe,265,sicher,"Höhenbeschränkung; Zahlenwert im Bild variiert (3,4/3,5/3,8 m), Synset hat nur einen Wert."
+regulatory--no-stopping--g1,hauptschild,25,class_name,AbsolutesHalteverbot,283,sicher,Absolutes Haltverbot.
+warning--wild-animals--g1,hauptschild,25,class_name,WildwechselLinks,142-20,wahrscheinlich,"Ausschnitte zeigen Hirsch mit Kopf oben rechts wie Synset-Bild ID 53 (WildwechselLinks); Alternative WildwechselRechts (142-10, gespiegelt)."
+complementary--trucks-buses-trailers--g1,zusatzzeichen,22,lower_sign,SonstigeOderMehrspurigeFahrzeuge3,1049-13,wahrscheinlich,Lkw + Bus + Pkw mit Anhänger = Synset-Bild 826; Variantennummer aus Website-Reihenfolge abgeleitet. Nicht in upper_sign.
+regulatory--no-entry--g1,hauptschild,20,class_name,VerbotDerEinfahrt,267,sicher,Verbot der Einfahrt.
+regulatory--go-straight--g1,hauptschild,19,class_name,VorgeschriebeneFahrtrichtungGeradeaus,209-30,sicher,Vorgeschriebene Fahrtrichtung geradeaus.
+warning--railroad-crossing-without-barriers--g1,hauptschild,19,class_name,Bahnuebergang,151,sicher,Ausschnitte zeigen Dreieck mit Lok = Z. 151 Bahnübergang (nicht Andreaskreuz 201).
+warning--bicycles-crossing--g1,hauptschild,18,class_name,RadverkehrRechts,138-10,wahrscheinlich,Gefahrzeichen Radverkehr; Ausrichtung (Aufstellung rechts/links) nicht sicher unterscheidbar; Alternative RadverkehrLinks (138-20).
+warning--children--g1,hauptschild,17,class_name,KinderRechts,136-10,wahrscheinlich,"Kind links, Erwachsener rechts wie Synset-Bild ID 28 (KinderRechts); Alternative KinderLinks (136-20)."
+complementary--two-way-traffic--g2,zusatzzeichen,16,lower_sign,RichtungsangabeDurchPfeile7,1000-30,sicher,Zwei gegengerichtete waagerechte Pfeile; Variante 7 per HF-Bild verifiziert. Nicht in upper_sign.
+regulatory--maximum-speed-limit-30--g1,hauptschild,16,class_name,Geschwindigkeit30,274-53,sicher,Höchstgeschwindigkeit 30.
+regulatory--stop--g1,hauptschild,16,class_name,Stop,206,sicher,Halt. Vorfahrt gewähren.
+regulatory--maximum-speed-limit-70--g1,hauptschild,15,class_name,Geschwindigkeit70,274-57,sicher,Höchstgeschwindigkeit 70.
+regulatory--minimum-safe-distance--g1,hauptschild,15,class_name,VerbotUnterschreitenMindestabstand,273,sicher,"Mindestabstand (z. B. 50 m, Lkw-Symbol)."
+regulatory--maximum-speed-limit-50--g1,hauptschild,14,class_name,Geschwindigkeit50,274-55,sicher,Höchstgeschwindigkeit 50.
+regulatory--no-overtaking-by-heavy-goods-vehicles--g1,hauptschild,14,class_name,UeberholverbotKraftfahrzeuge,277,sicher,"Überholverbot für Kfz über 3,5 t; Label 10 = UeberholverbotKraftfahrzeuge über HF-Datensatzzeilen geprüft."
+information--parking--g1,hauptschild,12,class_name,Parken,314,sicher,Parkplatz.
+warning--slippery-road-surface--g1,hauptschild,12,class_name,SchleuderOderRutschgefahr,114,sicher,Schleuder- oder Rutschgefahr.
+regulatory--maximum-speed-limit-40--g1,hauptschild,11,class_name,Geschwindigkeit40,274-54,sicher,Höchstgeschwindigkeit 40.
+warning--steep-descent--g1,hauptschild,11,class_name,Gefaelle10,108-10,wahrscheinlich,"Gefälle; Synset nur 10 %, Ausschnitte zeigen 5-6 % (gleiches Zeichen, anderer Zahlenwert)."
+complementary--buses--g1,zusatzzeichen,10,lower_sign,HinweisDurchSinnbild13,1010-57,wahrscheinlich,Bus-Sinnbild (unter Parkschild) = Synset-Bild 746; Variantennummer aus Website-Reihenfolge abgeleitet. Nicht in upper_sign.
+complementary--two-way-traffic--g3,zusatzzeichen,10,lower_sign,RichtungsangabeDurchPfeile8,1000-31,sicher,Zwei gegengerichtete senkrechte Pfeile; Variante 8 per HF-Bild verifiziert. Nicht in upper_sign.
+information--pedestrians-crossing--g1,hauptschild,10,class_name,FussgaengerueberwegRechts,350-10,wahrscheinlich,"Fußgängerüberweg (blau). Achtung: der Synset-Name FussgaengerueberwegRechts umfasst zwei Klassen (ID 58 Gefahrzeichen 101-11 und ID 152 Richtzeichen 350-10, daher 800 Bilder); Alternative FussgaengerueberwegLinks."
+information--motorway--g1,hauptschild,9,class_name,Autobahn,330.1,sicher,Autobahn.
+regulatory--no-heavy-goods-vehicles--g1,hauptschild,9,class_name,VerbotFuerKraftfahrzeugeUeberDreiKommaFuenfTonnen,253,sicher,"Verbot für Kfz über 3,5 t (Lkw-Symbol)."
+regulatory--no-parking--g1,hauptschild,9,class_name,EingeschraenktesHalteverbot,286,sicher,Eingeschränktes Haltverbot.
+regulatory--weight-limit--g1,hauptschild,9,class_name,TatsaechlicheMasse,262,sicher,"Gewichtsbeschränkung; Zahlenwert variiert (7,5 t/24 t)."
+regulatory--dual-path-bicycles-and-pedestrians--g1,hauptschild,8,class_name,GetrennterRadUndGehwegRadwegLinks,241-30,sicher,"Getrennter Rad-/Gehweg, Fahrrad links (Bilder geprüft) = Synset-Bild ID 89."
+regulatory--maximum-speed-limit-60--g1,hauptschild,8,class_name,Geschwindigkeit60,274-56,sicher,Höchstgeschwindigkeit 60.
+regulatory--roundabout--g1,hauptschild,8,class_name,Kreisverkehr,215,sicher,Kreisverkehr.
+complementary--motorcycles--g2,zusatzzeichen,7,lower_sign,HinweisDurchSinnbild18,1010-62,wahrscheinlich,"Kraftrad-Sinnbild ohne ""frei"" = Synset-Bild 751; Variantennummer aus Website-Reihenfolge abgeleitet; Alternative EinspurigeFahrzeugeFrei3 (Krafträder frei). Nicht in upper_sign."
+complementary--tow-away-zone--g1,zusatzzeichen,7,-,,,kein_gegenstueck,Abschlepp-Hinweisschild (kein amtliches StVO-Zusatzzeichen); nicht in Synset.
+complementary--trams--g1,zusatzzeichen,7,-,,1010-56,kein_gegenstueck,"Straßenbahn-Sinnbild ohne ""frei"" entspräche Synset-Bild 745 (HinweisDurchSinnbild12), dieser Wert kommt im Trainingssplit aber nicht vor (fehlt in synset_label_werte.json). Optisch nächstes vorhandenes Pendant: MehrspurigeFahrzeugeFrei7 (Straßenbahn frei)."
+complementary--except-trucks--g1,zusatzzeichen,6,lower_sign,MehrspurigeFahrzeugeFrei3,1024-12,unsicher,"Mapillary-Bedeutung ""Lkw frei"" = Synset-Bild 778; die Ausschnitte zeigen jedoch Lkw-Sinnbild mit Text ""herunterschalten"" (dann eher HinweisDurchSinnbild7). Nicht in upper_sign."
+complementary--priority-route-at-intersection--g2,zusatzzeichen,6,lower_sign,VerlaufVorfahrtsstrasse9,1002-22,wahrscheinlich,"Einmündung: 4/6 Ausschnitte von unten nach rechts mit Einmündung von links (Synset-Bild 190 = Variante 9), 2/6 von links nach unten (Variante 6). Zählung über Label 182 = VerlaufVorfahrtsstrasse1 geprüft. Auch als class_name vorhanden, nicht in upper_sign."
+regulatory--no-bicycles--g1,hauptschild,6,class_name,VerbotRadverkehr,254,sicher,Verbot für Radverkehr.
+regulatory--road-closed-to-vehicles--g3,hauptschild,6,class_name,VerbotFahrzeugeAllerArt,250,sicher,Leerer roter Ring = Verbot für Fahrzeuge aller Art.
+warning--wild-animals--g6,hauptschild,6,class_name,WildwechselLinks,142-20,wahrscheinlich,Grafikvariante von wild-animals; Ausschnitte ebenfalls Kopf oben rechts; Alternative WildwechselRechts.
+complementary--bike-route--g1,zusatzzeichen,5,lower_sign,RichtungsangabeDurchPfeile9,1000-32,unsicher,"Gemischt: Fahrrad mit waagerechten Gegenpfeilen (= RichtungsangabeDurchPfeile9, verifiziert), Fahrrad mit senkrechten Pfeilen (1000-33, nicht in Synset) und Fahrrad mit weiterem Symbol. RichtungsangabeDurchPfeile9 existiert auch in upper_sign. Alternative HinweisDurchSinnbild8 (nur Fahrrad)."
+complementary--except-polluting-level-green--g1,zusatzzeichen,5,lower_sign,FreistellungVomVerkehrsverbot3,1031-52,wahrscheinlich,"Grüne Plakette + ""frei"" = Synset-Bild 806; Variantennummer aus Website-Reihenfolge abgeleitet. Nicht in upper_sign."
+complementary--priority-route-at-intersection--g1,zusatzzeichen,5,lower_sign,VerlaufVorfahrtsstrasse1,1002-10,unsicher,"Kreuzung (4 Arme), Verlauf variiert: 2/5 von unten nach links (Variante 1), 2/5 von oben nach links (Variante 2), 1/5 von unten nach rechts (Variante 3). Der Mapillary-Wert ist richtungsunabhängig. Auch als class_name vorhanden, nicht in upper_sign."
+complementary--vehicles--g1,zusatzzeichen,5,lower_sign,HinweisDurchSinnbild14,1010-58,wahrscheinlich,Pkw-Seitenansicht (unter Parkschild) = Synset-Bild 747; Variante 14 per HF-Bild plausibel (Pkw-Dach sichtbar). Alternative HinweisDurchSinnbild6 (Pkw-Front). Nicht in upper_sign.
+information--bus-stop--g1,hauptschild,5,class_name,Haltestelle,224,sicher,Haltestelle (grün-gelbes H).
+information--dead-end--g1,hauptschild,5,class_name,Sackgasse,357,sicher,Sackgasse.
+regulatory--bicycles-only--g1,hauptschild,5,class_name,Radweg,237,sicher,Sonderweg Radverkehr.
+regulatory--speed-limit-zone--g1,hauptschild,5,class_name,BeginnZone30,274.1,wahrscheinlich,Tempo-30-Zone; 2 von 4 Ausschnitten zeigen aber Z. 274 (30) mit Zusatz 7-20h (Mapillary-Fehllabel); Alternative BeginnZone20.
+complementary--when-wet--g1,zusatzzeichen,4,lower_sign,BeiNaesse,1053-35,sicher,"""bei Nässe"" (teils mit Sinnbild); BeiNaesse in lower_sign und class_name, nicht in upper_sign."
+regulatory--end-of-speed-limit-zone--g1,hauptschild,4,class_name,EndeZone30,274.2,sicher,Ende Tempo-30-Zone (Bilder geprüft).
+regulatory--maximum-speed-limit-100--g1,hauptschild,4,class_name,Geschwindigkeit100,274-60,sicher,Höchstgeschwindigkeit 100.
+regulatory--turn-right-ahead--g1,hauptschild,4,class_name,VorgeschriebeneFahrtrichtungRechts,209-20,sicher,"Gebogener Pfeil rechts (Bilder geprüft) = Synset-Bild ID 33, nicht ""hier rechts"" (211)."
+regulatory--width-limit--g1,hauptschild,4,class_name,TatsaechlicheBreite2,264,wahrscheinlich,"Breitenbeschränkung (Bild: 2,1 m); Synset hat zwei Varianten: TatsaechlicheBreite2 (2 m) und TatsaechlicheBreite2Komma3 (2,3 m)."
+warning--double-curve-first-left--g1,hauptschild,4,class_name,DoppelkurveZunaechstLinks,105-10,sicher,Doppelkurve zunächst links.
+complementary--disabled-persons--g1,zusatzzeichen,3,lower_sign,Personengruppen1,1044-10,wahrscheinlich,"Rollstuhl-Sinnbild = Synset-Bild 819 (einzige Variante der Gruppe); Ausschnitte teils mit Text ""mit Parkausweis Nr."" (1044-11). Nicht in upper_sign."
+complementary--priority-route-at-intersection--g3,zusatzzeichen,3,lower_sign,VerlaufVorfahrtsstrasse5,1002-12,sicher,"Alle 3 Ausschnitte: von links nach unten, Einmündung von oben = Synset-Bild 186 (Variante 5). Auch als class_name vorhanden, nicht in upper_sign."
+regulatory--go-straight-or-turn-left--g1,hauptschild,3,class_name,VorgeschriebeneFahrtrichtungGeradeausOderLinks,214-10,sicher,Geradeaus oder links.
+regulatory--no-pedestrians--g1,hauptschild,3,class_name,VerbotFussgaenger,259,sicher,Verbot für Fußgänger.
+warning--pedestrians-crossing--g1,hauptschild,3,class_name,FussgaengerueberwegRechts,101-11,wahrscheinlich,Gefahrzeichen Fußgängerüberweg; der Synset-Name umfasst Gefahrzeichen (ID 58) und Richtzeichen (ID 152) gemeinsam; Alternative FussgaengerueberwegLinks.
+warning--road-narrows--g1,hauptschild,3,class_name,VerengteFahrbahn,120,sicher,Beidseitig verengte Fahrbahn.
+complementary--accident-area--g2,zusatzzeichen,2,-,,1006-31,kein_gegenstueck,"Unfall-Sinnbild; die Gruppe ""Hinweise auf Gefahren durch Sinnbild"" kommt im Trainingssplit nicht als lower_sign vor. Nur verbal ""Unfall"" (HinweiseAufGefahrenDurchVerbaleAngabe8) vorhanden, optisch verschieden."
+complementary--except-trams--g1,zusatzzeichen,2,lower_sign,MehrspurigeFahrzeugeFrei7,1024-16,wahrscheinlich,"Straßenbahn + ""frei"" = Synset-Bild 782; Variantennummer aus Website-Reihenfolge abgeleitet. Nicht in upper_sign."
+complementary--pedestrians-left--g1,zusatzzeichen,2,lower_sign,RichtungsangabeDurchPfeile3,1000-12,sicher,Fußgänger mit Pfeil links; Variante 3 per HF-Bild verifiziert. Nicht in upper_sign.
+complementary--pedestrians-right--g1,zusatzzeichen,2,lower_sign,RichtungsangabeDurchPfeile6,1000-22,sicher,Fußgänger mit Pfeil rechts (Gehweg gegenüber benutzen); Variante 6 per HF-Bild verifiziert. Nicht in upper_sign.
+complementary--soft-shoulder--g1,zusatzzeichen,2,-,,1007-60,kein_gegenstueck,"Sinnbild ""Seitenstreifen nicht befahrbar"" (kippender Pkw); Synset hat dieses Sinnbild nicht."
+complementary--trees--g1,zusatzzeichen,2,-,,,kein_gegenstueck,Sinnbild Baum/Lkw (Gefahr durch Bäume); nicht in Synset.
+information--end-of-motorway--g1,hauptschild,2,class_name,EndeAutbahn,330.2,sicher,"Ende der Autobahn (Synset-Schreibweise ""EndeAutbahn"")."
+information--limited-access-road--g1,hauptschild,2,class_name,Kraftfahrstrasse,331.1,sicher,Kraftfahrstraße (Pkw-Front auf Blau).
+information--minimum-speed-40--g1,hauptschild,2,class_name,VorgeschriebeneMindestgeschwindigkeit,275,wahrscheinlich,"Mindestgeschwindigkeit; Synset zeigt 30, Ausschnitte 40."
+information--motorway-exit-ahead--g2,hauptschild,2,-,,450,kein_gegenstueck,Ankündigungsbake (200 m mit Schrägbalken); nicht in Synset.
+information--parking--g5,hauptschild,2,class_name,Parken,314,wahrscheinlich,Parkschild-Variante (P mit Pfeil/Parkleittafel bzw. P mit Zusatzzeichen); Parkhaus nur bei Dachsymbol.
+regulatory--dual-path-pedestrians-and-bicycles--g1,hauptschild,2,class_name,GetrennterRadUndGehwegRadwegRechts,241-31,sicher,"Getrennter Geh-/Radweg, Fahrrad rechts (Bilder geprüft) = Synset-Bild ID 90."
+regulatory--go-straight--g3,hauptschild,2,-,,,kein_gegenstueck,Ausschnitte zeigen Fahrstreifentafel mit zwei gebogenen Pfeilen und Breitenzeichen; kein Synset-Gegenstück.
+regulatory--keep-left--g1,hauptschild,2,class_name,VorgeschriebeneVorbeifahrtLinks,222-20,sicher,Links vorbei.
+regulatory--maximum-speed-limit-80--g1,hauptschild,2,class_name,Geschwindigkeit80,274-58,sicher,Höchstgeschwindigkeit 80.
+regulatory--no-motor-vehicles--g1,hauptschild,2,class_name,VerbotKraftfahrzeuge,260,sicher,Motorrad über Pkw = Z. 260 Verbot für Kraftfahrzeuge (nicht VerbotKraftwagen 251).
+regulatory--one-way-left--g1,hauptschild,2,class_name,EinbahnstrasseLinksweisend,220-10,sicher,Einbahnstraße linksweisend.
+regulatory--texts-three-lines--g1,hauptschild,2,-,,,kein_gegenstueck,"Freies Textschild (Ausschnitte: ""fehlende Fahrbahnmarkierung"", ""Baustellenfahrzeuge kreuzen""), kein Hauptschild. Der Einzelfall ""fehlende Fahrbahnmarkierung"" entspräche lower_sign HinweiseAufGefahrenDurchVerbaleAngabe7, der Mapillary-Wert ist aber generisch."
+warning--crossroads--g1,hauptschild,2,class_name,Vorfahrt,301,wahrscheinlich,"Beide Ausschnitte zeigen Z. 301 (Vorfahrt an der nächsten Kreuzung), nicht das X von Z. 102; daher Vorfahrt. Alternative bei anderer Bildlage: KreuzungOderEinmuendung."
+warning--crossroads-with-priority-to-the-right--g1,hauptschild,2,class_name,KreuzungOderEinmuendung,102,sicher,Kreuzung mit Vorfahrt von rechts (X).
+warning--curve-right--g1,hauptschild,2,class_name,KurveRechts,103-20,sicher,Kurve rechts.
+warning--double-curve-first-right--g1,hauptschild,2,class_name,DoppelkurveRechts,105-20,sicher,Doppelkurve zunächst rechts (Synset-ID 49).
+warning--icy-road--g1,hauptschild,2,class_name,SchneeOderEisglaette,101-51,sicher,Schnee- oder Eisglätte.
+warning--road-narrows-right--g1,hauptschild,2,class_name,EinseitigVerengteFahrbahnRechts,121-10,sicher,Einseitig verengte Fahrbahn rechts.
+warning--steep-ascent--g1,hauptschild,2,class_name,Steigung10,110-10,wahrscheinlich,"Steigung; Synset nur 10 %, Ausschnitte zeigen 15 %."
+warning--traffic-signals--g1,hauptschild,2,class_name,Lichtzeichenanlage,131,sicher,Lichtzeichenanlage.
+complementary--both-directions--g2,zusatzzeichen,1,lower_sign,RichtungsangabeDurchPfeile7,1000-30,unsicher,"Einzelausschnitt mit Doppelpfeil in einer Zeile; nächstes Synset-Pendant sind gegengerichtete waagerechte Pfeile (Variante 7, zweizeilig)."
+complementary--priority-route-at-intersection--g4,zusatzzeichen,1,lower_sign,VerlaufVorfahrtsstrasse10,1002-24,sicher,"Von oben nach rechts, Einmündung von unten = Synset-Bild 191 (Variante 10). Einzelausschnitt."
+complementary--when-snowy--g1,zusatzzeichen,1,-,,,kein_gegenstueck,"Sinnbild ""bei Schnee/Glätte""; kein Synset-Pendant."
+information--dead-end-except-bicycles-and-pedestrians--g1,hauptschild,1,class_name,SackgasseRadverkehrFussgaengerDurchlaessig,357-50,sicher,Für Rad- und Fußverkehr durchlässige Sackgasse.
+information--motorway-exit-ahead--g3,hauptschild,1,-,,,kein_gegenstueck,Ausschnitt zeigt eine blaue Text-/Wegweisertafel; nicht in Synset.
+regulatory--end-of-no-parking--g1,hauptschild,1,class_name,EndeEingeschraenktesHalteverbotZone,290.2,unsicher,Nach Mapillary-Bedeutung Ende eines eingeschränkten Haltverbots (Zone); der einzige Ausschnitt zeigt aber ein Umweltzonen-Schild mit Zusatz (Fehllabel).
+regulatory--go-straight-or-turn-right--g1,hauptschild,1,class_name,VorgeschriebeneFahrtrichtungGeradeausOderRechts,214,sicher,Geradeaus oder rechts.
+regulatory--motorcycles-and-bicycles-only--g1,hauptschild,1,-,,,kein_gegenstueck,Mapillary-Klasse ohne deutsches StVO-Zeichen; einziger Ausschnitt unscharf (blaues Rundschild).
+regulatory--no-parking-or-no-stopping--g3,hauptschild,1,-,,,kein_gegenstueck,"Einziger Ausschnitt zeigt ein Werbeschild (Supermarkt, 7-22), Fehllabel; kein Verkehrszeichen."
+regulatory--no-vehicles-carrying-dangerous-water-pollutants--g1,hauptschild,1,class_name,VerbotFahrzeugeWassergefaehrdenderLadung,269,sicher,Verbot für Fahrzeuge mit wassergefährdender Ladung.
+regulatory--one-way-right--g1,hauptschild,1,class_name,EinbahnstrasseRechtsweisend,220-20,sicher,Einbahnstraße rechtsweisend.
+regulatory--texts-one-line--g1,hauptschild,1,-,,,kein_gegenstueck,"Freies Textschild (Ausschnitt: ""6-19h"", eigentlich Zeit-Zusatzzeichen 1040); die Synset-Zeitangaben haben andere Texte."
+regulatory--texts-two-lines--g1,hauptschild,1,-,,,kein_gegenstueck,"Freies Textschild (""Nur Ein/Ausstieg""); nicht in Synset."
+regulatory--turn-left-ahead--g1,hauptschild,1,class_name,VorgeschriebeneFahrtrichtungLinks,209-10,sicher,Gebogener Pfeil links.
+warning--falling-rocks-or-debris-right--g1,hauptschild,1,class_name,SteinschlagRechts,101-15,sicher,"Steinschlag, Hang rechts (Bild geprüft) = Synset-Bild ID 66."
+warning--limited-lighting-under-trees--g1,hauptschild,1,-,,,kein_gegenstueck,Kein StVO-Zeichen; der Ausschnitt ähnelt eher einer Doppelkurve (vermutlich Fehllabel).
+warning--pedestrians-crossing--g5,hauptschild,1,class_name,FussgaengerueberwegRechts,101-11,unsicher,"Unscharfer Einzelausschnitt; Grafikvariante g5 zeigt evtl. nur einen Fußgänger (Z. 133, dann FussgaengerRechts)."

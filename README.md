@@ -1,870 +1,211 @@
-# Traffic Sign Recognition System (GTSRB)
+# Kontexterkennung von Schildkombinationen
 
-🎯 **A Deep Convolutional Neural Network for classifying 43 types of German traffic signs, with an ONNX-based live demo for video and webcam on a CPU-only Windows laptop.**
+**Haupt- und Zusatzzeichen mit Multi-Task-Lernen aus synthetischen und echten Daten, geprüft an Straßenfotos aus NRW.**
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+Projekt im Modul *Deep Learning Applications in Computer Vision* (DLACV), FH Aachen, Fachbereich 5, Wintersemester 2026/27.
 
-## 🌟 Goal
+Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholverbot“ plus „LKW, Bus, PKW mit Anhänger“ gilt nur für diese Fahrzeuge, „Gehweg“ plus „Radfahrer frei“ erlaubt auch das Radfahren. Bekannte Benchmarks wie GTSRB enthalten nur das Hauptschild. Dieses Projekt erkennt die ganze Kombination und leitet daraus ab, für welche Zielgruppe (LKW, PKW, Bus, Fahrrad, Fußgänger …) die Regel gilt.
 
-**99.36% accuracy on the official GTSRB test set** (target ≥ 98%) and **17 ms per sign on a laptop CPU** via ONNX Runtime (target < 20 ms). Details under [Results](#results).
+**Forschungsfrage:** Wie viele echte Bilder braucht ein auf synthetischen Daten trainiertes Multi-Task-Modell, um Zusatzzeichen und Zielgruppen auf echten Fotos zu erkennen? Startpunkt der Lernkurve sind null echte Bilder, also das, was Synset allein leistet.
 
 ---
 
-## 📋 Table of Contents
+## Stand (20.11.2026)
 
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Dataset](#dataset)
-- [Key Features](#key-features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [🗺️ Complete Workflow Guide (Beginners Start Here)](#️-complete-workflow-guide-beginners-start-here)
-- [Project Structure](#project-structure)
-- [Model Architecture](#model-architecture)
-- [Training](#training)
-- [Evaluation](#evaluation)
-- [ONNX Export](#onnx-export)
-- [Results](#results)
-- [Future Work](#future-work)
-
----
-
-## 🎯 Overview
-
-This project implements a state-of-the-art traffic sign recognition system using deep learning. In an autonomous driving context, this system serves as the primary classification engine for traffic sign recognition modules.
-
-The model is trained on the **German Traffic Sign Recognition Benchmark (GTSRB)**, which contains 43 different traffic sign classes with varying lighting conditions, motion blur, and low-resolution images.
-
----
-
-## 🛠 Tech Stack
-
-- **Language**: Python 3.8+
-- **Deep Learning**: PyTorch 2.0+ / Torchvision
-- **Computer Vision**: OpenCV (preprocessing & augmentation)
-- **Data Analysis**: Pandas, NumPy, Matplotlib, Seaborn
-- **Deployment**: ONNX / ONNX Runtime
-- **Logging**: TensorBoard
-
----
-
-## 📊 Dataset
-
-The **German Traffic Sign Recognition Benchmark (GTSRB)** is a multi-class, single-image classification challenge.
-
-- **Classes**: 43 (Speed limits, Yield, Warning signs, etc.)
-- **Training Set**: ~39,209 images
-- **Test Set**: 12,630 images
-- **Image Size**: Variable (15x15 to 250x250 pixels)
-- **Challenges**: Varying lighting, motion blur, low resolution
-
-**Dataset Source**: [GTSRB Official Website](https://benchmark.ini.rub.de/)
-
----
-
-## 🚀 Key Features & ADAS Optimizations
-
-### Advanced Preprocessing
-- **CLAHE (Contrast Limited Adaptive Histogram Equalization)**: Handles extreme lighting conditions (overexposed or nighttime images)
-- **Adaptive Resizing**: Standardizes images to 48x48 pixels for optimal speed/accuracy tradeoff
-
-### Data Augmentation
-Simulates real-world vehicle camera conditions:
-- Random rotation (±15°) - camera angle variations
-- Random translation (±10%) - vibration and movement
-- Random scaling (0.9-1.1x) - distance variations
-- Color jitter - lighting variations
-- Gaussian noise - sensor noise simulation
-
-### Model Architecture
-- **Custom ResNet-18** optimized for small 48x48 images
-- Modified first conv layer (3x3 instead of 7x7)
-- Removed maxpool to preserve spatial information
-- Batch Normalization for stable training
-- Dropout (0.5) to prevent overfitting
-
-### Training Optimizations
-- **Mixed Precision Training (AMP)** for faster training
-- **Label Smoothing** to improve generalization
-- **Learning Rate Scheduling** (ReduceLROnPlateau)
-- **Early Stopping** to prevent overfitting
-- **TensorBoard Logging** for real-time monitoring
-
-### Deployment Ready
-- **ONNX Export** for cross-platform deployment
-- **Optimized Inference** (~4ms per image on GPU)
-- **Batch Processing** support for video streams
-
----
-
-## 📦 Installation
-
-### Prerequisites
-
-Before you begin, make sure you have the following installed:
-
-- **Python 3.8+** — [Download here](https://www.python.org/downloads/)
-- **pip** — Comes with Python (run `pip --version` to verify)
-- **Git** — [Download here](https://git-scm.com/)
-- **~6 GB of free disk space** — 1 GB for the GTSRB dataset (~50K images) + space for models and outputs
-- **NVIDIA GPU (optional but strongly recommended)** — Training on CPU alone takes 20–30 hours
-
-### 1. Clone the Repository
-
-```bash
-git clone <your-repo-url>
-cd "Traffic Sign Recognition System (GTSRB)"
-```
-
-### 2. Create a Virtual Environment
-
-A virtual environment keeps this project's dependencies isolated from other Python projects on your machine.
-
-```bash
-# Windows
-python -m venv venv
-venv\Scripts\activate
-
-# Linux / macOS
-python3 -m venv venv
-source venv/bin/activate
-```
-
-> You should now see `(venv)` at the start of your terminal prompt — this confirms the environment is active.
-
-### 3. Install Dependencies
-
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-This installs PyTorch, OpenCV, ONNX, TensorBoard, and all other required packages listed in `requirements.txt`.
-
-### 4. Download Dataset
-
-The dataset downloads **automatically** on first training run. Alternatively, you can pre-download it:
-
-```bash
-python src/utils/download_dataset.py --data_dir data/raw
-```
-
-> The GTSRB dataset will be saved to `data/raw/GTSRB/`. If the automatic download fails (e.g. firewall), see the Troubleshooting section below.
-
----
-
-## ⚡ Quick Start
-
-### 1. Train the Model
-
-```bash
-python train.py --config configs/config.yaml
-```
-
-Training will automatically:
-- Download the GTSRB dataset (if not already present)
-- Create train/validation splits
-- Train the model with mixed precision
-- Save the best model checkpoint
-- Generate training curves
-
-**Expected Training Time**:
-- GPU (NVIDIA RTX 3080): ~2-3 hours
-- CPU: ~20-30 hours
-
-### 2. Evaluate the Model
-
-```bash
-python evaluate.py --save_cm --benchmark
-```
-
-This will:
-- Evaluate the model on the test set
-- Generate confusion matrix
-- Show per-class accuracy
-- Benchmark inference speed
-
-### 3. Export to ONNX
-
-```bash
-python export_onnx.py --verify --benchmark
-```
-
-This will:
-- Export the model to ONNX format
-- Verify outputs match PyTorch
-- Benchmark ONNX inference speed
-
----
-
-## 🗺️ Complete Workflow Guide (Beginners Start Here)
-
-This section walks you through the **entire machine learning pipeline** step by step — from raw data to a deployed model — explaining the purpose and inner workings of each stage.
-
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                    END-TO-END PROJECT WORKFLOW                          │
-│                                                                         │
-│  Raw Images  →  Preprocessing  →  Augmentation  →  Model Training      │
-│       ↓                                                    ↓            │
-│  GTSRB Dataset        CLAHE + Resize               ResNet-18 (custom)   │
-│  (51,839 images)      (48×48 px)                   ~11M parameters      │
-│                                                            ↓            │
-│                                      ┌─────────────────────────────┐   │
-│                                      │  Checkpoint saved if best   │   │
-│                                      │  (models/checkpoints/)      │   │
-│                                      └─────────────────────────────┘   │
-│                                                            ↓            │
-│                       Evaluation  →  ONNX Export  →  Deployment        │
-│                       (98.5% acc)    (gtsrb.onnx)    (~4ms/frame)      │
-└─────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-### Stage 1 — Environment Setup
-
-**What happens**: You create an isolated Python environment and install all required libraries.
-
-**Why it matters**: Isolating dependencies prevents version conflicts with other Python projects. All packages (PyTorch, OpenCV, etc.) and their exact minimum versions are pinned in `requirements.txt`.
-
-```bash
-# Step 1: Create and activate virtual environment
-python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Linux/macOS
-
-# Step 2: Install all packages
-pip install --upgrade pip
-pip install -r requirements.txt
-
-# Step 3: Verify GPU is available (optional but recommended)
-python -c "import torch; print('CUDA available:', torch.cuda.is_available())"
-```
-
-**Expected output:**
-```
-CUDA available: True   ✅  (GPU training, ~2-3 hours)
-CUDA available: False  ⚠️  (CPU training, ~20-30 hours)
-```
-
----
-
-### Stage 2 — Dataset Acquisition
-
-**What happens**: The GTSRB (German Traffic Sign Recognition Benchmark) dataset is downloaded and organized into folders.
-
-**Why it matters**: The dataset contains ~51,839 images across 43 traffic sign classes under realistic conditions: varying brightness, motion blur, low resolution (15×15 to 250×250 px), and partial occlusion.
-
-```bash
-# Automatic (happens on first train.py run) — recommended
-python train.py
-
-# Manual download (if automatic fails)
-python src/utils/download_dataset.py --data_dir data/raw
-```
-
-**Dataset split** (configured in `configs/config.yaml`):
-
-| Split      | Source                                   | Purpose                          |
-|------------|------------------------------------------|----------------------------------|
-| Training   | 90% of the GTSRB training *tracks*       | Update model weights each epoch  |
-| Validation | 10% of the GTSRB training *tracks*       | Model selection, early stopping  |
-| Test       | Official GTSRB `Final_Test` (12,630 img) | Final unbiased accuracy report   |
-
-GTSRB stores ~30 frames of the same physical sign per *track* (`<track>_<frame>.ppm`). The split is done per track, so near-identical frames never appear in both training and validation (a random per-image split would inflate validation accuracy).
-
-> **Beginner tip**: Never use test data during training. The test set is a "locked box" you open only once — at the very end — to get an honest accuracy number.
-
-**Output location**: `data/raw/GTSRB/`
-
----
-
-### Stage 3 — Image Preprocessing (`src/data/preprocessing.py`)
-
-**What happens**: Every raw image is normalized to the same scale and lighting conditions before being fed to the model.
-
-**Why it matters**: Raw traffic sign photos come in wildly different sizes (15×15 to 250×250) and lighting conditions. The model needs consistent, well-lit inputs.
-
-Two preprocessing steps are applied:
-
-#### CLAHE — Contrast Limited Adaptive Histogram Equalization
-
-CLAHE is applied to the L (Lightness) channel in LAB color space. It locally boosts contrast in dark areas while preventing over-brightening of areas that are already bright.
-
-**Before CLAHE**: Sign barely visible in shadow.
-**After CLAHE**: Sign edges and colors clearly defined.
-
-```python
-# Configured in configs/config.yaml:
-augmentation:
-  apply_clahe: true   # Enable/disable CLAHE globally
-```
-
-#### Adaptive Resizing to 48×48
-
-All images are bicubically downsampled (or upsampled) to **48×48 pixels** using `cv2.INTER_AREA` interpolation, which minimizes aliasing artifacts during downscaling. This balances:
-- **Speed**: Smaller images = faster training and inference
-- **Accuracy**: 48×48 retains enough detail for 43-class classification
-
----
-
-### Stage 4 — Data Augmentation (`src/data/augmentation.py`)
-
-**What happens**: Each training image is randomly transformed on-the-fly during every epoch. This creates artificial variation in the data.
-
-**Why it matters**: A model trained only on "perfect" images will fail in real-world conditions. Augmentation teaches it to be robust.
-
-| Augmentation Technique | Range           | Simulates                              |
-|------------------------|-----------------|----------------------------------------|
-| `RandomRotation`       | ±15°            | Camera mounted at an angle             |
-| `RandomTranslation`    | ±10%            | Camera vibration / bumpy road          |
-| `RandomScale`          | 0.9× – 1.1×     | Sign at different distances            |
-| `ColorJitter`          | ±20% brightness | Varying sunlight / shadow              |
-| `GaussianNoise`        | std=0.01        | Image sensor electronic noise          |
-
-> **Augmentation only applies to training data.** Validation and test images are passed through unchanged (only resized and normalized) so your accuracy numbers are realistic.
-
-All augmentation parameters can be tuned in `configs/config.yaml` under the `augmentation` key.
-
----
-
-### Stage 5 — Model Architecture (`src/models/resnet_gtsrb.py`)
-
-**What happens**: A modified ResNet-18 is instantiated with ~11M trainable parameters and adapted for 48×48 images.
-
-**Why it matters**: Standard ResNet-18 was designed for 224×224 ImageNet images. Using it unchanged on 48×48 inputs would shrink feature maps to 1×1 after the first few layers, losing almost all spatial detail. This project makes two critical modifications:
-
-| Modification | Standard ResNet-18 | This Implementation |
-|---|---|---|
-| First conv kernel | 7×7, stride 2 | **3×3, stride 1** |
-| MaxPool after conv1 | Present | **Removed** |
-| Output classes | 1000 (ImageNet) | **43 (GTSRB)** |
-
-**Full forward pass:**
-
-```
-Input: (batch, 3, 48, 48)
-        ↓
-Conv2d 3×3 → BatchNorm → ReLU          # Fine-grained features on small input
-        ↓
-ResNet Layer 1  (64  channels, 48×48)   # Low-level edges and textures
-        ↓
-ResNet Layer 2  (128 channels, 24×24)   # Mid-level shapes
-        ↓
-ResNet Layer 3  (256 channels, 12×12)   # High-level patterns
-        ↓
-ResNet Layer 4  (512 channels,  6×6)    # Semantic features
-        ↓
-AdaptiveAvgPool2d → (512,)
-        ↓
-Dropout (p=0.5)                         # Regularization — prevents overfitting
-        ↓
-Linear (512 → 43)                       # One score per traffic sign class
-        ↓
-Output: (batch, 43) — raw logits
-```
-
-An alternative **LightweightCNN** (4 conv blocks) is also implemented in the same file for speed-critical deployments where 98.5% accuracy is not required.
-
----
-
-### Stage 6 — Training (`train.py` + `src/training/trainer.py`)
-
-**What happens**: The model iteratively processes training batches, computes loss, and adjusts weights via backpropagation over up to 50 epochs.
-
-#### Running Training
-
-```bash
-# Default configuration
-python train.py
-
-# Custom configuration file
-python train.py --config configs/config.yaml
-```
-
-#### What the Trainer does each epoch
-
-1. **Forward Pass** — Images flow through the network, producing class scores (logits).
-2. **Loss Computation** — Cross-Entropy Loss with *Label Smoothing* (`label_smoothing: 0.1`) measures how wrong the predictions are. Label smoothing prevents the model from becoming overconfident.
-3. **Backward Pass** — Gradients flow back through the network using `loss.backward()`.
-4. **Weight Update** — Adam optimizer adjusts each weight by a small step in the direction that reduces loss.
-5. **Validation** — After each epoch, the model is evaluated on the validation set (no weight changes, no augmentation).
-6. **Checkpointing** — If `val_accuracy` improves, the model is saved to `models/checkpoints/best_model.pth`.
-7. **LR Scheduling** — If validation accuracy stops improving for 5 consecutive epochs (`patience: 5`), the learning rate is halved (`factor: 0.5`), allowing finer weight adjustments.
-8. **Early Stopping** — Training stops automatically if no improvement is seen for 10 consecutive epochs (`patience: 10`), avoiding wasted compute and overfitting.
-
-#### Key Training Hyperparameters (in `configs/config.yaml`)
-
-```yaml
-training:
-  batch_size: 128       # Images processed per weight update
-  num_epochs: 50        # Maximum number of full dataset passes
-  learning_rate: 0.001  # Initial step size for weight updates
-  weight_decay: 0.0001  # L2 regularization to combat overfitting
-
-optimizer:
-  type: "adam"          # Adam adapts learning rate per parameter
-
-scheduler:
-  type: "reduce_on_plateau"
-  patience: 5           # Epochs to wait before halving LR
-  factor: 0.5           # LR multiplier on plateau
-  min_lr: 0.00001       # Minimum learning rate clamp
-
-early_stopping:
-  patience: 10          # Stop if no improvement for 10 epochs
-  min_delta: 0.001      # Min improvement to count as "better"
-
-mixed_precision:
-  enabled: true         # FP16 training for 2x GPU speed boost
-```
-
-> **Beginner tip — what if training is too slow?** If you don't have a GPU, you have two options:
-> 1. **Google Colab** (free): Upload the project to Google Drive, open a Colab notebook, enable GPU runtime (Runtime → Change runtime type → T4 GPU), and run the commands there.
-> 2. **Reduce batch size**: Lower `batch_size` to `32` if you get out-of-memory errors on a weak GPU.
-
-#### Expected Training Output
-
-```
-================================================================================
-Device: cuda
-GPU: NVIDIA GeForce RTX 3080
-================================================================================
-
-Loading dataset...
-✅ Dataset loaded successfully
-   Training samples: ~35,300
-   Validation samples: ~3,900
-   Test samples:       12,630
-
-Creating model...
-Model: resnet18
-Total parameters: 11,181,611
-Device: cuda
-
-================================================================================
-Starting Training
-================================================================================
-Epoch 1/50 [Train]: 100%|████████████| 245/245 [00:43<00:00, loss=1.2341]
-Epoch 1/50 [Val]:   100%|████████████|  31/31  [00:03<00:00]
-Epoch 1/50:
-  Train Loss: 1.2341 | Train Acc: 0.6823
-  Val Loss:   0.8902 | Val Acc:   0.8014
-  Learning Rate: 0.001000
-✅ Best model saved with validation accuracy: 0.8014
-...
-Epoch 38/50:
-  Train Loss: 0.0421 | Train Acc: 0.9901
-  Val Loss:   0.0389 | Val Acc:   0.9851
-✅ Best model saved with validation accuracy: 0.9851
-⚠️  Early stopping triggered after 48 epochs
-
-Training Complete!
-Total time: 142.37 minutes
-Best validation accuracy: 0.9854
-```
-
----
-
-### Stage 7 — Monitoring Training with TensorBoard
-
-**What happens**: Training metrics are streamed in real time to TensorBoard, a browser-based dashboard.
-
-**Why it matters**: Watching the loss and accuracy curves helps you spot problems early — e.g., if validation accuracy diverges from training accuracy (overfitting).
-
-```bash
-# Open a second terminal (keep training running in the first)
-tensorboard --logdir results/tensorboard
-```
-
-Then open your browser at **http://localhost:6006**
-
-You will see interactive graphs for:
-- `Loss/train` and `Loss/val` — should both decrease and stay close
-- `Accuracy/train` and `Accuracy/val` — should both increase
-- `LR` — shows when the learning rate scheduler fired
-
-> **Beginner tip**: If `Accuracy/train` is high but `Accuracy/val` is much lower, the model is **overfitting** — memorizing training data instead of learning to generalize. Try increasing Dropout, reducing batch size, or adding more augmentation.
-
----
-
-### Stage 8 — Evaluation (`evaluate.py`)
-
-**What happens**: The saved best model is loaded and measured against the held-out test set. This is your "official" performance score.
-
-```bash
-# Basic accuracy report
-python evaluate.py
-
-# Full report: confusion matrix + speed benchmark
-python evaluate.py --save_cm --benchmark
-```
-
-#### What the Report Includes
-
-| Output | Description |
+| Baustein | Stand |
 |---|---|
-| Overall accuracy | Single number (target: **98.5%**) |
-| Precision / Recall / F1 | Per-class and macro-averaged |
-| Per-class accuracy table | See which signs are hardest to classify |
-| Confusion matrix | Saved to `results/confusion_matrix.png` |
-| Inference benchmark | Avg/min/max ms per image on your hardware |
-| Best/worst classes | Top 5 easiest and hardest sign types |
-
-#### Reading the Confusion Matrix
-
-The confusion matrix is a 43×43 grid. The brighter the diagonal, the better — it means the model correctly predicted the right class. Off-diagonal bright cells reveal systematic confusions (e.g., mistaking "Speed limit 30" for "Speed limit 50").
+| GTSRB-Baseline (ResNet-18, 43 Klassen) | fertig: 99,36 % auf dem GTSRB-Testset, 17 ms je Schild auf der Laptop-CPU ([Details](docs/gtsrb_baseline.md)) |
+| Synset-Stichprobe | fertig: Zusatzschild in 170 von 170 Bildern unten abgeschnitten (siehe [Daten](#daten)) |
+| Echte Fotos NRW (Test) | 654 Mapillary-Fotos, 385 Kombinationen ausgeschnitten, Testsatz (86) von Hand geprüft |
+| Echte Fotos Deutschland (Training) | gezielte Suche nach 15 Zusatzzeichen mit Zielgruppe in 66 Städten läuft |
+| Architektur A | Code fertig, Probelauf auf CPU erfolgreich; Training auf Colab steht aus |
+| E1 (Synset gegen GTSRB) | Code fertig, Probelauf erfolgreich; Lauf auf Colab steht aus |
+| E4 Lernkurve, Grad-CAM-Beispiele, Demo | offen |
+| Architektur B (U-Net, zweistufig) | optional (Ausblick); Code vorbereitet, Probelauf erfolgreich |
 
 ---
 
-### Stage 9 — ONNX Export (`export_onnx.py`)
+## Daten
 
-**What happens**: The trained PyTorch model is converted to the ONNX (Open Neural Network Exchange) format — a universal, hardware-agnostic model format.
+| Quelle | Inhalt | Rolle | Lizenz |
+|---|---|---|---|
+| [Synset Signset Germany](https://huggingface.co/datasets/FraunhoferIOSB/Synset-Signset-Germany) (Cycles) | 84.400 gerenderte Bilder, 211 Hauptschild-Klassen (209 verschiedene Namen), 20 % mit Schild darunter | Hauptschild und „Zusatzschild vorhanden?“ | CC BY 4.0 |
+| Mapillary, gezielte Suche in 66 deutschen Städten | bis 150 Fotos je Zusatzzeichen mit Zielgruppe | welches Zusatzzeichen | CC BY-SA 4.0 |
+| Mapillary, 21 Regionen in NRW | 654 Fotos | **Test:** Aachen, Eifel, Köln; übrige Regionen Training/Validierung | CC BY-SA 4.0 |
+| GTSRB | 51.800 echte Ausschnitte, 43 Klassen | Baseline, Vergleich synthetisch gegen echt beim Hauptschild | – |
 
-**Why it matters**: ONNX lets you run the model in production without needing PyTorch installed. ONNX Runtime achieves ~4ms inference per image on GPU vs. PyTorch's ~5ms, and runs on CPUs, edge devices, and cloud inference servers.
+**Warum echte Fotos fürs Zusatzzeichen?** Die Synset-Ausschnitte sind auf das Hauptschild zugeschnitten. In einer Stichprobe von 170 Bildern mit Zusatzschild war dieses jedes Mal am unteren Bildrand abgeschnitten; sichtbar ist im Median ein Streifen von 0,30 Hauptschildhöhen. Per Augenschein war das Zusatzzeichen nur in 9 von 42 Bildern erkennbar, bei Zusatzzeichen mit Zielgruppe in 1 von 16. Synset lehrt also, *ob* ein Zusatzschild da ist, kaum aber *welches*.
 
-```bash
-# Export + verify + benchmark in one command
-python export_onnx.py --verify --benchmark
+**Split nach Ort:** Ausschnitte aus Aachen, Eifel und Köln sind der feste Testsatz und kommen nie ins Training (auch nicht über die Deutschland-Suche). Das Modell wird an Bonn, Düsseldorf, Münster, Berlin, München und Hamburg ausgewählt, nie am Test. Dasselbe Schild steht oft auf mehreren Fotos, ein zufälliger Split würde den Test schönen.
 
-# Export to a custom path
-python export_onnx.py --output models/onnx/gtsrb_model.onnx
-```
+**Zuordnung Mapillary → Synset:** [`configs/mapillary_to_synset.csv`](configs/) ordnet 85 Mapillary-Hauptschilder und 31 Zusatzzeichen den Synset-Klassen zu, mit Sicherheitsstufe und Begründung je Zeile (lokal, wegen `*.csv` in `.gitignore`).
 
-`--verify` checks that the ONNX model produces numerically identical outputs to PyTorch (max difference < 1e-5). If this check fails, the export is invalid.
-
-#### Using the Exported ONNX Model
-
-```python
-import onnxruntime as ort
-import numpy as np
-import cv2
-
-# Load the exported model
-session = ort.InferenceSession('models/onnx/gtsrb_model.onnx')
-
-from src.data.preprocessing import preprocess_for_inference
-
-# Preprocess exactly like training: BGR->RGB, CLAHE on the full crop, resize, normalize
-img = preprocess_for_inference(cv2.imread('my_traffic_sign.jpg'))   # (1, 3, 48, 48)
-
-# Run inference
-outputs = session.run(None, {'input': img})
-logits = outputs[0] - outputs[0].max()                              # numerically stable softmax
-probabilities = np.exp(logits) / np.exp(logits).sum()
-predicted_class = int(np.argmax(probabilities))
-confidence = float(probabilities[0, predicted_class])
-
-print(f"Predicted class: {predicted_class}  |  Confidence: {confidence:.2%}")
-```
+Fotos, Ausschnitte und vorbereitete Synset-Daten liegen nicht im Repo (Größe, Lizenz CC BY-SA); die Skripte unten erzeugen sie neu.
 
 ---
 
-### Stage 10 — Understanding the Outputs
-
-After completing the full workflow, your project directory will contain:
+## Architektur A: ein Netz, drei Köpfe
 
 ```
-models/
-  checkpoints/
-    best_model.pth         ← PyTorch weights (best validation accuracy)
-  onnx/
-    gtsrb_model.onnx       ← Deployment-ready ONNX model
-
-results/
-  training_curves.png      ← Loss & accuracy vs. epoch plot
-  confusion_matrix.png     ← 43×43 heatmap of predictions vs. true classes
-  tensorboard/             ← Raw TensorBoard event files
-
-data/
-  raw/GTSRB/               ← Original downloaded dataset
+Bild 128×128 ──► ResNet-18 (ImageNet) ──┬─► Hauptschild      209 Klassen, Softmax        ◄ Synset (+ echte, wenn zuordenbar)
+                                        ├─► Zusatz vorhanden? 1 Logit, Sigmoid            ◄ Synset + echte
+                                        └─► Zusatzzeichen     26 Klassen, Multi-Label     ◄ echte Ausschnitte
+                                                                      │
+                                                                      ▼
+                                                  Regel + Zielgruppe (Tabelle nach StVO)
 ```
+
+Maskierter Verlust: Jeder Kopf lernt nur aus Bildern, die sein Label haben.
+
+$$L = \lambda_1 L_\text{haupt} + \lambda_2\, m_\text{da} L_\text{da} + \lambda_3\, m_\text{zusatz} L_\text{zusatz}, \quad m \in \{0, 1\}$$
+
+- Eingabe 128×128 statt 48×48 wie bei GTSRB, damit Text und Sinnbild des Zusatzschilds lesbar bleiben.
+- Zusatz-Kopf als Multi-Label (gestapelte Zusatzschilder), Focal Loss gegen seltene Klassen.
+- Je Batch ca. 30 % echte Ausschnitte, damit sie neben 84.400 Synset-Bildern nicht untergehen.
+- Augmentierung ohne Spiegeln (Pfeile und Richtungen würden falsch).
+- Klassenliste des Zusatz-Kopfs: [`src/data/zusatz_klassen.py`](src/data/zusatz_klassen.py), vorläufig 26 Klassen, wird nach der Deutschland-Suche anhand der Häufigkeiten festgelegt.
+
+**Architektur B** (optional, Ausblick): U-Net auf den Synset-Klassenkarten trennt Hauptschild, andere Schilder und Mast; aus der Karte entstehen Boxen, jedes Zusatzschild wird einzeln klassifiziert (`train_zweistufig.py`, Code und Probelauf fertig).
 
 ---
 
-### 🛠️ Troubleshooting Common Issues
+## Ablauf
 
-| Problem | Cause | Fix |
-|---|---|---|
-| `CUDA out of memory` | `batch_size` too large | Set `batch_size: 64` (or `32`) in `config.yaml` |
-| Dataset download fails | Firewall / network | Manually download from [https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/](https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/) and extract to `data/raw/GTSRB/` |
-| `ModuleNotFoundError` | Virtual env not activated | Run `venv\Scripts\activate` (Windows) or `source venv/bin/activate` |
-| Training extremely slow | Running on CPU | Use Google Colab with free GPU (Runtime → T4 GPU) |
-| `best_model.pth` not found | Training not completed | Run `python train.py` first, then evaluate |
-| TensorBoard shows no data | Wrong log directory | Make sure to point to `results/tensorboard` |
-| ONNX verify fails | Mismatched model version | Re-export: delete old `.onnx` file and rerun `export_onnx.py` |
+### 0. Umgebung
 
----
-
-## 🎥 Live Demo (video or webcam)
-
-```bash
-python demo_video.py --source my_video.mp4                     # smartphone video
-python demo_video.py --source 0                                # webcam
-python demo_video.py --source my_video.mp4 --save results/demo.mp4 --no-window
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
-Per frame: red/blue HSV mask + contours propose candidate regions → each crop goes through `preprocess_for_inference()` → ONNX model → a small IoU tracker keeps a majority vote over the last `--smooth` frames to stop labels from flickering. Default `--conf 0.5`: with label smoothing 0.1 a confident prediction peaks around 0.9, so higher thresholds discard correct detections.
+Für Mapillary einen Client-Token anlegen (https://www.mapillary.com/dashboard/developers) und in `mapillary_token.txt` speichern (steht in `.gitignore`).
+
+### 1. Echte Fotos sammeln
+
+```powershell
+python scrape_mapillary.py --quelle mapillary                      # 21 Regionen in NRW (Test + Training)
+python scrape_mapillary.py --quelle zielgruppen                    # 15 Zielgruppen-Zusatzzeichen in 66 Städten
+python scrape_mapillary.py --quelle zielgruppen --testregionen     # dieselben Zeichen nur in Aachen, Eifel, Köln
+```
+
+### 2. Schildkombinationen ausschneiden
+
+```powershell
+python crop_signs.py mapillary
+```
+
+Nutzt die Schild-Umrisse von Mapillary: Hauptschild plus die Zusatzzeichen direkt darunter, 10 % Rand. Zusatzzeichen ohne erkanntes Hauptschild werden per Farbsuche gerettet (`crops/mapillary_gerettet/`).
+
+### 3. Labels von Hand prüfen
+
+```powershell
+python review_crops.py --split test        # zuerst der Testsatz
+python review_crops.py                     # dann die Trainingsausschnitte
+python review_crops.py --statistik         # Zählung je Klasse und Split
+```
+
+Fenster mit Ausschnitt, Umgebung und Vorschlag; Enter bestätigt, Tasten korrigieren. Ergebnisse in `crops/geprueft.csv`.
+
+### 4. Synset vorbereiten
+
+```powershell
+python prepare_synset.py --split validation
+python prepare_synset.py --split train      # liest 7,4 GB, besser auf Colab
+```
+
+Liest die Parquet-Datei Zeilengruppe für Zeilengruppe (auch direkt von Hugging Face) und speichert die Bilder als 128×128-Array in `data/synset/`.
+
+### 5. Architektur A trainieren
+
+```powershell
+python train_multitask.py --smoke           # Probelauf auf der CPU (ca. 20 s)
+```
+
+Das eigentliche Training läuft auf Google Colab: [`notebooks/train_multitask_colab.ipynb`](notebooks/train_multitask_colab.ipynb). Vorher `python pack_colab_data.py` ausführen und `colab_daten.zip` nach `MyDrive/dlacv_gtsrb/` hochladen. Ergebnis: `results/multitask/ergebnis.json` (Kennzahlen je Kopf, F1 je Zusatzzeichen).
+
+### 6. Experiment E1
+
+```powershell
+python experiment_e1.py --smoke             # Probelauf auf der CPU
+python experiment_e1.py                     # auf Colab: Abschnitt 9 im Notebook
+```
+
+Trainiert die GTSRB-Architektur (ResNet-18, 48×48) auf den 43 Synset-Klassen, die den GTSRB-Klassen entsprechen (Label 0–42, Namen geprüft), und vergleicht mit dem GTSRB-Modell in einer 2×2-Tabelle (trainiert auf Synset/GTSRB × getestet auf Synset/GTSRB). Ergebnis: `results/e1/ergebnis.json`.
 
 ---
 
-## ☁️ Training on Google Colab
+## Evaluation
 
-Open `notebooks/train_colab.ipynb` in Colab, select a T4 GPU and run all cells. Checkpoints and results are stored in Google Drive; the last cell downloads `gtsrb_model.onnx` and `best_model.pth`.
+Umfang am 20.11.2026 gekürzt: Kern sind E1 und E4, E4 beantwortet die Forschungsfrage.
+
+| | Vergleich | Metrik | Status |
+|---|---|---|---|
+| E1 | Synset gegen GTSRB beim Hauptschild (Klassen 0–42) | Accuracy, Makro-F1 | Kern |
+| E2 | A auf der Synset-Validierung | Accuracy je Kopf | Kern (fällt beim Training mit ab) |
+| E4 | Lernkurve: 0 / 25 / 50 / 100 / 150 echte Bilder je Zusatzzeichen | Zusatz exakt, Zielgruppe korrekt (Test) | Kern |
+| E7 | Laufzeit von A als ONNX auf der Laptop-CPU | ms je Schild | ein Messwert |
+| E3 | A gegen B auf dem echten Testsatz | wie E4 | optional |
+| E5, E6 | Bedingungen; Kombinations-Prior, Focal Loss gegen Kreuzentropie | – | gestrichen |
+
+---|---|---|
+| E1 | Synset gegen GTSRB beim Hauptschild (Klassen 0–42) | Accuracy, Makro-F1 |
+| E2 | A auf der Synset-Validierung | Accuracy je Kopf, exakte Trefferquote der Kombination |
+| E3 | A gegen B auf dem echten Testsatz | wie E2, dazu Abfall gegenüber Synset |
+| E4 | Lernkurve: 0 / 25 / 50 / 100 / 150 echte Bilder je Zusatzzeichen | exakte Trefferquote auf dem Test |
+| E5 | Bedingungen (Tageszeit, Kontrast, Unschärfe) | Accuracy je Bedingung |
+| E6 | Kombinations-Prior; Kreuzentropie gegen Focal Loss | Makro-F1 der Zusatzzeichen |
+| E7 | Laufzeit A gegen B als ONNX auf der Laptop-CPU | ms je Schild |
 
 ---
 
-## 📁 Project Structure
+## Projektstruktur
 
 ```
-Traffic Sign Recognition System (GTSRB)/
+├── scrape_mapillary.py        Fotos von Mapillary laden (NRW-Regionen, Zielgruppen in Deutschland)
+├── crop_signs.py              Schildkombinationen aus Gesamtfotos ausschneiden
+├── review_crops.py            Prüfwerkzeug für die Ausschnitte
+├── prepare_synset.py          Synset Signset Germany vorbereiten
+├── train_multitask.py         Architektur A trainieren und auswerten
+├── experiment_e1.py           E1: Synset gegen GTSRB beim Hauptschild
+├── pack_colab_data.py         echte Daten für Colab verpacken
+├── train_gtsrb.py             GTSRB-Baseline: Training
+├── evaluate_gtsrb.py          GTSRB-Baseline: Auswertung
+├── export_onnx_gtsrb.py       GTSRB-Baseline: ONNX-Export
+├── demo_video.py              Live-Demo der GTSRB-Baseline (Video/Webcam)
 ├── configs/
-│   └── config.yaml              # Training configuration
-├── data/
-│   ├── raw/                     # Downloaded GTSRB dataset
-│   ├── processed/               # Preprocessed images
-│   └── splits/                  # Train/val/test splits
-├── models/
-│   ├── checkpoints/             # Saved model weights
-│   │   └── best_model.pth       # Best model checkpoint
-│   └── onnx/                    # Exported ONNX models
-│       └── gtsrb_model.onnx     # ONNX model
-├── results/
-│   ├── training_curves.png      # Training/validation curves
-│   ├── confusion_matrix.png     # Confusion matrix heatmap
-│   └── tensorboard/             # TensorBoard logs
+│   ├── multitask.yaml         Konfiguration Architektur A
+│   ├── synset_klassen.json    Synset-Klassennamen (von prepare_synset.py)
+│   └── gtsrb.yaml             Konfiguration GTSRB-Baseline
 ├── src/
-│   ├── data/                    # Data loading & preprocessing
-│   │   ├── data_loader.py       # Dataset class
-│   │   ├── preprocessing.py     # CLAHE & preprocessing
-│   │   └── augmentation.py      # Data augmentation
-│   ├── models/                  # Model architectures
-│   │   └── resnet_gtsrb.py      # Custom ResNet model
-│   ├── training/                # Training utilities
-│   │   ├── trainer.py           # Training loop
-│   │   └── metrics.py           # Metrics tracking
-│   └── utils/                   # Helper functions
-│       ├── class_names.py       # Class name mappings
-│       ├── visualization.py     # Visualization utilities
-│       └── download_dataset.py  # Dataset downloader
-├── train.py                     # Main training script
-├── evaluate.py                  # Evaluation script
-├── export_onnx.py               # ONNX export script
-├── requirements.txt             # Python dependencies
-└── README.md                    # This file
+│   ├── data/
+│   │   ├── multitask_data.py  Datensätze Synset und echte Ausschnitte
+│   │   ├── crop_records.py    Split und Labels der echten Ausschnitte
+│   │   ├── zusatz_klassen.py  Klassenliste des Zusatz-Kopfs
+│   │   └── …                  GTSRB-Datenlader, CLAHE, Augmentierung
+│   ├── models/
+│   │   ├── multitask.py       MultiTaskResNet und maskierter Verlust
+│   │   └── resnet_gtsrb.py    GTSRB-Baseline
+│   ├── training/              Trainer und Metriken der Baseline
+│   └── utils/
+│       └── zielgruppen.py     Zielgruppen-Tabelle nach StVO, Regel als Text
+├── notebooks/
+│   ├── train_multitask_colab.ipynb
+│   └── train_gtsrb_colab.ipynb
+├── praesentationen/           Präsentationen (.pptx)
+└── docs/                      Dokumentation der GTSRB-Baseline (Anleitung, Ergebnisse, Code-Überblick)
 ```
+
+Nur lokal (in `.gitignore`): `real_world_mapillary/`, `crops/`, `data/`, `models/`, `results/`, `kurs/`, `mapillary_token.txt`.
 
 ---
 
-## 🏗 Model Architecture
-
-### Custom ResNet-18 for GTSRB
-
-```
-Input (3, 48, 48)
-    ↓
-Conv2d (3x3, stride=1) → BatchNorm → ReLU
-    ↓
-ResNet Layer 1 (64 channels)
-    ↓
-ResNet Layer 2 (128 channels)
-    ↓
-ResNet Layer 3 (256 channels)
-    ↓
-ResNet Layer 4 (512 channels)
-    ↓
-AdaptiveAvgPool2d (1, 1)
-    ↓
-Dropout (p=0.5)
-    ↓
-Linear (512 → 43 classes)
-    ↓
-Output (43,)
-```
-
-**Key Modifications for Small Images**:
-- First conv: 3x3 kernel (instead of 7x7)
-- Removed maxpool after first conv
-- Preserves spatial information for 48x48 inputs
-
-**Parameters**: ~11M trainable parameters
-
----
-
-## 🎓 Training
-
-### Configuration
-
-Edit `configs/config.yaml` to customize training:
-
-```yaml
-training:
-  batch_size: 128
-  num_epochs: 50
-  learning_rate: 0.001
-  
-augmentation:
-  rotation_degrees: 15
-  translation_percent: 0.1
-  apply_clahe: true
-```
-
-### Monitoring Training
-
-View training progress in TensorBoard:
-
-```bash
-tensorboard --logdir results/tensorboard
-```
-
-Then open http://localhost:6006 in your browser.
-
-### Training Outputs
-
-- **Best Model**: `models/checkpoints/best_model.pth`
-- **Training Curves**: `results/training_curves.png`
-- **TensorBoard Logs**: `results/tensorboard/`
-
----
-
-## 📊 Evaluation
-
-### Basic Evaluation
-
-```bash
-python evaluate.py
-```
-
-### With Confusion Matrix
-
-```bash
-python evaluate.py --save_cm
-```
-
-### With Inference Benchmark
-
-```bash
-python evaluate.py --benchmark
-```
-
-### Evaluation Metrics
-
-The evaluation script provides:
-- Overall accuracy
-- Precision, Recall, F1-score
-- Per-class accuracy
-- Confusion matrix
-- Inference time statistics
-- Best/worst performing classes
-
----
-
-## 🚀 ONNX Export
-
-### Export Model
-
-```bash
-python export_onnx.py --output models/onnx/gtsrb_model.onnx
-```
-
-### Verify ONNX Model
-
-```bash
-python export_onnx.py --verify
-```
-
-This ensures ONNX outputs match PyTorch (max difference < 1e-5).
-
-### Benchmark ONNX Inference
-
-```bash
-python export_onnx.py --benchmark
-```
-
-### Using ONNX Model
-
-```python
-import onnxruntime as ort
-import numpy as np
-
-# Load ONNX model
-session = ort.InferenceSession('models/onnx/gtsrb_model.onnx')
-
-# Prepare input (1, 3, 48, 48)
-input_data = np.random.randn(1, 3, 48, 48).astype(np.float32)
-
-# Run inference
-outputs = session.run(None, {'input': input_data})
-predictions = outputs[0]
-```
-
----
-
-## 📈 Results
-
-### Performance Metrics
-
-Measured on 12 Nov 2026 (training on Google Colab, Tesla T4; early stopping after 27 epochs, best checkpoint epoch 25, 23.3 min).
-
-| Metric | Value |
-|--------|-------|
-| **Test Accuracy** (GTSRB Final_Test, 12,630 images) | **99.36%** |
-| **Validation Accuracy** (track-based split, 3,930 images) | 99.69% |
-| **Macro Precision / Recall / F1** | 98.61% / 98.75% / 98.60% |
-| **Inference Time, PyTorch, Colab T4** (batch 1) | 3.6 ms (median 3.5 ms) |
-| **Inference Time, ONNX Runtime, laptop CPU** (AMD, batch 1) | 17.5 ms (median 17.1 ms) |
-| **ONNX vs. PyTorch max. output difference** | 9.5e-7 |
-
-Hardest classes: 42 *End of no passing by vehicles over 3.5 t* (71.1%, mostly predicted as 41 *End of no passing*), 6 *End of speed limit 80* (90.0%), 27 *Pedestrians* (96.7%). All three are grey "end of restriction" or rare signs with few training images.
-
-### Training Curves
-
-- Validation accuracy fluctuates strongly until epoch 14 (91–99%) and stabilises once the learning rate is halved after epoch 14 (99.5% from epoch 15 on)
-- Train/val gap at the end < 0.3 percentage points; validation (99.69%) and test (99.36%) agree closely thanks to the track-based split
-- Loss settles around 0.70 instead of near 0 because of label smoothing 0.1
-
-### Confusion Matrix
-
-- Strong diagonal for 40 of 43 classes
-- The only systematic confusion: class 42 → class 41 (both "end of no passing" signs, differing only in the small truck symbol)
-- Speed limits are hardly confused with each other (class 3 *60 km/h*: 97.8%)
-
----
-
-## 🔮 Future Work
-
-### Planned Enhancements
-
-- [ ] **Saliency Maps**: Implement Grad-CAM to visualize where the model "looks" when identifying signs
-- [ ] **End-to-End Pipeline**: Integrate with YOLO-based detector for detection + classification
-- [ ] **Model Quantization**: Quantize to INT8 for deployment on mobile/embedded hardware
-- [ ] **Multi-Country Support**: Extend to other traffic sign datasets (Belgium, China, etc.)
-- [ ] **Real-time Video**: Add video processing pipeline with temporal smoothing
-- [ ] **Mobile Deployment**: Create TensorFlow Lite version for mobile devices
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## 🙏 Acknowledgments
-
-- **GTSRB Dataset**: Institut für Neuroinformatik, Ruhr-Universität Bochum
-- **PyTorch Team**: For the excellent deep learning framework
-- **OpenCV Community**: For computer vision tools
-
----
-
-## 📧 Contact
-
-For questions or collaboration opportunities, please open an issue on GitHub.
-
----
-
-**Built with ❤️ for safer autonomous driving**
+## Quellen
+
+1. A. Sielemann, L. Loercher, M.-L. Schumacher, S. Wolf, M. Roschani, J. Ziehn und J. Beyerer, „Synset Signset Germany: A synthetic dataset for German traffic sign recognition,“ in *Proc. IEEE ITSC*, 2024, S. 3383–3390, doi: 10.1109/ITSC58415.2024.10920175.
+2. J. Stallkamp, M. Schlipsing, J. Salmen und C. Igel, „Man vs. computer: Benchmarking machine learning algorithms for traffic sign recognition,“ *Neural Networks*, Bd. 32, S. 323–332, 2012, doi: 10.1016/j.neunet.2012.02.016.
+3. O. Ronneberger, P. Fischer und T. Brox, „U-Net: Convolutional networks for biomedical image segmentation,“ in *Proc. MICCAI*, LNCS, Springer, 2015, S. 234–241, doi: 10.1007/978-3-319-24574-4_28.
+4. K. He, X. Zhang, S. Ren und J. Sun, „Deep residual learning for image recognition,“ in *Proc. IEEE CVPR*, 2016, S. 770–778, doi: 10.1109/CVPR.2016.90.
+5. T.-Y. Lin, P. Goyal, R. Girshick, K. He und P. Dollár, „Focal loss for dense object detection,“ in *Proc. IEEE ICCV*, 2017, S. 2999–3007, doi: 10.1109/ICCV.2017.324.
+6. R. R. Selvaraju et al., „Grad-CAM: Visual explanations from deep networks via gradient-based localization,“ in *Proc. IEEE ICCV*, 2017, S. 618–626, doi: 10.1109/ICCV.2017.74.
+7. Mapillary, Straßenfotos verschiedener Nutzer (Urheber je Bild in `real_world_mapillary/labels.csv`), Lizenz CC BY-SA 4.0, https://www.mapillary.com. Zugriff: 18.11.2026.

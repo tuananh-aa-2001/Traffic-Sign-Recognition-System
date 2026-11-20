@@ -40,7 +40,7 @@ The dataset will be downloaded automatically when you start training. No manual 
 
 ### Train the Model
 ```bash
-python train.py
+python train_gtsrb.py
 ```
 
 This will:
@@ -57,7 +57,7 @@ This will:
 After training completes, evaluate on test set:
 
 ```bash
-python evaluate.py --save_cm --benchmark
+python evaluate_gtsrb.py --save_cm --benchmark
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 For deployment:
 
 ```bash
-python export_onnx.py --verify --benchmark
+python export_onnx_gtsrb.py --verify --benchmark
 ```
 
 This will:
@@ -92,7 +92,7 @@ Then open http://localhost:6006 in your browser.
 ## Troubleshooting
 
 ### CUDA Out of Memory
-If you get CUDA out of memory errors, reduce batch size in `configs/config.yaml`:
+If you get CUDA out of memory errors, reduce batch size in `configs/gtsrb.yaml`:
 ```yaml
 training:
   batch_size: 64  # Reduce from 128
@@ -120,7 +120,7 @@ After training, you should see:
 ## Next Steps
 
 1. **Visualize Results**: Check `results/` folder for training curves and confusion matrix
-2. **Test on Custom Images**: Modify `evaluate.py` to test on your own traffic sign images
+2. **Test on Custom Images**: Modify `evaluate_gtsrb.py` to test on your own traffic sign images
 3. **Deploy**: Use the ONNX model for deployment in production systems
 
 ## Need Help?
