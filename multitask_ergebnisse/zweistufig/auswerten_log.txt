@@ -1,0 +1,3 @@
+Gerät: cuda
+Pipeline B auf dem echten Test (n = 651): da_acc 0.902, zusatz_exakt 0.462, zielgruppe_korrekt_relevant 0.489
+Ergebnis: /content/drive/MyDrive/dlacv_gtsrb/zweistufig/auswerten.json

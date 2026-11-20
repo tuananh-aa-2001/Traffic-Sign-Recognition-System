@@ -1,0 +1,114 @@
+{
+ "unet": [
+  {
+   "epoche": 1,
+   "verlust": 0.15999982707500457,
+   "miou": 0.8351583845363542,
+   "iou": {
+    "Hintergrund": 0.9553,
+    "Hauptschild": 0.945,
+    "andere Schilder": 0.807,
+    "Mast": 0.6333
+   }
+  },
+  {
+   "epoche": 2,
+   "verlust": 0.08523953825235367,
+   "miou": 0.8634750342333177,
+   "iou": {
+    "Hintergrund": 0.9593,
+    "Hauptschild": 0.9457,
+    "andere Schilder": 0.8862,
+    "Mast": 0.6627
+   }
+  },
+  {
+   "epoche": 3,
+   "verlust": 0.07433496178388596,
+   "miou": 0.856189491262391,
+   "iou": {
+    "Hintergrund": 0.9627,
+    "Hauptschild": 0.9556,
+    "andere Schilder": 0.8205,
+    "Mast": 0.6859
+   }
+  },
+  {
+   "epoche": 4,
+   "verlust": 0.06864616332054138,
+   "miou": 0.8759506912364154,
+   "iou": {
+    "Hintergrund": 0.966,
+    "Hauptschild": 0.9558,
+    "andere Schilder": 0.8779,
+    "Mast": 0.7041
+   }
+  },
+  {
+   "epoche": 5,
+   "verlust": 0.0637022186100483,
+   "miou": 0.8806390652251725,
+   "iou": {
+    "Hintergrund": 0.9672,
+    "Hauptschild": 0.9558,
+    "andere Schilder": 0.8886,
+    "Mast": 0.7109
+   }
+  },
+  {
+   "epoche": 6,
+   "verlust": 0.05819263631701469,
+   "miou": 0.8837422060792031,
+   "iou": {
+    "Hintergrund": 0.9658,
+    "Hauptschild": 0.952,
+    "andere Schilder": 0.8941,
+    "Mast": 0.723
+   }
+  },
+  {
+   "epoche": 7,
+   "verlust": 0.05459112358689308,
+   "miou": 0.8846694919846217,
+   "iou": {
+    "Hintergrund": 0.9675,
+    "Hauptschild": 0.9571,
+    "andere Schilder": 0.9101,
+    "Mast": 0.7041
+   }
+  },
+  {
+   "epoche": 8,
+   "verlust": 0.05190488377809525,
+   "miou": 0.8898136920908687,
+   "iou": {
+    "Hintergrund": 0.9705,
+    "Hauptschild": 0.9608,
+    "andere Schilder": 0.9007,
+    "Mast": 0.7272
+   }
+  },
+  {
+   "epoche": 9,
+   "verlust": 0.048743070954084394,
+   "miou": 0.8941590496928247,
+   "iou": {
+    "Hintergrund": 0.9706,
+    "Hauptschild": 0.9599,
+    "andere Schilder": 0.9077,
+    "Mast": 0.7385
+   }
+  },
+  {
+   "epoche": 10,
+   "verlust": 0.048244534599781036,
+   "miou": 0.8944680073456235,
+   "iou": {
+    "Hintergrund": 0.9711,
+    "Hauptschild": 0.9611,
+    "andere Schilder": 0.9082,
+    "Mast": 0.7375
+   }
+  }
+ ]
+}

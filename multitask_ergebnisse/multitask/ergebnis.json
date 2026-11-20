@@ -1,0 +1,117 @@
+{
+ "epoche": 14,
+ "echt_test": {
+  "haupt_acc": 0.9877551020408163,
+  "n_haupt": 490,
+  "da_acc": 0.9953917050691244,
+  "n_da": 651,
+  "zusatz_exakt": 0.8725038402457758,
+  "n_zusatz": 651,
+  "zielgruppe_korrekt": 0.9262672811059908,
+  "zielgruppe_korrekt_relevant": 0.9464285714285714,
+  "n_zielgruppe_relevant": 560,
+  "zusatz_micro_f1": 0.9054263565891473,
+  "zusatz_macro_f1": 0.5585671586275403,
+  "zusatz_f1_je_klasse": {
+   "Rad frei": {
+    "f1": 0.978,
+    "anzahl": 158
+   },
+   "LKW, Bus, Anhänger": {
+    "f1": 0.994,
+    "anzahl": 174
+   },
+   "LKW": {
+    "f1": 0.939,
+    "anzahl": 52
+   },
+   "Bus": {
+    "f1": 0.8,
+    "anzahl": 41
+   },
+   "Bus frei": {
+    "f1": 0.818,
+    "anzahl": 22
+   },
+   "Krafträder": {
+    "f1": 1.0,
+    "anzahl": 1
+   },
+   "PKW": {
+    "f1": 0.966,
+    "anzahl": 75
+   },
+   "Schwerbehinderte": {
+    "f1": 0.959,
+    "anzahl": 49
+   },
+   "Straßenbahn": {
+    "f1": 0.0,
+    "anzahl": 2
+   },
+   "Landwirtschaft frei": {
+    "f1": 0.833,
+    "anzahl": 6
+   },
+   "Umweltzone frei": {
+    "f1": 0.0,
+    "anzahl": 1
+   },
+   "Text (Anlieger frei u. a.)": {
+    "f1": 0.0,
+    "anzahl": 7
+   },
+   "Länge einer Strecke": {
+    "f1": 0.864,
+    "anzahl": 23
+   },
+   "Entfernung": {
+    "f1": 0.588,
+    "anzahl": 12
+   },
+   "Pfeil rechts": {
+    "f1": 0.667,
+    "anzahl": 9
+   },
+   "Pfeil links": {
+    "f1": 0.4,
+    "anzahl": 7
+   },
+   "Pfeile beidseitig": {
+    "f1": 0.5,
+    "anzahl": 9
+   },
+   "Abknickende Vorfahrt": {
+    "f1": 0.8,
+    "anzahl": 3
+   },
+   "Bei Nässe": {
+    "f1": 0.0,
+    "anzahl": 4
+   },
+   "Zeitangabe": {
+    "f1": 0.0,
+    "anzahl": 1
+   },
+   "Abschleppen": {
+    "f1": 0.0,
+    "anzahl": 7
+   },
+   "andere": {
+    "f1": 0.182,
+    "anzahl": 7
+   }
+  }
+ },
+ "synset_val": {
+  "haupt_acc": 0.9857345971563981,
+  "n_haupt": 21100,
+  "da_acc": 0.9978199052132701,
+  "n_da": 21100,
+  "zusatz_exakt": null,
+  "n_zusatz": 0,
+  "zielgruppe_korrekt": null,
+  "zielgruppe_korrekt_relevant": null,
+  "n_zielgruppe_relevant": 0
+ }
+}

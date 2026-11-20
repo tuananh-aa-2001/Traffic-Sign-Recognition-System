@@ -1,0 +1,28 @@
+Gerät: cuda
+Zusatzschilder: Training 1650, Validierung 230
+Klassifikator Epoche 1/25: Verlust 2.020, Val-Accuracy 0.657
+Klassifikator Epoche 2/25: Verlust 1.101, Val-Accuracy 0.761
+Klassifikator Epoche 3/25: Verlust 0.888, Val-Accuracy 0.839
+Klassifikator Epoche 4/25: Verlust 0.792, Val-Accuracy 0.848
+Klassifikator Epoche 5/25: Verlust 0.741, Val-Accuracy 0.865
+Klassifikator Epoche 6/25: Verlust 0.720, Val-Accuracy 0.887
+Klassifikator Epoche 7/25: Verlust 0.707, Val-Accuracy 0.878
+Klassifikator Epoche 8/25: Verlust 0.690, Val-Accuracy 0.883
+Klassifikator Epoche 9/25: Verlust 0.686, Val-Accuracy 0.883
+Klassifikator Epoche 10/25: Verlust 0.683, Val-Accuracy 0.878
+Klassifikator Epoche 11/25: Verlust 0.681, Val-Accuracy 0.896
+Klassifikator Epoche 12/25: Verlust 0.669, Val-Accuracy 0.891
+Klassifikator Epoche 13/25: Verlust 0.665, Val-Accuracy 0.887
+Klassifikator Epoche 14/25: Verlust 0.660, Val-Accuracy 0.891
+Klassifikator Epoche 15/25: Verlust 0.661, Val-Accuracy 0.896
+Klassifikator Epoche 16/25: Verlust 0.661, Val-Accuracy 0.883
+Klassifikator Epoche 17/25: Verlust 0.661, Val-Accuracy 0.887
+Klassifikator Epoche 18/25: Verlust 0.659, Val-Accuracy 0.896
+Klassifikator Epoche 19/25: Verlust 0.655, Val-Accuracy 0.891
+Klassifikator Epoche 20/25: Verlust 0.657, Val-Accuracy 0.896
+Klassifikator Epoche 21/25: Verlust 0.654, Val-Accuracy 0.891
+Klassifikator Epoche 22/25: Verlust 0.657, Val-Accuracy 0.896
+Klassifikator Epoche 23/25: Verlust 0.656, Val-Accuracy 0.896
+Klassifikator Epoche 24/25: Verlust 0.654, Val-Accuracy 0.891
+Klassifikator Epoche 25/25: Verlust 0.653, Val-Accuracy 0.891
+Ergebnis: /content/drive/MyDrive/dlacv_gtsrb/zweistufig/klassifikator.json

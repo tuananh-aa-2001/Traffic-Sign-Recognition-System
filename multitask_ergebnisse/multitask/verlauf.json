@@ -1,0 +1,1607 @@
+[
+ {
+  "epoche": 1,
+  "verlust": {
+   "haupt": 2.1146567909956486,
+   "da": 0.03377470291251424,
+   "zusatz": 0.020352875382931374
+  },
+  "synset_val": {
+   "haupt_acc": 0.8919431279620853,
+   "n_haupt": 21100,
+   "da_acc": 0.9881042654028436,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9377289377289377,
+   "n_haupt": 546,
+   "da_acc": 0.9771341463414634,
+   "n_da": 656,
+   "zusatz_exakt": 0.7225609756097561,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.7789634146341463,
+   "zielgruppe_korrekt_relevant": 0.2765957446808511,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.35967302452316074,
+   "zusatz_macro_f1": 0.19663644395787253,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.533,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.531,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.0,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.591,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.182,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.438,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.125,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.476,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.378,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.286,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.0,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 0.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.0,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.8072520517859207
+ },
+ {
+  "epoche": 2,
+  "verlust": {
+   "haupt": 1.2287095708887714,
+   "da": 0.016445777303269155,
+   "zusatz": 0.00947046183324707
+  },
+  "synset_val": {
+   "haupt_acc": 0.9285308056872038,
+   "n_haupt": 21100,
+   "da_acc": 0.9926540284360189,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9505494505494505,
+   "n_haupt": 546,
+   "da_acc": 0.9740853658536586,
+   "n_da": 656,
+   "zusatz_exakt": 0.7774390243902439,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8246951219512195,
+   "zielgruppe_korrekt_relevant": 0.43617021276595747,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.5122615803814714,
+   "zusatz_macro_f1": 0.3235072951739618,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.667,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.444,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.333,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.68,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.167,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.88,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.091,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.45,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.889,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.333,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.0,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 0.889,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.0,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.8529849150387239
+ },
+ {
+  "epoche": 3,
+  "verlust": {
+   "haupt": 1.1375830975422727,
+   "da": 0.011522748305632083,
+   "zusatz": 0.006785406939077702
+  },
+  "synset_val": {
+   "haupt_acc": 0.9469194312796209,
+   "n_haupt": 21100,
+   "da_acc": 0.9931279620853081,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9615384615384616,
+   "n_haupt": 546,
+   "da_acc": 0.9832317073170732,
+   "n_da": 656,
+   "zusatz_exakt": 0.8338414634146342,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8689024390243902,
+   "zielgruppe_korrekt_relevant": 0.574468085106383,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.6321243523316062,
+   "zusatz_macro_f1": 0.46506988621674306,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.842,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.788,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.636,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.706,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.364,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.133,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.471,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.893,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.45,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.286,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.4,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.533,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.8903804473471275
+ },
+ {
+  "epoche": 4,
+  "verlust": {
+   "haupt": 1.0780571723289327,
+   "da": 0.010279621578567325,
+   "zusatz": 0.005440346825595345
+  },
+  "synset_val": {
+   "haupt_acc": 0.9544549763033175,
+   "n_haupt": 21100,
+   "da_acc": 0.9956872037914692,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9505494505494505,
+   "n_haupt": 546,
+   "da_acc": 0.9847560975609756,
+   "n_da": 656,
+   "zusatz_exakt": 0.8490853658536586,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8826219512195121,
+   "zielgruppe_korrekt_relevant": 0.6329787234042553,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.6600496277915633,
+   "zusatz_macro_f1": 0.5088995151887202,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.93,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.882,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.8,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.745,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.2,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.25,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.537,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.877,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.4,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.286,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 0.909,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.308,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.901770171078488
+ },
+ {
+  "epoche": 5,
+  "verlust": {
+   "haupt": 1.045069625636916,
+   "da": 0.007915514423998434,
+   "zusatz": 0.004254880626047991
+  },
+  "synset_val": {
+   "haupt_acc": 0.9686729857819906,
+   "n_haupt": 21100,
+   "da_acc": 0.9949289099526066,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9597069597069597,
+   "n_haupt": 546,
+   "da_acc": 0.9740853658536586,
+   "n_da": 656,
+   "zusatz_exakt": 0.8445121951219512,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.875,
+   "zielgruppe_korrekt_relevant": 0.6117021276595744,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.648910411622276,
+   "zusatz_macro_f1": 0.5149415184567752,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.857,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.829,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.6,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.714,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.25,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.32,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.622,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.915,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.41,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.286,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.429,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9065925904519709
+ },
+ {
+  "epoche": 6,
+  "verlust": {
+   "haupt": 1.0203589598761438,
+   "da": 0.007574707198305242,
+   "zusatz": 0.0038561298482632364
+  },
+  "synset_val": {
+   "haupt_acc": 0.9680094786729858,
+   "n_haupt": 21100,
+   "da_acc": 0.9946445497630332,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9487179487179487,
+   "n_haupt": 546,
+   "da_acc": 0.9847560975609756,
+   "n_da": 656,
+   "zusatz_exakt": 0.8658536585365854,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8887195121951219,
+   "zielgruppe_korrekt_relevant": 0.6595744680851063,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.6954436450839329,
+   "zusatz_macro_f1": 0.5401789118054204,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.88,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.882,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.783,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.76,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.421,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.917,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.235,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.609,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.842,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.45,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.778,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9169315686047856
+ },
+ {
+  "epoche": 7,
+  "verlust": {
+   "haupt": 1.0016105923571312,
+   "da": 0.0068893899796962504,
+   "zusatz": 0.0032651665241225187
+  },
+  "synset_val": {
+   "haupt_acc": 0.9740758293838863,
+   "n_haupt": 21100,
+   "da_acc": 0.9969194312796209,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9597069597069597,
+   "n_haupt": 546,
+   "da_acc": 0.9832317073170732,
+   "n_da": 656,
+   "zusatz_exakt": 0.864329268292683,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8917682926829268,
+   "zielgruppe_korrekt_relevant": 0.6648936170212766,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.69377990430622,
+   "zusatz_macro_f1": 0.5526440705058795,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.952,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.837,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.72,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.809,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.444,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.222,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.5,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.931,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.462,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.286,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.8,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 0.909,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.706,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9192025488382847
+ },
+ {
+  "epoche": 8,
+  "verlust": {
+   "haupt": 0.98175674270211,
+   "da": 0.005186885563859732,
+   "zusatz": 0.0029205570298024633
+  },
+  "synset_val": {
+   "haupt_acc": 0.976824644549763,
+   "n_haupt": 21100,
+   "da_acc": 0.9962085308056872,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9542124542124543,
+   "n_haupt": 546,
+   "da_acc": 0.9817073170731707,
+   "n_da": 656,
+   "zusatz_exakt": 0.8734756097560976,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8978658536585366,
+   "zielgruppe_korrekt_relevant": 0.6861702127659575,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7129186602870813,
+   "zusatz_macro_f1": 0.5706068754026457,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.957,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.842,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.815,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.824,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.421,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.917,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.25,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.5,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.9,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.474,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.706,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9251501271529303
+ },
+ {
+  "epoche": 9,
+  "verlust": {
+   "haupt": 0.9681217047705579,
+   "da": 0.004949805942811579,
+   "zusatz": 0.0023065182837537987
+  },
+  "synset_val": {
+   "haupt_acc": 0.9781516587677725,
+   "n_haupt": 21100,
+   "da_acc": 0.9968720379146919,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9615384615384616,
+   "n_haupt": 546,
+   "da_acc": 0.9771341463414634,
+   "n_da": 656,
+   "zusatz_exakt": 0.8734756097560976,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.9009146341463414,
+   "zielgruppe_korrekt_relevant": 0.7021276595744681,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7166276346604216,
+   "zusatz_macro_f1": 0.5881010428004249,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.933,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.895,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.769,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.84,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.545,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.917,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.316,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.609,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.881,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.45,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 0.889,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.25,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9258136342619351
+ },
+ {
+  "epoche": 10,
+  "verlust": {
+   "haupt": 0.9531373041016715,
+   "da": 0.004587685202756253,
+   "zusatz": 0.002075582282645737
+  },
+  "synset_val": {
+   "haupt_acc": 0.9809952606635071,
+   "n_haupt": 21100,
+   "da_acc": 0.9972037914691944,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9560439560439561,
+   "n_haupt": 546,
+   "da_acc": 0.9786585365853658,
+   "n_da": 656,
+   "zusatz_exakt": 0.8719512195121951,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8978658536585366,
+   "zielgruppe_korrekt_relevant": 0.6914893617021277,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7028301886792453,
+   "zusatz_macro_f1": 0.5665631661290923,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.936,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.895,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.8,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.783,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.467,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.235,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.571,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.9,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.45,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.926473240087851
+ },
+ {
+  "epoche": 11,
+  "verlust": {
+   "haupt": 0.9436855463585111,
+   "da": 0.004117529058034893,
+   "zusatz": 0.0019158573431729364
+  },
+  "synset_val": {
+   "haupt_acc": 0.9830805687203792,
+   "n_haupt": 21100,
+   "da_acc": 0.9968720379146919,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9633699633699634,
+   "n_haupt": 546,
+   "da_acc": 0.9786585365853658,
+   "n_da": 656,
+   "zusatz_exakt": 0.875,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.899390243902439,
+   "zielgruppe_korrekt_relevant": 0.7021276595744681,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7037037037037037,
+   "zusatz_macro_f1": 0.5917499690325777,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.957,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.872,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.769,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.76,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.444,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.917,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.222,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.609,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.9,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.41,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9290402843601896
+ },
+ {
+  "epoche": 12,
+  "verlust": {
+   "haupt": 0.934377138802746,
+   "da": 0.0034406377090839173,
+   "zusatz": 0.001563727897429925
+  },
+  "synset_val": {
+   "haupt_acc": 0.9837914691943128,
+   "n_haupt": 21100,
+   "da_acc": 0.9973459715639811,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9615384615384616,
+   "n_haupt": 546,
+   "da_acc": 0.975609756097561,
+   "n_da": 656,
+   "zusatz_exakt": 0.875,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.9009146341463414,
+   "zielgruppe_korrekt_relevant": 0.7074468085106383,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.6990740740740741,
+   "zusatz_macro_f1": 0.5693990108120544,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.957,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.85,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.8,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.76,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.5,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.3,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.571,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.9,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.45,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9293957345971564
+ },
+ {
+  "epoche": 13,
+  "verlust": {
+   "haupt": 0.9281778030558181,
+   "da": 0.002489607579616913,
+   "zusatz": 0.0015318840713410733
+  },
+  "synset_val": {
+   "haupt_acc": 0.9852606635071091,
+   "n_haupt": 21100,
+   "da_acc": 0.9978199052132701,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9633699633699634,
+   "n_haupt": 546,
+   "da_acc": 0.9817073170731707,
+   "n_da": 656,
+   "zusatz_exakt": 0.8673780487804879,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.8948170731707317,
+   "zielgruppe_korrekt_relevant": 0.6808510638297872,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.6964705882352941,
+   "zusatz_macro_f1": 0.5663693504885847,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.957,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.85,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.833,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.75,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.519,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.211,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.591,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.862,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.462,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.0,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9263193561437985
+ },
+ {
+  "epoche": 14,
+  "verlust": {
+   "haupt": 0.9238084147988098,
+   "da": 0.003107967444877726,
+   "zusatz": 0.001482621173256202
+  },
+  "synset_val": {
+   "haupt_acc": 0.9857345971563981,
+   "n_haupt": 21100,
+   "da_acc": 0.9978199052132701,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9633699633699634,
+   "n_haupt": 546,
+   "da_acc": 0.9725609756097561,
+   "n_da": 656,
+   "zusatz_exakt": 0.875,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.9009146341463414,
+   "zielgruppe_korrekt_relevant": 0.7021276595744681,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7020785219399538,
+   "zusatz_macro_f1": 0.5801631440289937,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.936,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.85,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.769,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.784,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.444,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.3,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.605,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.881,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.462,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.25,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.930367298578199
+ },
+ {
+  "epoche": 15,
+  "verlust": {
+   "haupt": 0.9206784323080263,
+   "da": 0.002799746785389839,
+   "zusatz": 0.001424147251792111
+  },
+  "synset_val": {
+   "haupt_acc": 0.985781990521327,
+   "n_haupt": 21100,
+   "da_acc": 0.9978199052132701,
+   "n_da": 21100,
+   "zusatz_exakt": null,
+   "n_zusatz": 0,
+   "zielgruppe_korrekt": null,
+   "zielgruppe_korrekt_relevant": null,
+   "n_zielgruppe_relevant": 0
+  },
+  "echt_val": {
+   "haupt_acc": 0.9633699633699634,
+   "n_haupt": 546,
+   "da_acc": 0.975609756097561,
+   "n_da": 656,
+   "zusatz_exakt": 0.8734756097560976,
+   "n_zusatz": 656,
+   "zielgruppe_korrekt": 0.899390243902439,
+   "zielgruppe_korrekt_relevant": 0.6968085106382979,
+   "n_zielgruppe_relevant": 188,
+   "zusatz_micro_f1": 0.7023255813953488,
+   "zusatz_macro_f1": 0.5799418759578684,
+   "zusatz_f1_je_klasse": {
+    "Rad frei": {
+     "f1": 0.936,
+     "anzahl": 22
+    },
+    "LKW, Bus, Anhänger": {
+     "f1": 0.85,
+     "anzahl": 19
+    },
+    "LKW": {
+     "f1": 0.769,
+     "anzahl": 14
+    },
+    "Bus": {
+     "f1": 0.784,
+     "anzahl": 27
+    },
+    "Bus frei": {
+     "f1": 0.462,
+     "anzahl": 9
+    },
+    "Krafträder": {
+     "f1": 0.87,
+     "anzahl": 13
+    },
+    "PKW": {
+     "f1": 0.3,
+     "anzahl": 13
+    },
+    "PKW frei": {
+     "f1": 0.571,
+     "anzahl": 23
+    },
+    "Schwerbehinderte": {
+     "f1": 0.881,
+     "anzahl": 27
+    },
+    "Straßenbahn frei": {
+     "f1": 0.474,
+     "anzahl": 24
+    },
+    "Umweltzone frei": {
+     "f1": 0.5,
+     "anzahl": 3
+    },
+    "Entfernung": {
+     "f1": 0.5,
+     "anzahl": 6
+    },
+    "Pfeil rechts": {
+     "f1": 0.667,
+     "anzahl": 2
+    },
+    "Pfeil links": {
+     "f1": 0.0,
+     "anzahl": 3
+    },
+    "Pfeile beidseitig": {
+     "f1": 1.0,
+     "anzahl": 5
+    },
+    "Abknickende Vorfahrt": {
+     "f1": 0.625,
+     "anzahl": 11
+    },
+    "Fußgänger Pfeil": {
+     "f1": 0.0,
+     "anzahl": 2
+    },
+    "andere": {
+     "f1": 0.25,
+     "anzahl": 7
+    }
+   }
+  },
+  "auswahlwert": 0.9296288001387123
+ }
+]

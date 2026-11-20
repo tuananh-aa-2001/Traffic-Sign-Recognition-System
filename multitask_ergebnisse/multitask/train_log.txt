@@ -1,0 +1,49 @@
+Gerät: cuda
+Echte Ausschnitte: train 3353, val 656, test 651 (davon geprüft im Training: 0)
+Epoche 1/15 (215 s) Verlust haupt 2.115, da 0.034, zusatz 0.020
+  Synset-Val: haupt_acc 0.892, da_acc 0.988 | Echt-Val: haupt_acc 0.938, da_acc 0.977, zusatz_exakt 0.723, zusatz_macro_f1 0.197, zielgruppe_korrekt_relevant 0.277 | Auswahlwert 0.807
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 2/15 (208 s) Verlust haupt 1.229, da 0.016, zusatz 0.009
+  Synset-Val: haupt_acc 0.929, da_acc 0.993 | Echt-Val: haupt_acc 0.951, da_acc 0.974, zusatz_exakt 0.777, zusatz_macro_f1 0.324, zielgruppe_korrekt_relevant 0.436 | Auswahlwert 0.853
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 3/15 (202 s) Verlust haupt 1.138, da 0.012, zusatz 0.007
+  Synset-Val: haupt_acc 0.947, da_acc 0.993 | Echt-Val: haupt_acc 0.962, da_acc 0.983, zusatz_exakt 0.834, zusatz_macro_f1 0.465, zielgruppe_korrekt_relevant 0.574 | Auswahlwert 0.890
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 4/15 (188 s) Verlust haupt 1.078, da 0.010, zusatz 0.005
+  Synset-Val: haupt_acc 0.954, da_acc 0.996 | Echt-Val: haupt_acc 0.951, da_acc 0.985, zusatz_exakt 0.849, zusatz_macro_f1 0.509, zielgruppe_korrekt_relevant 0.633 | Auswahlwert 0.902
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 5/15 (184 s) Verlust haupt 1.045, da 0.008, zusatz 0.004
+  Synset-Val: haupt_acc 0.969, da_acc 0.995 | Echt-Val: haupt_acc 0.960, da_acc 0.974, zusatz_exakt 0.845, zusatz_macro_f1 0.515, zielgruppe_korrekt_relevant 0.612 | Auswahlwert 0.907
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 6/15 (187 s) Verlust haupt 1.020, da 0.008, zusatz 0.004
+  Synset-Val: haupt_acc 0.968, da_acc 0.995 | Echt-Val: haupt_acc 0.949, da_acc 0.985, zusatz_exakt 0.866, zusatz_macro_f1 0.540, zielgruppe_korrekt_relevant 0.660 | Auswahlwert 0.917
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 7/15 (187 s) Verlust haupt 1.002, da 0.007, zusatz 0.003
+  Synset-Val: haupt_acc 0.974, da_acc 0.997 | Echt-Val: haupt_acc 0.960, da_acc 0.983, zusatz_exakt 0.864, zusatz_macro_f1 0.553, zielgruppe_korrekt_relevant 0.665 | Auswahlwert 0.919
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 8/15 (183 s) Verlust haupt 0.982, da 0.005, zusatz 0.003
+  Synset-Val: haupt_acc 0.977, da_acc 0.996 | Echt-Val: haupt_acc 0.954, da_acc 0.982, zusatz_exakt 0.873, zusatz_macro_f1 0.571, zielgruppe_korrekt_relevant 0.686 | Auswahlwert 0.925
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 9/15 (185 s) Verlust haupt 0.968, da 0.005, zusatz 0.002
+  Synset-Val: haupt_acc 0.978, da_acc 0.997 | Echt-Val: haupt_acc 0.962, da_acc 0.977, zusatz_exakt 0.873, zusatz_macro_f1 0.588, zielgruppe_korrekt_relevant 0.702 | Auswahlwert 0.926
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 10/15 (187 s) Verlust haupt 0.953, da 0.005, zusatz 0.002
+  Synset-Val: haupt_acc 0.981, da_acc 0.997 | Echt-Val: haupt_acc 0.956, da_acc 0.979, zusatz_exakt 0.872, zusatz_macro_f1 0.567, zielgruppe_korrekt_relevant 0.691 | Auswahlwert 0.926
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 11/15 (188 s) Verlust haupt 0.944, da 0.004, zusatz 0.002
+  Synset-Val: haupt_acc 0.983, da_acc 0.997 | Echt-Val: haupt_acc 0.963, da_acc 0.979, zusatz_exakt 0.875, zusatz_macro_f1 0.592, zielgruppe_korrekt_relevant 0.702 | Auswahlwert 0.929
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 12/15 (192 s) Verlust haupt 0.934, da 0.003, zusatz 0.002
+  Synset-Val: haupt_acc 0.984, da_acc 0.997 | Echt-Val: haupt_acc 0.962, da_acc 0.976, zusatz_exakt 0.875, zusatz_macro_f1 0.569, zielgruppe_korrekt_relevant 0.707 | Auswahlwert 0.929
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 13/15 (146 s) Verlust haupt 0.928, da 0.002, zusatz 0.002
+  Synset-Val: haupt_acc 0.985, da_acc 0.998 | Echt-Val: haupt_acc 0.963, da_acc 0.982, zusatz_exakt 0.867, zusatz_macro_f1 0.566, zielgruppe_korrekt_relevant 0.681 | Auswahlwert 0.926
+Epoche 14/15 (142 s) Verlust haupt 0.924, da 0.003, zusatz 0.001
+  Synset-Val: haupt_acc 0.986, da_acc 0.998 | Echt-Val: haupt_acc 0.963, da_acc 0.973, zusatz_exakt 0.875, zusatz_macro_f1 0.580, zielgruppe_korrekt_relevant 0.702 | Auswahlwert 0.930
+  bestes Modell gespeichert: /content/drive/MyDrive/dlacv_gtsrb/multitask/multitask_best.pth
+Epoche 15/15 (143 s) Verlust haupt 0.921, da 0.003, zusatz 0.001
+  Synset-Val: haupt_acc 0.986, da_acc 0.998 | Echt-Val: haupt_acc 0.963, da_acc 0.976, zusatz_exakt 0.873, zusatz_macro_f1 0.580, zielgruppe_korrekt_relevant 0.697 | Auswahlwert 0.930
+
+Test (echt, Aachen/Eifel/Köln): haupt_acc 0.988, da_acc 0.995, zusatz_exakt 0.873, zusatz_macro_f1 0.559, zielgruppe_korrekt_relevant 0.946
+Synset-Validierung: haupt_acc 0.986, da_acc 0.998
+Ergebnis: /content/drive/MyDrive/dlacv_gtsrb/multitask/ergebnis.json

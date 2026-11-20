@@ -16,12 +16,11 @@ Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholv
 |---|---|
 | GTSRB-Baseline (ResNet-18, 43 Klassen) | fertig: 99,36 % auf dem GTSRB-Testset, 17 ms je Schild auf der Laptop-CPU ([Details](docs/gtsrb_baseline.md)) |
 | Synset-Stichprobe | fertig: Zusatzschild in 170 von 170 Bildern unten abgeschnitten (siehe [Daten](#daten)) |
-| Echte Fotos NRW (Test) | 654 Mapillary-Fotos, 385 Kombinationen ausgeschnitten, Testsatz (86) von Hand geprüft |
-| Echte Fotos Deutschland (Training) | gezielte Suche nach 15 Zusatzzeichen mit Zielgruppe in 66 Städten läuft |
-| Architektur A | Code fertig, Probelauf auf CPU erfolgreich; Training auf Colab steht aus |
-| E1 (Synset gegen GTSRB) | Code fertig, Probelauf erfolgreich; Lauf auf Colab steht aus |
+| Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft) |
+| Architektur A | trainiert auf Colab (15 Epochen, T4): Zielgruppe korrekt 94,6 % auf dem echten Test ([Ergebnisse](#ergebnisse)) |
+| E1 (Synset gegen GTSRB) | Synset → GTSRB gelaufen (92,4 %); Gegenrichtung GTSRB → Synset steht aus |
 | E4 Lernkurve, Grad-CAM-Beispiele, Demo | offen |
-| Architektur B (U-Net, zweistufig) | optional (Ausblick); Code vorbereitet, Probelauf erfolgreich |
+| Architektur B (U-Net, zweistufig) | optional (Ausblick); trainiert, auf dem echten Test deutlich schwächer als A |
 
 ---
 
@@ -148,14 +147,25 @@ Umfang am 20.11.2026 gekürzt: Kern sind E1 und E4, E4 beantwortet die Forschung
 | E3 | A gegen B auf dem echten Testsatz | wie E4 | optional |
 | E5, E6 | Bedingungen; Kombinations-Prior, Focal Loss gegen Kreuzentropie | – | gestrichen |
 
----|---|---|
-| E1 | Synset gegen GTSRB beim Hauptschild (Klassen 0–42) | Accuracy, Makro-F1 |
-| E2 | A auf der Synset-Validierung | Accuracy je Kopf, exakte Trefferquote der Kombination |
-| E3 | A gegen B auf dem echten Testsatz | wie E2, dazu Abfall gegenüber Synset |
-| E4 | Lernkurve: 0 / 25 / 50 / 100 / 150 echte Bilder je Zusatzzeichen | exakte Trefferquote auf dem Test |
-| E5 | Bedingungen (Tageszeit, Kontrast, Unschärfe) | Accuracy je Bedingung |
-| E6 | Kombinations-Prior; Kreuzentropie gegen Focal Loss | Makro-F1 der Zusatzzeichen |
-| E7 | Laufzeit A gegen B als ONNX auf der Laptop-CPU | ms je Schild |
+## Ergebnisse
+
+Rohdaten: [`multitask_ergebnisse/`](multitask_ergebnisse/) (JSON, Logs, Verlaufskurven; Gewichte nicht im Repo).
+
+**Architektur A**, echter Test (Aachen, Eifel, Köln; n = 651, bestes Modell aus Epoche 14):
+
+| Kopf / Metrik | Wert |
+|---|---|
+| Hauptschild, Accuracy | 98,8 % |
+| Zusatzzeichen vorhanden, Accuracy | 99,5 % |
+| Zusatzzeichen exakt | 87,3 % |
+| Zusatz Micro-/Macro-F1 | 0,91 / 0,56 |
+| Zielgruppe korrekt (relevant, n = 560) | 94,6 % |
+
+Häufige Zusatzzeichen (Rad frei, LKW/Bus/Anhänger, PKW, Schwerbehinderte) erreichen F1 ≥ 0,94; seltene (Straßenbahn, Umweltzone, Text, Bei Nässe, Zeitangabe, Abschleppen; je 1–7 Testbeispiele) F1 = 0. Auf den echten Validierungsregionen mit vielen seltenen Zielgruppen liegt „Zielgruppe korrekt“ nur bei 0,70; das motiviert E4.
+
+**E1**, ResNet-18 auf Synset (Klassen 0–42): 98,9 % auf der Synset-Validierung, 92,4 % (Makro-F1 0,89) auf dem GTSRB-Test. Größter Abfall: Fußgänger (−46 Pp.), Ende Überholverbot 3,5 t (−29 Pp.).
+
+**Architektur B** (optional): U-Net mIoU 0,89 auf Synset, Klassifikator 89 % auf echten Einzelschildern, als Pipeline auf dem echten Test aber nur Zusatz exakt 46 %, Zielgruppe 49 % (Fehler beim Übergang Maske → Boxen auf echten Fotos).
 
 ---
 

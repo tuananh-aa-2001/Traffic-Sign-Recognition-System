@@ -1,0 +1,492 @@
+{
+ "tabelle": {
+  "synset->synset_val": {
+   "accuracy": 0.9888372093023255,
+   "makro_f1": 0.9888499057486401,
+   "n": 4300,
+   "je_klasse": {
+    "0": {
+     "name": "Geschwindigkeitsbegrenzung (20km/h)",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "1": {
+     "name": "Geschwindigkeitsbegrenzung (30km/h)",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "2": {
+     "name": "Geschwindigkeitsbegrenzung (50km/h)",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "3": {
+     "name": "Geschwindigkeitsbegrenzung (60km/h)",
+     "genauigkeit": 0.97,
+     "anzahl": 100
+    },
+    "4": {
+     "name": "Geschwindigkeitsbegrenzung (70km/h)",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "5": {
+     "name": "Geschwindigkeitsbegrenzung (80km/h)",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "6": {
+     "name": "Ende der Geschwindigkeitsbegrenzung (80km/h)",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "7": {
+     "name": "Geschwindigkeitsbegrenzung (100km/h)",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "8": {
+     "name": "Geschwindigkeitsbegrenzung (120km/h)",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "9": {
+     "name": "Überholverbot",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "10": {
+     "name": "Überholverbot für Fahrzeuge über 3.5t",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "11": {
+     "name": "Vorfahrt an der nächsten Kreuzung",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "12": {
+     "name": "Vorfahrtsstraße",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "13": {
+     "name": "Vorfahrt gewähren",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "14": {
+     "name": "Halt",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "15": {
+     "name": "Verbot für Fahrzeuge aller Art",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "16": {
+     "name": "Verbot für Fahrzeuge über 3.5t",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "17": {
+     "name": "Einfahrt verboten",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "18": {
+     "name": "Gefahrenstelle",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "19": {
+     "name": "Gefährliche Kurve nach links",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "20": {
+     "name": "Gefährliche Kurve nach rechts",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "21": {
+     "name": "Doppelkurve",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "22": {
+     "name": "Unebene Fahrbahn",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "23": {
+     "name": "Schleudergefahr",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "24": {
+     "name": "Verengte Fahrbahn rechts",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "25": {
+     "name": "Baustelle",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "26": {
+     "name": "Lichtzeichenanlage",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "27": {
+     "name": "Fußgänger",
+     "genauigkeit": 0.96,
+     "anzahl": 100
+    },
+    "28": {
+     "name": "Kinder",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "29": {
+     "name": "Fahrräder kreuzen",
+     "genauigkeit": 0.97,
+     "anzahl": 100
+    },
+    "30": {
+     "name": "Schnee- oder Eisglätte",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "31": {
+     "name": "Wildwechsel",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "32": {
+     "name": "Ende aller Streckenverbote",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "33": {
+     "name": "Rechts abbiegen",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "34": {
+     "name": "Links abbiegen",
+     "genauigkeit": 0.97,
+     "anzahl": 100
+    },
+    "35": {
+     "name": "Geradeaus",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "36": {
+     "name": "Geradeaus oder rechts",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    },
+    "37": {
+     "name": "Geradeaus oder links",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "38": {
+     "name": "Rechts vorbei",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "39": {
+     "name": "Links vorbei",
+     "genauigkeit": 1.0,
+     "anzahl": 100
+    },
+    "40": {
+     "name": "Kreisverkehr",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "41": {
+     "name": "Ende des Überholverbots",
+     "genauigkeit": 0.99,
+     "anzahl": 100
+    },
+    "42": {
+     "name": "Ende des Überholverbots für Fahrzeuge über 3.5t",
+     "genauigkeit": 0.98,
+     "anzahl": 100
+    }
+   }
+  },
+  "synset->gtsrb_test": {
+   "accuracy": 0.9243863816310373,
+   "makro_f1": 0.891169028825386,
+   "n": 12630,
+   "je_klasse": {
+    "0": {
+     "name": "Geschwindigkeitsbegrenzung (20km/h)",
+     "genauigkeit": 1.0,
+     "anzahl": 60
+    },
+    "1": {
+     "name": "Geschwindigkeitsbegrenzung (30km/h)",
+     "genauigkeit": 0.9486,
+     "anzahl": 720
+    },
+    "2": {
+     "name": "Geschwindigkeitsbegrenzung (50km/h)",
+     "genauigkeit": 0.952,
+     "anzahl": 750
+    },
+    "3": {
+     "name": "Geschwindigkeitsbegrenzung (60km/h)",
+     "genauigkeit": 0.8889,
+     "anzahl": 450
+    },
+    "4": {
+     "name": "Geschwindigkeitsbegrenzung (70km/h)",
+     "genauigkeit": 0.9727,
+     "anzahl": 660
+    },
+    "5": {
+     "name": "Geschwindigkeitsbegrenzung (80km/h)",
+     "genauigkeit": 0.8873,
+     "anzahl": 630
+    },
+    "6": {
+     "name": "Ende der Geschwindigkeitsbegrenzung (80km/h)",
+     "genauigkeit": 0.9533,
+     "anzahl": 150
+    },
+    "7": {
+     "name": "Geschwindigkeitsbegrenzung (100km/h)",
+     "genauigkeit": 0.9178,
+     "anzahl": 450
+    },
+    "8": {
+     "name": "Geschwindigkeitsbegrenzung (120km/h)",
+     "genauigkeit": 0.8178,
+     "anzahl": 450
+    },
+    "9": {
+     "name": "Überholverbot",
+     "genauigkeit": 0.9125,
+     "anzahl": 480
+    },
+    "10": {
+     "name": "Überholverbot für Fahrzeuge über 3.5t",
+     "genauigkeit": 0.9121,
+     "anzahl": 660
+    },
+    "11": {
+     "name": "Vorfahrt an der nächsten Kreuzung",
+     "genauigkeit": 0.9381,
+     "anzahl": 420
+    },
+    "12": {
+     "name": "Vorfahrtsstraße",
+     "genauigkeit": 0.958,
+     "anzahl": 690
+    },
+    "13": {
+     "name": "Vorfahrt gewähren",
+     "genauigkeit": 0.9792,
+     "anzahl": 720
+    },
+    "14": {
+     "name": "Halt",
+     "genauigkeit": 0.963,
+     "anzahl": 270
+    },
+    "15": {
+     "name": "Verbot für Fahrzeuge aller Art",
+     "genauigkeit": 0.9714,
+     "anzahl": 210
+    },
+    "16": {
+     "name": "Verbot für Fahrzeuge über 3.5t",
+     "genauigkeit": 1.0,
+     "anzahl": 150
+    },
+    "17": {
+     "name": "Einfahrt verboten",
+     "genauigkeit": 0.9278,
+     "anzahl": 360
+    },
+    "18": {
+     "name": "Gefahrenstelle",
+     "genauigkeit": 0.8103,
+     "anzahl": 390
+    },
+    "19": {
+     "name": "Gefährliche Kurve nach links",
+     "genauigkeit": 1.0,
+     "anzahl": 60
+    },
+    "20": {
+     "name": "Gefährliche Kurve nach rechts",
+     "genauigkeit": 1.0,
+     "anzahl": 90
+    },
+    "21": {
+     "name": "Doppelkurve",
+     "genauigkeit": 1.0,
+     "anzahl": 90
+    },
+    "22": {
+     "name": "Unebene Fahrbahn",
+     "genauigkeit": 0.9917,
+     "anzahl": 120
+    },
+    "23": {
+     "name": "Schleudergefahr",
+     "genauigkeit": 0.8133,
+     "anzahl": 150
+    },
+    "24": {
+     "name": "Verengte Fahrbahn rechts",
+     "genauigkeit": 0.8667,
+     "anzahl": 90
+    },
+    "25": {
+     "name": "Baustelle",
+     "genauigkeit": 0.9042,
+     "anzahl": 480
+    },
+    "26": {
+     "name": "Lichtzeichenanlage",
+     "genauigkeit": 0.9278,
+     "anzahl": 180
+    },
+    "27": {
+     "name": "Fußgänger",
+     "genauigkeit": 0.5,
+     "anzahl": 60
+    },
+    "28": {
+     "name": "Kinder",
+     "genauigkeit": 0.9467,
+     "anzahl": 150
+    },
+    "29": {
+     "name": "Fahrräder kreuzen",
+     "genauigkeit": 0.8444,
+     "anzahl": 90
+    },
+    "30": {
+     "name": "Schnee- oder Eisglätte",
+     "genauigkeit": 0.8533,
+     "anzahl": 150
+    },
+    "31": {
+     "name": "Wildwechsel",
+     "genauigkeit": 0.9481,
+     "anzahl": 270
+    },
+    "32": {
+     "name": "Ende aller Streckenverbote",
+     "genauigkeit": 0.9,
+     "anzahl": 60
+    },
+    "33": {
+     "name": "Rechts abbiegen",
+     "genauigkeit": 0.9952,
+     "anzahl": 210
+    },
+    "34": {
+     "name": "Links abbiegen",
+     "genauigkeit": 1.0,
+     "anzahl": 120
+    },
+    "35": {
+     "name": "Geradeaus",
+     "genauigkeit": 0.8718,
+     "anzahl": 390
+    },
+    "36": {
+     "name": "Geradeaus oder rechts",
+     "genauigkeit": 1.0,
+     "anzahl": 120
+    },
+    "37": {
+     "name": "Geradeaus oder links",
+     "genauigkeit": 1.0,
+     "anzahl": 60
+    },
+    "38": {
+     "name": "Rechts vorbei",
+     "genauigkeit": 0.9565,
+     "anzahl": 690
+    },
+    "39": {
+     "name": "Links vorbei",
+     "genauigkeit": 0.8222,
+     "anzahl": 90
+    },
+    "40": {
+     "name": "Kreisverkehr",
+     "genauigkeit": 0.8778,
+     "anzahl": 90
+    },
+    "41": {
+     "name": "Ende des Überholverbots",
+     "genauigkeit": 0.9833,
+     "anzahl": 60
+    },
+    "42": {
+     "name": "Ende des Überholverbots für Fahrzeuge über 3.5t",
+     "genauigkeit": 0.6889,
+     "anzahl": 90
+    }
+   }
+  }
+ },
+ "groesster_abfall": {
+  "synset": [
+   {
+    "klasse": 27,
+    "name": "Fußgänger",
+    "abfall": 0.46
+   },
+   {
+    "klasse": 42,
+    "name": "Ende des Überholverbots für Fahrzeuge über 3.5t",
+    "abfall": 0.2911
+   },
+   {
+    "klasse": 23,
+    "name": "Schleudergefahr",
+    "abfall": 0.1867
+   },
+   {
+    "klasse": 18,
+    "name": "Gefahrenstelle",
+    "abfall": 0.1797
+   },
+   {
+    "klasse": 39,
+    "name": "Links vorbei",
+    "abfall": 0.1778
+   },
+   {
+    "klasse": 8,
+    "name": "Geschwindigkeitsbegrenzung (120km/h)",
+    "abfall": 0.1722
+   },
+   {
+    "klasse": 30,
+    "name": "Schnee- oder Eisglätte",
+    "abfall": 0.1367
+   },
+   {
+    "klasse": 35,
+    "name": "Geradeaus",
+    "abfall": 0.1282
+   }
+  ]
+ }
+}

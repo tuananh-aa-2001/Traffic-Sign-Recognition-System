@@ -1,0 +1,9 @@
+{
+ "echt_test": {
+  "n": 651,
+  "da_acc": 0.901689708141321,
+  "zusatz_exakt": 0.46236559139784944,
+  "zielgruppe_korrekt_relevant": 0.48928571428571427,
+  "n_zielgruppe_relevant": 560
+ }
+}

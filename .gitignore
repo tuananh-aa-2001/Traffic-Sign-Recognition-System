@@ -92,3 +92,6 @@ kurs/
 
 # Zuordnung Mapillary -> Synset ist Konfiguration, nicht Daten
 !configs/mapillary_to_synset.csv
+
+# Modellgewichte aus Colab (zu groß fürs Repo)
+multitask_ergebnisse/**/*.pth

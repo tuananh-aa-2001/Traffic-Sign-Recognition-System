@@ -1,0 +1,12 @@
+Gerät: cuda
+U-Net Epoche 1/10 (148 s): Verlust 0.160, mIoU 0.835, {'Hintergrund': 0.9553, 'Hauptschild': 0.945, 'andere Schilder': 0.807, 'Mast': 0.6333}
+U-Net Epoche 2/10 (148 s): Verlust 0.085, mIoU 0.863, {'Hintergrund': 0.9593, 'Hauptschild': 0.9457, 'andere Schilder': 0.8862, 'Mast': 0.6627}
+U-Net Epoche 3/10 (152 s): Verlust 0.074, mIoU 0.856, {'Hintergrund': 0.9627, 'Hauptschild': 0.9556, 'andere Schilder': 0.8205, 'Mast': 0.6859}
+U-Net Epoche 4/10 (146 s): Verlust 0.069, mIoU 0.876, {'Hintergrund': 0.966, 'Hauptschild': 0.9558, 'andere Schilder': 0.8779, 'Mast': 0.7041}
+U-Net Epoche 5/10 (145 s): Verlust 0.064, mIoU 0.881, {'Hintergrund': 0.9672, 'Hauptschild': 0.9558, 'andere Schilder': 0.8886, 'Mast': 0.7109}
+U-Net Epoche 6/10 (145 s): Verlust 0.058, mIoU 0.884, {'Hintergrund': 0.9658, 'Hauptschild': 0.952, 'andere Schilder': 0.8941, 'Mast': 0.723}
+U-Net Epoche 7/10 (146 s): Verlust 0.055, mIoU 0.885, {'Hintergrund': 0.9675, 'Hauptschild': 0.9571, 'andere Schilder': 0.9101, 'Mast': 0.7041}
+U-Net Epoche 8/10 (143 s): Verlust 0.052, mIoU 0.890, {'Hintergrund': 0.9705, 'Hauptschild': 0.9608, 'andere Schilder': 0.9007, 'Mast': 0.7272}
+U-Net Epoche 9/10 (143 s): Verlust 0.049, mIoU 0.894, {'Hintergrund': 0.9706, 'Hauptschild': 0.9599, 'andere Schilder': 0.9077, 'Mast': 0.7385}
+U-Net Epoche 10/10 (140 s): Verlust 0.048, mIoU 0.894, {'Hintergrund': 0.9711, 'Hauptschild': 0.9611, 'andere Schilder': 0.9082, 'Mast': 0.7375}
+Ergebnis: /content/drive/MyDrive/dlacv_gtsrb/zweistufig/unet.json
