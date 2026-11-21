@@ -37,7 +37,7 @@ from src.data.crop_records import build_records
 from src.data.multitask_data import RealCropDataset, SynsetDataset, load_synset_klassen
 from src.data.zusatz_klassen import MODELL_KLASSEN
 from src.models.multitask import MaskedMultiTaskLoss, MultiTaskResNet
-from src.utils.zielgruppen import regel, zielgruppe_gleich
+from src.training.zusatz_metriken import zusatz_kennzahlen
 
 
 def set_seed(seed):
@@ -53,9 +53,8 @@ def evaluate(model, loader, device, max_batches=None):
     """Kennzahlen je Kopf. Zusatzzeichen: Schwelle 0,5; 'keins' = keine Klasse über der Schwelle."""
     model.eval()
     k = len(MODELL_KLASSEN)
-    n_h = c_h = n_d = c_d = n_z = exact = 0
-    n_zg = c_zg = n_zg_rel = c_zg_rel = 0
-    tp, fp, fn = np.zeros(k), np.zeros(k), np.zeros(k)
+    n_h = c_h = n_d = c_d = 0
+    preds, trues, gefahren = [np.zeros((0, k))], [np.zeros((0, k))], []
     for b, (x, t) in enumerate(loader):
         if max_batches and b >= max_batches:
             break
@@ -69,37 +68,12 @@ def evaluate(model, loader, device, max_batches=None):
         c_d += int(((out["da"][m] > 0).float() == t["da"][m]).sum())
         m = t["m_zusatz"] > 0
         if m.any():
-            pred = (torch.sigmoid(out["zusatz"][m]) > 0.5).float().cpu().numpy()
-            true = t["zusatz"][m].cpu().numpy()
-            n_z += len(true)
-            exact += int((pred == true).all(axis=1).sum())
-            gefahr = t["gefahr"][m].cpu().numpy()
-            for p_row, t_row, g in zip(pred, true, gefahr):
-                namen = lambda row: [MODELL_KLASSEN[j] for j in np.flatnonzero(row)] or ["keins"]
-                r_true = regel("", namen(t_row), bool(g))
-                ok = zielgruppe_gleich(regel("", namen(p_row), bool(g)), r_true)
-                n_zg += 1
-                c_zg += ok
-                if r_true["gilt_fuer"] != ["alle"] or r_true["ausgenommen"]:   # Zusatz ändert die Zielgruppe
-                    n_zg_rel += 1
-                    c_zg_rel += ok
-            tp += (pred * true).sum(0)
-            fp += (pred * (1 - true)).sum(0)
-            fn += ((1 - pred) * true).sum(0)
-    f1 = np.where(tp + fp + fn > 0, 2 * tp / np.maximum(2 * tp + fp + fn, 1), np.nan)
-    support = tp + fn
+            preds.append((torch.sigmoid(out["zusatz"][m]) > 0.5).float().cpu().numpy())
+            trues.append(t["zusatz"][m].cpu().numpy())
+            gefahren.extend(t["gefahr"][m].cpu().numpy().tolist())
     res = {"haupt_acc": c_h / n_h if n_h else None, "n_haupt": n_h,
-           "da_acc": c_d / n_d if n_d else None, "n_da": n_d,
-           "zusatz_exakt": exact / n_z if n_z else None, "n_zusatz": n_z,
-           # gleiche Wirkung auf Zielgruppen (gilt nur für / ausgenommen) wie das echte Label
-           "zielgruppe_korrekt": c_zg / n_zg if n_zg else None,
-           "zielgruppe_korrekt_relevant": c_zg_rel / n_zg_rel if n_zg_rel else None,
-           "n_zielgruppe_relevant": n_zg_rel}
-    if n_z:
-        res["zusatz_micro_f1"] = float(2 * tp.sum() / max(2 * tp.sum() + fp.sum() + fn.sum(), 1))
-        res["zusatz_macro_f1"] = float(np.nanmean(f1[support > 0])) if (support > 0).any() else None
-        res["zusatz_f1_je_klasse"] = {MODELL_KLASSEN[i]: {"f1": round(float(f1[i]), 3), "anzahl": int(support[i])}
-                                      for i in range(k) if support[i] > 0}
+           "da_acc": c_d / n_d if n_d else None, "n_da": n_d}
+    res.update(zusatz_kennzahlen(np.concatenate(preds), np.concatenate(trues), gefahren, MODELL_KLASSEN))
     return res
 
 

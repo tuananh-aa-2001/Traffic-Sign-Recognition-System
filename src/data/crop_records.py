@@ -54,7 +54,7 @@ def load_locations(path=SOURCE_LABELS):
 
 
 def test_boxes():
-    from scrape_mapillary import MAPILLARY_REGIONS, region_bbox
+    from scripts.daten.scrape_mapillary import MAPILLARY_REGIONS, region_bbox
     return [region_bbox(*MAPILLARY_REGIONS[r]) for r in TEST_REGIONEN]
 
 
