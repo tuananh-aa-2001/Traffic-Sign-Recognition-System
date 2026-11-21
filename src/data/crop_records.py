@@ -13,6 +13,7 @@ from .zusatz_klassen import KLASSEN
 
 LABELS = os.path.join("crops", "labels.csv")
 REVIEW = os.path.join("crops", "geprueft.csv")
+NACHGELABELT = os.path.join("crops", "hauptschild_nachgelabelt.csv")   # Hauptschild für Mapillary 'unbekannt'
 MAPPING = os.path.join("configs", "mapillary_to_synset.csv")
 SOURCE_LABELS = os.path.join("real_world_mapillary", "labels.csv")
 TEST_REGIONEN = ["aachen", "eifel_monschau", "koeln"]
@@ -77,6 +78,16 @@ def load_reviews(path=REVIEW):
     return done
 
 
+def load_nachgelabelt(path=NACHGELABELT):
+    """Ausschnitt -> Synset-Klasse des Hauptschilds ('' = keine passende Klasse); letzter Eintrag gilt."""
+    done = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                done[r["crop"].replace("\\", "/")] = r["haupt_synset"]
+    return done
+
+
 def build_records(allow_unreviewed=False):
     """Alle nutzbaren echten Ausschnitte als Liste von dicts.
 
@@ -85,6 +96,7 @@ def build_records(allow_unreviewed=False):
     if not os.path.exists(LABELS):
         return []
     mapping, loc, boxes, reviews = load_mapping(), load_locations(), test_boxes(), load_reviews()
+    nachgelabelt = load_nachgelabelt()
     with open(LABELS, encoding="utf-8") as f:
         rows = [r for r in csv.DictReader(f) if r["crop"] and r["methode"].startswith("mapillary")]
     records = []
@@ -108,6 +120,8 @@ def build_records(allow_unreviewed=False):
             continue
         m = mapping.get(r["hauptschild"], {})
         haupt = m.get("synset_wert", "") if m.get("sicherheit") in ("sicher", "wahrscheinlich") else ""
+        if r["hauptschild"] == "unbekannt":
+            haupt = nachgelabelt.get(r["crop"].replace("\\", "/"), "")
         # Pfade wurden unter Windows mit "\" geschrieben; "/" funktioniert auf Windows und Linux (Colab)
         records.append({"crop": r["crop"].replace("\\", "/"), "original": r["original"].replace("\\", "/"),
                         "split": split,

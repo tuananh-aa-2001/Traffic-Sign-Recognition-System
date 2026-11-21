@@ -105,6 +105,7 @@ Nutzt die Schild-Umrisse von Mapillary: Hauptschild plus die Zusatzzeichen direk
 python scripts/daten/review_crops.py --split test        # zuerst der Testsatz
 python scripts/daten/review_crops.py                     # dann die Trainingsausschnitte
 python scripts/daten/review_crops.py --statistik         # Zählung je Klasse und Split
+python scripts/daten/hauptschild_nachlabeln.py          # Hauptschild für Mapillary "unbekannt" nachtragen (138 Test, 420 Training)
 ```
 
 Fenster mit Ausschnitt, Umgebung und Vorschlag; Enter bestätigt, Tasten korrigieren. Ergebnisse in `crops/geprueft.csv`.
@@ -211,6 +212,7 @@ Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf e
 │   │   ├── scrape_mapillary.py   Fotos von Mapillary laden (NRW-Regionen, Zielgruppen in Deutschland)
 │   │   ├── crop_signs.py         Schildkombinationen aus Gesamtfotos ausschneiden
 │   │   ├── review_crops.py       Prüfwerkzeug für die Ausschnitte
+│   │   ├── hauptschild_nachlabeln.py  Hauptschild für Ausschnitte ohne Mapillary-Hauptschild
 │   │   ├── prepare_synset.py     Synset Signset Germany vorbereiten
 │   │   └── pack_colab_data.py    echte Daten für Colab verpacken
 │   ├── training/
