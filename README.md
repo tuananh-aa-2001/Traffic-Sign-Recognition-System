@@ -19,7 +19,7 @@ Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholv
 | Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft) |
 | Architektur A | trainiert auf Colab (15 Epochen, T4): Zielgruppe korrekt 94,6 % auf dem echten Test ([Ergebnisse](#ergebnisse)) |
 | E1 (Synset gegen GTSRB) | fertig: Synset-Modell verliert auf GTSRB 6,5 Pp., GTSRB-Modell auf Synset 13 Pp. ([Ergebnisse](#ergebnisse)) |
-| E4 Lernkurve | Code fertig (`experiment_e4.py`, Notebook Abschnitt 10b), Probelauf erfolgreich; Lauf auf Colab steht aus |
+| E4 Lernkurve | fertig: ab 50 echten Bildern je Zusatzzeichen 93 % Zielgruppe korrekt, mit 150 Bildern 96 % ([Ergebnisse](#ergebnisse)) |
 | Grad-CAM-Beispiele, Demo | offen |
 | Architektur B (U-Net, zweistufig) | optional (Ausblick); trainiert, auf dem echten Test deutlich schwächer als A |
 
@@ -183,6 +183,19 @@ Häufige Zusatzzeichen (Rad frei, LKW/Bus/Anhänger, PKW, Schwerbehinderte) erre
 | GTSRB | 86,4 % (0,87) | 99,4 % (0,99) |
 
 Synthetisches Training überträgt sich besser auf echte Bilder (−6,5 Pp.) als echtes auf synthetische (−13,0 Pp.). Größter Abfall Synset → GTSRB: Fußgänger (−46 Pp.), Ende Überholverbot 3,5 t (−29 Pp.); GTSRB → Synset vor allem Gefahrzeichen: Fußgänger (−33 Pp.), Radfahrer kreuzen (−32 Pp.), Doppelkurve (−28 Pp.).
+
+**E4 Lernkurve** (Forschungsfrage), A je Stufe neu trainiert (8 Epochen), echter Test (n = 651):
+
+| echte Bilder je Zusatzzeichen | Ausschnitte | Zusatz exakt | Zielgruppe korrekt | Zusatz Makro-F1 | Hauptschild |
+|---|---|---|---|---|---|
+| 0 (nur Synset) | 0 | 0,0 % | 0,0 % | 0,08 | 50,0 % |
+| 25 | 418 | 79,1 % | 86,8 % | 0,56 | 93,7 % |
+| 50 | 743 | 84,9 % | 93,4 % | 0,56 | 94,5 % |
+| 100 | 1.340 | 87,1 % | 94,5 % | 0,56 | 94,1 % |
+| 150 | 1.571 | **88,2 %** | **95,9 %** | 0,57 | 95,7 % |
+| alle (unbegrenzt) | 3.353 | 83,6 % | 92,3 % | 0,49 | 97,1 % |
+
+Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf echten Fotos (das Zusatzschild ist in Synset abgeschnitten) und nur die Hälfte der Hauptschilder. Schon 25 echte Bilder je Zusatzzeichen heben „Zielgruppe korrekt“ auf 87 %, ab etwa 50 flacht die Kurve ab (93–96 %). Mehr Bilder ohne Begrenzung helfen dem Hauptschild, schaden aber den Zusatzzeichen: der unbegrenzte Satz ist unausgewogen (1.766 × „keins“, 298 × LKW/Bus/Anhänger, seltene Klassen mit wenigen Beispielen). Der Makro-F1 bleibt auf allen Stufen bei etwa 0,56, weil seltene Klassen auch mit Begrenzung kaum Beispiele haben.
 
 **Architektur B** (optional): U-Net mIoU 0,89 auf Synset, Klassifikator 89 % auf echten Einzelschildern, als Pipeline auf dem echten Test aber nur Zusatz exakt 46 %, Zielgruppe 49 % (Fehler beim Übergang Maske → Boxen auf echten Fotos).
 
