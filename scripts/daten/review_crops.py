@@ -18,14 +18,16 @@ Tasten:
   q / Esc             beenden
 
 Beispiele:
-  python review_crops.py                    # erst Test, dann Training; Ausschnitte mit Zusatzzeichen
-  python review_crops.py --split test
-  python review_crops.py --mit-none         # auch Hauptschilder ohne Zusatzzeichen prüfen
-  python review_crops.py --statistik        # Zählung je Klasse und Split, ohne Fenster
-  python review_crops.py --nachpruefen "andere,Länge einer Strecke"
+  python scripts/daten/review_crops.py                    # erst Test, dann Training; Ausschnitte mit Zusatzzeichen
+  python scripts/daten/review_crops.py --split test
+  python scripts/daten/review_crops.py --mit-none         # auch Hauptschilder ohne Zusatzzeichen prüfen
+  python scripts/daten/review_crops.py --statistik        # Zählung je Klasse und Split, ohne Fenster
+  python scripts/daten/review_crops.py --nachpruefen "andere,Länge einer Strecke"
                                             # schon geprüfte Ausschnitte dieser Klassen erneut zeigen
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import collections
 import csv
@@ -267,5 +269,5 @@ if __name__ == "__main__":
                         help="kommagetrennte Klassen: schon geprüfte Ausschnitte dieser Klassen erneut zeigen")
     args = parser.parse_args()
     if not os.path.exists(LABELS):
-        sys.exit(f"{LABELS} fehlt. Zuerst: python crop_signs.py mapillary")
+        sys.exit(f"{LABELS} fehlt. Zuerst: python scripts/daten/crop_signs.py mapillary")
     statistik() if args.statistik else review(args)

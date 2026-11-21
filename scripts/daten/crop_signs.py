@@ -22,11 +22,13 @@ Hauptschild, Zusatzzeichen ("none" = keins) und Methode (mapillary / auto / manu
 Die Box wird gespeichert, damit man später mit anderem Rand neu ausschneiden kann.
 
 Beispiele:
-  python crop_signs.py mapillary --kontrolle 30
-  python crop_signs.py markieren real_world_wikimedia
-  python crop_signs.py markieren eigene_fotos --auto
+  python scripts/daten/crop_signs.py mapillary --kontrolle 30
+  python scripts/daten/crop_signs.py markieren real_world_wikimedia
+  python scripts/daten/crop_signs.py markieren eigene_fotos --auto
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import csv
 import json
@@ -233,7 +235,7 @@ def fetch_boxes(bild_id, token):
 def run_mapillary(args):
     src = os.path.join("real_world_mapillary", "labels.csv")
     if not os.path.exists(src):
-        sys.exit(f"{src} fehlt. Zuerst: python scrape_mapillary.py --quelle mapillary")
+        sys.exit(f"{src} fehlt. Zuerst: python scripts/daten/scrape_mapillary.py --quelle mapillary")
     cache_path = os.path.join("real_world_mapillary", "boxen.json")
     cache = {}
     if os.path.exists(cache_path):

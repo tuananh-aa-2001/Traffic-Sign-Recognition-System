@@ -1,7 +1,7 @@
 """
 Datensätze für Architektur B.
 
-SynsetSegDataset     Synset-Bild + Klassenkarte (prepare_synset.py --segmentierung) für das U-Net
+SynsetSegDataset     Synset-Bild + Klassenkarte (scripts/daten/prepare_synset.py --segmentierung) für das U-Net
 ZusatzEinzelDataset  ein einzelnes Zusatzschild aus einem echten Ausschnitt, Box von Mapillary, eine Klasse
 zusatz_einzel_items  baut die Einträge für ZusatzEinzelDataset aus den echten Ausschnitten
 """

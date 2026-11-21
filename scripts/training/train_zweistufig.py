@@ -2,19 +2,21 @@
 Architektur B trainieren und auswerten: U-Net -> Boxen der Zusatzschilder -> Klassifikator je Schild.
 
 Vorher:
-  python prepare_synset.py --split train --segmentierung
-  python prepare_synset.py --split validation --segmentierung
-  python crop_signs.py mapillary   (und möglichst review_crops.py)
+  python scripts/daten/prepare_synset.py --split train --segmentierung
+  python scripts/daten/prepare_synset.py --split validation --segmentierung
+  python scripts/daten/crop_signs.py mapillary   (und möglichst scripts/daten/review_crops.py)
 
 Beispiele:
-  python train_zweistufig.py unet               # Stufe 1 auf Synset trainieren
-  python train_zweistufig.py klassifikator      # Stufe 2 auf echten Zusatzschildern trainieren
-  python train_zweistufig.py auswerten          # ganze Pipeline auf dem echten Testsatz
-  python train_zweistufig.py alles --smoke      # Probelauf auf der CPU
+  python scripts/training/train_zweistufig.py unet               # Stufe 1 auf Synset trainieren
+  python scripts/training/train_zweistufig.py klassifikator      # Stufe 2 auf echten Zusatzschildern trainieren
+  python scripts/training/train_zweistufig.py auswerten          # ganze Pipeline auf dem echten Testsatz
+  python scripts/training/train_zweistufig.py alles --smoke      # Probelauf auf der CPU
 
 Ergebnisse: models/checkpoints/b_unet.pth, b_zusatz.pth und results/zweistufig/*.json
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import json
 import os

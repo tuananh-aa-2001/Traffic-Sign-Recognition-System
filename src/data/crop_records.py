@@ -1,5 +1,5 @@
 """
-Echte Ausschnitte (crops/) mit Split und Labels, gemeinsam genutzt von review_crops.py und dem Training.
+Echte Ausschnitte (crops/) mit Split und Labels, gemeinsam genutzt von scripts/daten/review_crops.py und dem Training.
 
 Split nach Ort: Ausschnitte aus Aachen, Eifel und Köln sind Test, alles andere Training.
 Labels: die von Hand geprüften aus crops/geprueft.csv; auf Wunsch für noch ungeprüfte

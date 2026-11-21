@@ -3,14 +3,16 @@ Experiment E4: Lernkurve. Wie viele echte Bilder je Zusatzzeichen braucht das au
 Multi-Task-Modell (Architektur A)?
 
 Für jede Stufe (0 / 25 / 50 / 100 / 150 / alle echten Trainingsausschnitte je Zusatzzeichen) wird A
-neu trainiert (train_multitask.py --echte-je-klasse N) und auf dem echten Test (Aachen, Eifel, Köln)
+neu trainiert (scripts/training/train_multitask.py --echte-je-klasse N) und auf dem echten Test (Aachen, Eifel, Köln)
 ausgewertet. Fertige Stufen werden übersprungen (ergebnis.json vorhanden), ein abgebrochener Lauf
 auf Colab kann also einfach neu gestartet werden.
 
-  python experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4
-  python experiment_e4.py --smoke            # kurzer Probelauf auf der CPU
+  python scripts/auswertung/experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4
+  python scripts/auswertung/experiment_e4.py --smoke            # kurzer Probelauf auf der CPU
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import json
 import os
@@ -33,7 +35,7 @@ def lauf(stufe, args):
     if os.path.exists(ergebnis) and not args.neu:
         print(f"Stufe {stufe}: schon vorhanden, übersprungen")
     else:
-        cmd = [sys.executable, "train_multitask.py", "--config", args.config, "--ausgabe", ordner,
+        cmd = [sys.executable, "scripts/training/train_multitask.py", "--config", args.config, "--ausgabe", ordner,
                "--epochen", str(args.epochen)]
         if stufe != "alle":
             cmd += ["--echte-je-klasse", stufe]

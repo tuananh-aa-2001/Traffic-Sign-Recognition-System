@@ -3,7 +3,7 @@
 data:
   image_size: 128                 # größer als GTSRB (48), damit das Zusatzschild lesbar bleibt
   clahe: true                     # wie die Vorverarbeitung des GTSRB-Modells
-  synset_train: train             # data/synset/train_* (prepare_synset.py --split train)
+  synset_train: train             # data/synset/train_* (scripts/daten/prepare_synset.py --split train)
   synset_val: validation          # data/synset/validation_*
   # Echte Ausschnitte: Test = Aachen, Eifel, Köln (nur geprüfte). Validierung = diese
   # Trainingsregionen, damit das Modell nie auf dem Test ausgewählt wird.

@@ -10,18 +10,20 @@ gleiche 43 Klassen (Synset-Label 0-42 = GTSRB-Klasse 0-42, geprüft am 20.11.202
   trainiert auf GTSRB        ✓                  ✓          (vorhandenes Baseline-Modell, 99,36 %)
 
 Vorher:
-  python prepare_synset.py --split train
-  python prepare_synset.py --split validation
+  python scripts/daten/prepare_synset.py --split train
+  python scripts/daten/prepare_synset.py --split validation
   GTSRB-Daten unter data/raw (python src/utils/download_dataset.py --data_dir data/raw), für die GTSRB-Spalte
 
 Beispiele:
-  python experiment_e1.py                       # trainieren (falls noch kein Modell) und alles auswerten
-  python experiment_e1.py --nur-auswerten       # nur auswerten
-  python experiment_e1.py --smoke               # Probelauf auf der CPU mit wenigen Bildern
+  python scripts/auswertung/experiment_e1.py                       # trainieren (falls noch kein Modell) und alles auswerten
+  python scripts/auswertung/experiment_e1.py --nur-auswerten       # nur auswerten
+  python scripts/auswertung/experiment_e1.py --smoke               # Probelauf auf der CPU mit wenigen Bildern
 
 Ergebnis: results/e1/ergebnis.json (Accuracy, Makro-F1, Genauigkeit je Klasse, größte Abfälle)
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import csv
 import json

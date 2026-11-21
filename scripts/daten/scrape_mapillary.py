@@ -16,12 +16,14 @@ Zugangsschlüssel (kostenlos): https://www.mapillary.com/dashboard/developers ->
 -> Client Token in die Datei mapillary_token.txt schreiben (oder $env:MAPILLARY_TOKEN = "MLY|...").
 
 Aufruf:
-  python scrape_mapillary.py --quelle mapillary --max 600
-  python scrape_mapillary.py --quelle mapillary --regionen aachen,koeln --max 50
-  python scrape_mapillary.py --quelle zielgruppen
-  python scrape_mapillary.py --quelle zielgruppen --testregionen
+  python scripts/daten/scrape_mapillary.py --quelle mapillary --max 600
+  python scripts/daten/scrape_mapillary.py --quelle mapillary --regionen aachen,koeln --max 50
+  python scripts/daten/scrape_mapillary.py --quelle zielgruppen
+  python scripts/daten/scrape_mapillary.py --quelle zielgruppen --testregionen
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import base64
 import csv

@@ -4,7 +4,7 @@ data:
   image_size: 128               # U-Net-Eingabe, wie Architektur A
   zusatz_size: 96               # einzelnes Zusatzschild
   clahe: true
-  synset_train: train           # prepare_synset.py --split train --segmentierung
+  synset_train: train           # scripts/daten/prepare_synset.py --split train --segmentierung
   synset_val: validation
   real_val_regionen: [bonn, duesseldorf, muenster, zg_berlin, zg_muenchen, zg_hamburg]
   ungepruefte_trainingsausschnitte: true

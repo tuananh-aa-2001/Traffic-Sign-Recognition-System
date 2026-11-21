@@ -7,11 +7,13 @@ Pipeline pro Frame:
   3. Glätten: einfaches IoU-Tracking + Mehrheitsentscheid über die letzten N Frames
 
 Beispiele:
-  python demo_video.py --source mein_video.mp4
-  python demo_video.py --source 0                       # Webcam
-  python demo_video.py --source mein_video.mp4 --save results/demo.mp4 --no-window
+  python scripts/auswertung/demo_video.py --source mein_video.mp4
+  python scripts/auswertung/demo_video.py --source 0                       # Webcam
+  python scripts/auswertung/demo_video.py --source mein_video.mp4 --save results/demo.mp4 --no-window
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import time
 from collections import Counter, deque

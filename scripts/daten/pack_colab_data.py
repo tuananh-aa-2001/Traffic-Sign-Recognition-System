@@ -8,9 +8,11 @@ Packt in colab_daten.zip:
 
 Die ZIP danach in Google Drive nach MyDrive/dlacv_gtsrb/ hochladen.
 
-  python pack_colab_data.py
+  python scripts/daten/pack_colab_data.py
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import os
 import zipfile
 

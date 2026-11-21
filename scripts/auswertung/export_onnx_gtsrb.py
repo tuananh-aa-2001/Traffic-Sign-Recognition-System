@@ -3,6 +3,8 @@ ONNX Export Script
 Export trained PyTorch model to ONNX format for deployment
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import sys
 
 # Windows consoles/log files default to cp1252, which cannot print the emoji status lines

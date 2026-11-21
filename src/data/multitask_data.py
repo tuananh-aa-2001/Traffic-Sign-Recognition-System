@@ -5,7 +5,7 @@ Beide liefern (Bild, Ziele). Ziele ist ein dict mit
   haupt (long, -1 = unbekannt), da (float), zusatz (float[K], Multi-Hot)
   und den Masken m_haupt, m_da, m_zusatz (1 = Label vorhanden).
 
-SynsetDataset    vorbereitete Synset-Bilder (prepare_synset.py): Hauptschild und "da"
+SynsetDataset    vorbereitete Synset-Bilder (scripts/daten/prepare_synset.py): Hauptschild und "da"
 RealCropDataset  echte Ausschnitte (crops/): "da", Zusatzzeichen und, wenn zuordenbar, Hauptschild
 """
 
@@ -48,7 +48,7 @@ def build_transform(train: bool, size: int):
 
 
 def letterbox(rgb: np.ndarray, size: int) -> np.ndarray:
-    """Quadratisch auffüllen (Bildmittelwert) und skalieren, wie in prepare_synset.py."""
+    """Quadratisch auffüllen (Bildmittelwert) und skalieren, wie in scripts/daten/prepare_synset.py."""
     h, w = rgb.shape[:2]
     side = max(h, w)
     canvas = np.empty((side, side, 3), np.uint8)

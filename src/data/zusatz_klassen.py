@@ -1,5 +1,5 @@
 """
-Klassen des Zusatzzeichen-Kopfs, gemeinsam genutzt von review_crops.py und dem Training.
+Klassen des Zusatzzeichen-Kopfs, gemeinsam genutzt von scripts/daten/review_crops.py und dem Training.
 
 Jede Klasse: (Anzeigename, Mapillary-Werte). Der Synset-Name kommt aus
 configs/mapillary_to_synset.csv. Die Reihenfolge bestimmt die Tasten im Prüfwerkzeug

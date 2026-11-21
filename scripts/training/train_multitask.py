@@ -2,18 +2,20 @@
 Architektur A trainieren: ResNet-18 mit drei Köpfen auf Synset und echten Ausschnitten.
 
 Vorher:
-  python prepare_synset.py --split train
-  python prepare_synset.py --split validation
-  python crop_signs.py mapillary        (und möglichst: python review_crops.py)
+  python scripts/daten/prepare_synset.py --split train
+  python scripts/daten/prepare_synset.py --split validation
+  python scripts/daten/crop_signs.py mapillary        (und möglichst: python scripts/daten/review_crops.py)
 
 Beispiele:
-  python train_multitask.py                       # Training nach configs/multitask.yaml
-  python train_multitask.py --smoke               # Probelauf auf der CPU mit wenigen Bildern
-  python train_multitask.py --nur-auswerten       # bestes Modell auf Test und Synset-Validierung auswerten
+  python scripts/training/train_multitask.py                       # Training nach configs/multitask.yaml
+  python scripts/training/train_multitask.py --smoke               # Probelauf auf der CPU mit wenigen Bildern
+  python scripts/training/train_multitask.py --nur-auswerten       # bestes Modell auf Test und Synset-Validierung auswerten
 
 Ergebnisse: models/checkpoints/multitask_best.pth und results/multitask/ergebnis.json
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import json
 import os
@@ -150,7 +152,7 @@ def build_data(cfg, smoke):
     if os.path.exists(os.path.join("data", "synset", f"{syn_train_split}_bilder.npy")):
         sets["syn_train"] = SynsetDataset(syn_train_split, size, True, clahe, max_n)
     else:
-        print(f"Warnung: Synset '{syn_train_split}' fehlt (prepare_synset.py), trainiere nur auf echten Ausschnitten")
+        print(f"Warnung: Synset '{syn_train_split}' fehlt (scripts/daten/prepare_synset.py), trainiere nur auf echten Ausschnitten")
     if os.path.exists(os.path.join("data", "synset", f"{d['synset_val']}_bilder.npy")):
         sets["syn_val"] = SynsetDataset(d["synset_val"], size, False, clahe, max_n)
     sets["real_train"] = RealCropDataset(real["train"], size, True, clahe)

@@ -13,11 +13,13 @@ Masken und Segmentierung werden nur mit --segmentierung geladen (für Architektu
                                     2 andere Schilder, 3 Mast (src/data/segmentation.py)
 
 Beispiele:
-  python prepare_synset.py --split validation --max 2000        # kleiner Ausschnitt zum Testen
-  python prepare_synset.py --split train                         # komplett, auf Colab (ca. 7,4 GB lesen)
-  python prepare_synset.py --split train --quelle /content/cycles_train.parquet
+  python scripts/daten/prepare_synset.py --split validation --max 2000        # kleiner Ausschnitt zum Testen
+  python scripts/daten/prepare_synset.py --split train                         # komplett, auf Colab (ca. 7,4 GB lesen)
+  python scripts/daten/prepare_synset.py --split train --quelle /content/cycles_train.parquet
 """
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))))  # Projektordner (src/)
 import argparse
 import csv
 import io

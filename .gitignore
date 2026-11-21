@@ -77,14 +77,14 @@ Thumbs.db
 *.bak
 *.log
 
-# Mapillary-Fotos und Ausschnitte (CC BY-SA, viele MB): lokal bzw. per pack_colab_data.py
+# Mapillary-Fotos und Ausschnitte (CC BY-SA, viele MB): lokal bzw. per scripts/daten/pack_colab_data.py
 real_world_mapillary/
 crops/
 
 # Zugangsdaten
 mapillary_token.txt
 
-# Vorbereitete Synset-Daten (prepare_synset.py)
+# Vorbereitete Synset-Daten (scripts/daten/prepare_synset.py)
 data/synset/
 
 # Kursunterlagen (Vorlagen, Bewertungsbogen) – nicht Teil der Abgabe

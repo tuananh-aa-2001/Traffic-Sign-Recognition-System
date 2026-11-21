@@ -67,7 +67,7 @@ $$L = \lambda_1 L_\text{haupt} + \lambda_2\, m_\text{da} L_\text{da} + \lambda_3
 - Augmentierung ohne Spiegeln (Pfeile und Richtungen würden falsch).
 - Klassenliste des Zusatz-Kopfs: [`src/data/zusatz_klassen.py`](src/data/zusatz_klassen.py), vorläufig 26 Klassen, wird nach der Deutschland-Suche anhand der Häufigkeiten festgelegt.
 
-**Architektur B** (optional, Ausblick): U-Net auf den Synset-Klassenkarten trennt Hauptschild, andere Schilder und Mast; aus der Karte entstehen Boxen, jedes Zusatzschild wird einzeln klassifiziert (`train_zweistufig.py`, Code und Probelauf fertig).
+**Architektur B** (optional, Ausblick): U-Net auf den Synset-Klassenkarten trennt Hauptschild, andere Schilder und Mast; aus der Karte entstehen Boxen, jedes Zusatzschild wird einzeln klassifiziert (`scripts/training/train_zweistufig.py`, Code und Probelauf fertig).
 
 ---
 
@@ -86,15 +86,15 @@ Für Mapillary einen Client-Token anlegen (https://www.mapillary.com/dashboard/d
 ### 1. Echte Fotos sammeln
 
 ```powershell
-python scrape_mapillary.py --quelle mapillary                      # 21 Regionen in NRW (Test + Training)
-python scrape_mapillary.py --quelle zielgruppen                    # 15 Zielgruppen-Zusatzzeichen in 66 Städten
-python scrape_mapillary.py --quelle zielgruppen --testregionen     # dieselben Zeichen nur in Aachen, Eifel, Köln
+python scripts/daten/scrape_mapillary.py --quelle mapillary                      # 21 Regionen in NRW (Test + Training)
+python scripts/daten/scrape_mapillary.py --quelle zielgruppen                    # 15 Zielgruppen-Zusatzzeichen in 66 Städten
+python scripts/daten/scrape_mapillary.py --quelle zielgruppen --testregionen     # dieselben Zeichen nur in Aachen, Eifel, Köln
 ```
 
 ### 2. Schildkombinationen ausschneiden
 
 ```powershell
-python crop_signs.py mapillary
+python scripts/daten/crop_signs.py mapillary
 ```
 
 Nutzt die Schild-Umrisse von Mapillary: Hauptschild plus die Zusatzzeichen direkt darunter, 10 % Rand. Zusatzzeichen ohne erkanntes Hauptschild werden per Farbsuche gerettet (`crops/mapillary_gerettet/`).
@@ -102,9 +102,9 @@ Nutzt die Schild-Umrisse von Mapillary: Hauptschild plus die Zusatzzeichen direk
 ### 3. Labels von Hand prüfen
 
 ```powershell
-python review_crops.py --split test        # zuerst der Testsatz
-python review_crops.py                     # dann die Trainingsausschnitte
-python review_crops.py --statistik         # Zählung je Klasse und Split
+python scripts/daten/review_crops.py --split test        # zuerst der Testsatz
+python scripts/daten/review_crops.py                     # dann die Trainingsausschnitte
+python scripts/daten/review_crops.py --statistik         # Zählung je Klasse und Split
 ```
 
 Fenster mit Ausschnitt, Umgebung und Vorschlag; Enter bestätigt, Tasten korrigieren. Ergebnisse in `crops/geprueft.csv`.
@@ -112,8 +112,8 @@ Fenster mit Ausschnitt, Umgebung und Vorschlag; Enter bestätigt, Tasten korrigi
 ### 4. Synset vorbereiten
 
 ```powershell
-python prepare_synset.py --split validation
-python prepare_synset.py --split train      # liest 7,4 GB, besser auf Colab
+python scripts/daten/prepare_synset.py --split validation
+python scripts/daten/prepare_synset.py --split train      # liest 7,4 GB, besser auf Colab
 ```
 
 Liest die Parquet-Datei Zeilengruppe für Zeilengruppe (auch direkt von Hugging Face) und speichert die Bilder als 128×128-Array in `data/synset/`.
@@ -121,16 +121,16 @@ Liest die Parquet-Datei Zeilengruppe für Zeilengruppe (auch direkt von Hugging 
 ### 5. Architektur A trainieren
 
 ```powershell
-python train_multitask.py --smoke           # Probelauf auf der CPU (ca. 20 s)
+python scripts/training/train_multitask.py --smoke           # Probelauf auf der CPU (ca. 20 s)
 ```
 
-Das eigentliche Training läuft auf Google Colab: [`notebooks/train_multitask_colab.ipynb`](notebooks/train_multitask_colab.ipynb). Vorher `python pack_colab_data.py` ausführen und `colab_daten.zip` nach `MyDrive/dlacv_gtsrb/` hochladen. Ergebnis: `results/multitask/ergebnis.json` (Kennzahlen je Kopf, F1 je Zusatzzeichen).
+Das eigentliche Training läuft auf Google Colab: [`notebooks/train_multitask_colab.ipynb`](notebooks/train_multitask_colab.ipynb). Vorher `python scripts/daten/pack_colab_data.py` ausführen und `colab_daten.zip` nach `MyDrive/dlacv_gtsrb/` hochladen. Ergebnis: `results/multitask/ergebnis.json` (Kennzahlen je Kopf, F1 je Zusatzzeichen).
 
 ### 6. Experiment E1
 
 ```powershell
-python experiment_e1.py --smoke             # Probelauf auf der CPU
-python experiment_e1.py                     # auf Colab: Abschnitt 9 im Notebook
+python scripts/auswertung/experiment_e1.py --smoke             # Probelauf auf der CPU
+python scripts/auswertung/experiment_e1.py                     # auf Colab: Abschnitt 9 im Notebook
 ```
 
 Trainiert die GTSRB-Architektur (ResNet-18, 48×48) auf den 43 Synset-Klassen, die den GTSRB-Klassen entsprechen (Label 0–42, Namen geprüft), und vergleicht mit dem GTSRB-Modell in einer 2×2-Tabelle (trainiert auf Synset/GTSRB × getestet auf Synset/GTSRB). Ergebnis: `results/e1/ergebnis.json`.
@@ -140,8 +140,8 @@ Trainiert die GTSRB-Architektur (ResNet-18, 48×48) auf den 43 Synset-Klassen, d
 ### 7. Experiment E4 (Lernkurve)
 
 ```bash
-python experiment_e4.py --smoke                                          # Probelauf
-python experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4   # auf Colab: Abschnitt 10b
+python scripts/auswertung/experiment_e4.py --smoke                                          # Probelauf
+python scripts/auswertung/experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4   # auf Colab: Abschnitt 10b
 ```
 
 Trainiert A je Stufe neu mit höchstens 0 / 25 / 50 / 100 / 150 / allen echten Trainingsausschnitten je Zusatzzeichen („keins“ zählt als Klasse; 418 / 743 / 1.340 / 1.571 / 3.353 Ausschnitte), 8 Epochen je Stufe. Ergebnis: `results/e4/lernkurve.json` und `lernkurve.png`.
@@ -206,17 +206,24 @@ Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf e
 ## Projektstruktur
 
 ```
-├── scrape_mapillary.py        Fotos von Mapillary laden (NRW-Regionen, Zielgruppen in Deutschland)
-├── crop_signs.py              Schildkombinationen aus Gesamtfotos ausschneiden
-├── review_crops.py            Prüfwerkzeug für die Ausschnitte
-├── prepare_synset.py          Synset Signset Germany vorbereiten
-├── train_multitask.py         Architektur A trainieren und auswerten
-├── experiment_e1.py           E1: Synset gegen GTSRB beim Hauptschild
-├── pack_colab_data.py         echte Daten für Colab verpacken
-├── train_gtsrb.py             GTSRB-Baseline: Training
-├── evaluate_gtsrb.py          GTSRB-Baseline: Auswertung
-├── export_onnx_gtsrb.py       GTSRB-Baseline: ONNX-Export
-├── demo_video.py              Live-Demo der GTSRB-Baseline (Video/Webcam)
+├── scripts/                   alle Skripte, immer vom Projektordner aus starten (python scripts/…)
+│   ├── daten/
+│   │   ├── scrape_mapillary.py   Fotos von Mapillary laden (NRW-Regionen, Zielgruppen in Deutschland)
+│   │   ├── crop_signs.py         Schildkombinationen aus Gesamtfotos ausschneiden
+│   │   ├── review_crops.py       Prüfwerkzeug für die Ausschnitte
+│   │   ├── prepare_synset.py     Synset Signset Germany vorbereiten
+│   │   └── pack_colab_data.py    echte Daten für Colab verpacken
+│   ├── training/
+│   │   ├── train_multitask.py    Architektur A trainieren und auswerten
+│   │   ├── train_zweistufig.py   Architektur B (Ausblick)
+│   │   └── train_gtsrb.py        GTSRB-Baseline: Training
+│   └── auswertung/
+│       ├── experiment_e1.py      E1: Synset gegen GTSRB beim Hauptschild
+│       ├── experiment_e4.py      E4: Lernkurve über die Zahl echter Bilder
+│       ├── evaluate_gtsrb.py     GTSRB-Baseline: Auswertung
+│       ├── export_onnx_gtsrb.py  GTSRB-Baseline: ONNX-Export
+│       └── demo_video.py         Live-Demo der GTSRB-Baseline (Video/Webcam)
+├── multitask_ergebnisse/      Ergebnisse von Colab (JSON, Logs, Plots; ohne Gewichte)
 ├── configs/
 │   ├── multitask.yaml         Konfiguration Architektur A
 │   ├── synset_klassen.json    Synset-Klassennamen (von prepare_synset.py)

@@ -40,7 +40,7 @@ The dataset will be downloaded automatically when you start training. No manual 
 
 ### Train the Model
 ```bash
-python train_gtsrb.py
+python scripts/training/train_gtsrb.py
 ```
 
 This will:
@@ -57,7 +57,7 @@ This will:
 After training completes, evaluate on test set:
 
 ```bash
-python evaluate_gtsrb.py --save_cm --benchmark
+python scripts/auswertung/evaluate_gtsrb.py --save_cm --benchmark
 ```
 
 This will:
@@ -71,7 +71,7 @@ This will:
 For deployment:
 
 ```bash
-python export_onnx_gtsrb.py --verify --benchmark
+python scripts/auswertung/export_onnx_gtsrb.py --verify --benchmark
 ```
 
 This will:
@@ -120,7 +120,7 @@ After training, you should see:
 ## Next Steps
 
 1. **Visualize Results**: Check `results/` folder for training curves and confusion matrix
-2. **Test on Custom Images**: Modify `evaluate_gtsrb.py` to test on your own traffic sign images
+2. **Test on Custom Images**: Modify `scripts/auswertung/evaluate_gtsrb.py` to test on your own traffic sign images
 3. **Deploy**: Use the ONNX model for deployment in production systems
 
 ## Need Help?
