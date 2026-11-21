@@ -6,7 +6,9 @@ Projekt im Modul *Deep Learning Applications in Computer Vision* (DLACV), FH Aac
 
 Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholverbot“ plus „LKW, Bus, PKW mit Anhänger“ gilt nur für diese Fahrzeuge, „Gehweg“ plus „Radfahrer frei“ erlaubt auch das Radfahren. Bekannte Benchmarks wie GTSRB enthalten nur das Hauptschild. Dieses Projekt erkennt die ganze Kombination und leitet daraus ab, für welche Zielgruppe (LKW, PKW, Bus, Fahrrad, Fußgänger …) die Regel gilt.
 
-**Forschungsfrage:** Wie viele echte Bilder braucht ein auf synthetischen Daten trainiertes Multi-Task-Modell, um Zusatzzeichen und Zielgruppen auf echten Fotos zu erkennen? Startpunkt der Lernkurve sind null echte Bilder, also das, was Synset allein leistet.
+**Forschungsfrage:** Ab wie vielen echten Bildern je Zusatzzeichen erkennt ein mit synthetischen Daten trainiertes Multi-Task-Modell Zusatzzeichen auf echten Fotos so gut, dass sich die betroffene Zielgruppe ableiten lässt?
+
+**Ziel:** Aus einem Foto Hauptschild und Zusatzzeichen erkennen und daraus ableiten, für wen die Regel gilt, mit möglichst wenigen echten Bildern. Startpunkt der Lernkurve sind null echte Bilder, also das, was Synset allein leistet.
 
 ---
 
