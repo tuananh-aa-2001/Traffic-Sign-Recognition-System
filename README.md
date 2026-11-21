@@ -124,7 +124,7 @@ Liest die Parquet-Datei Zeilengruppe für Zeilengruppe (auch direkt von Hugging 
 python scripts/training/train_multitask.py --smoke           # Probelauf auf der CPU (ca. 20 s)
 ```
 
-Das eigentliche Training läuft auf Google Colab: [`notebooks/train_multitask_colab.ipynb`](notebooks/train_multitask_colab.ipynb). Vorher `python scripts/daten/pack_colab_data.py` ausführen und `colab_daten.zip` nach `MyDrive/dlacv_gtsrb/` hochladen. Ergebnis: `results/multitask/ergebnis.json` (Kennzahlen je Kopf, F1 je Zusatzzeichen).
+Das eigentliche Training läuft auf Google Colab: [`notebooks/train_multitask_colab.ipynb`](notebooks/train_multitask_colab.ipynb). Vorher `python scripts/daten/pack_colab_data.py` ausführen und `data/colab_daten.zip` nach `MyDrive/dlacv_gtsrb/` hochladen. Ergebnis: `results/multitask/ergebnis.json` (Kennzahlen je Kopf, F1 je Zusatzzeichen).
 
 ### 6. Experiment E1
 

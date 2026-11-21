@@ -1,7 +1,7 @@
 """
 Echte Daten für Colab verpacken (sie liegen wegen .gitignore nicht im Repo).
 
-Packt in colab_daten.zip:
+Packt in data/colab_daten.zip:
   crops/                            Ausschnitte, labels.csv, geprueft.csv (ohne Kontrollbilder)
   real_world_mapillary/labels.csv   Orte der Fotos (für den Split nach Region)
   configs/mapillary_to_synset.csv   Zuordnung Mapillary -> Synset
@@ -16,9 +16,10 @@ _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.
 import os
 import zipfile
 
-ZIEL = "colab_daten.zip"
+ZIEL = os.path.join("data", "colab_daten.zip")
 DATEIEN = [os.path.join("real_world_mapillary", "labels.csv"), os.path.join("configs", "mapillary_to_synset.csv")]
 
+os.makedirs("data", exist_ok=True)
 with zipfile.ZipFile(ZIEL, "w", zipfile.ZIP_STORED) as z:     # JPEGs sind schon komprimiert
     n = 0
     for root, _, files in os.walk("crops"):
