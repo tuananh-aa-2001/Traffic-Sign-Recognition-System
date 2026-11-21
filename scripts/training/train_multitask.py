@@ -104,6 +104,13 @@ def begrenze_je_klasse(records, n, seed):
     return auswahl
 
 
+def begrenze_keins(records, n, seed):
+    """Höchstens n echte Trainingsausschnitte ohne Zusatzzeichen ('keins'); alle anderen bleiben."""
+    keins = [r for r in records if r["klassen"] == ["keins"]]
+    random.Random(seed).shuffle(keins)
+    return [r for r in records if r["klassen"] != ["keins"]] + keins[:n]
+
+
 def build_data(cfg, smoke):
     d = cfg["data"]
     size, clahe = d["image_size"], d["clahe"]
@@ -117,6 +124,9 @@ def build_data(cfg, smoke):
     if d.get("echte_je_klasse") is not None:
         real["train"] = begrenze_je_klasse(real["train"], d["echte_je_klasse"], cfg["seed"])
         print(f"E4: höchstens {d['echte_je_klasse']} echte Trainingsausschnitte je Zusatzzeichen")
+    if d.get("max_keins") is not None:
+        real["train"] = begrenze_keins(real["train"], d["max_keins"], cfg["seed"])
+        print(f"höchstens {d['max_keins']} echte Trainingsausschnitte ohne Zusatzzeichen")
     print("Echte Ausschnitte: " + ", ".join(f"{k} {len(v)}" for k, v in real.items())
           + f" (davon geprüft im Training: {sum(r['geprueft'] for r in real['train'])})")
 
@@ -168,6 +178,10 @@ def main(args):
         cfg["output"]["results_dir"] = os.path.join("results", "multitask_smoke")
     if args.epochen:
         cfg["training"]["num_epochs"] = args.epochen
+    if args.max_keins is not None:
+        cfg["data"]["max_keins"] = args.max_keins
+    if args.seed is not None:
+        cfg["seed"] = args.seed
     if args.echte_je_klasse is not None:
         cfg["data"]["echte_je_klasse"] = args.echte_je_klasse
     if args.ausgabe:
@@ -238,6 +252,7 @@ def main(args):
     state = torch.load(ckpt_path, map_location=device)
     model.load_state_dict(state["model"])
     ergebnis = {"epoche": state["epoche"], "echte_je_klasse": cfg["data"].get("echte_je_klasse"),
+                "max_keins": cfg["data"].get("max_keins"), "seed": cfg["seed"],
                 "n_echt_train": len(sets["real_train"]),
                 "echt_test": evaluate(model, eval_loader(sets["real_test"], cfg, args.smoke), device, max_eval)
                 if len(sets["real_test"]) else {},
@@ -259,5 +274,8 @@ if __name__ == "__main__":
     p.add_argument("--nur-auswerten", action="store_true")
     p.add_argument("--echte-je-klasse", type=int, default=None,
                    help="E4: höchstens so viele echte Trainingsausschnitte je Zusatzzeichen (0 = nur Synset)")
+    p.add_argument("--max-keins", type=int, default=None,
+                   help="höchstens N echte Trainingsausschnitte ohne Zusatzzeichen (gegen Übergewicht von 'keins')")
+    p.add_argument("--seed", type=int, default=None, help="überschreibt den Seed aus der Config")
     p.add_argument("--ausgabe", default=None, help="Ergebnisordner (Checkpoint landet darin)")
     main(p.parse_args())
