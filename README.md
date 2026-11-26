@@ -12,17 +12,19 @@ Ein Verkehrszeichen gilt oft nur zusammen mit seinem Zusatzzeichen: „Überholv
 
 ---
 
-## Stand (20.11.2026)
+## Stand (26.11.2026)
 
 | Baustein | Stand |
 |---|---|
 | GTSRB-Baseline (ResNet-18, 43 Klassen) | fertig: 99,36 % auf dem GTSRB-Testset, 17 ms je Schild auf der Laptop-CPU ([Details](docs/gtsrb_baseline.md)) |
 | Synset-Stichprobe | fertig: Zusatzschild in 170 von 170 Bildern unten abgeschnitten (siehe [Daten](#daten)) |
-| Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft) |
+| Echte Fotos (Mapillary) | 3.353 Ausschnitte Training, 656 Validierung, 651 Test (Aachen/Eifel/Köln, von Hand geprüft); 558 fehlende Hauptschilder nachgelabelt (Test: 620 statt 490 mit Label) |
 | Architektur A | trainiert auf Colab (15 Epochen, T4): Zielgruppe korrekt 94,6 % auf dem echten Test ([Ergebnisse](#ergebnisse)) |
 | E1 (Synset gegen GTSRB) | fertig: Synset-Modell verliert auf GTSRB 6,5 Pp., GTSRB-Modell auf Synset 13 Pp. ([Ergebnisse](#ergebnisse)) |
-| E4 Lernkurve | fertig: ab 50 echten Bildern je Zusatzzeichen 93 % Zielgruppe korrekt, mit 150 Bildern 96 % ([Ergebnisse](#ergebnisse)) |
-| Grad-CAM-Beispiele, Demo | offen |
+| E4 Lernkurve | fertig, mit 3 Seeds bestätigt: ab etwa 50 echten Bildern je Zusatzzeichen flacht die Kurve ab (Zielgruppe korrekt 93,7 ± 0,5 %) ([Ergebnisse](#ergebnisse)) |
+| Demonstrator | Gerüst fertig (Gradio-App mit Regel und Grad-CAM, [Abschnitt 8](#8-demonstrator)); wartet auf das neu trainierte Modell |
+| A mit nachgelabelten Hauptschildern | vorbereitet (Colab-Abschnitt 7 → `multitask_v2`), wartet auf freie GPU |
+| Zwischenpräsentation (15.12.) | Entwurf: `praesentationen/02_zwischenpraesentation.pptx` |
 | Architektur B (U-Net, zweistufig) | optional (Ausblick); trainiert, auf dem echten Test deutlich schwächer als A |
 
 ---
@@ -79,7 +81,10 @@ $$L = \lambda_1 L_\text{haupt} + \lambda_2\, m_\text{da} L_\text{da} + \lambda_3
 python -m venv venv
 .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+python -m pytest -q tests          # 18 Tests
 ```
+
+Alle Befehle mit dem Python aus `venv` ausführen; dem System-Python fehlen OpenCV und TensorBoard.
 
 Für Mapillary einen Client-Token anlegen (https://www.mapillary.com/dashboard/developers) und in `mapillary_token.txt` speichern (steht in `.gitignore`).
 
@@ -145,7 +150,15 @@ python scripts/auswertung/experiment_e4.py --smoke                              
 python scripts/auswertung/experiment_e4.py --config configs/colab_multitask.yaml --ziel results/e4   # auf Colab: Abschnitt 10b
 ```
 
-Trainiert A je Stufe neu mit höchstens 0 / 25 / 50 / 100 / 150 / allen echten Trainingsausschnitten je Zusatzzeichen („keins“ zählt als Klasse; 418 / 743 / 1.340 / 1.571 / 3.353 Ausschnitte), 8 Epochen je Stufe. Ergebnis: `results/e4/lernkurve.json` und `lernkurve.png`.
+Trainiert A je Stufe neu mit höchstens 0 / 25 / 50 / 100 / 150 / allen echten Trainingsausschnitten je Zusatzzeichen („keins“ zählt als Klasse; 418 / 743 / 1.340 / 1.571 / 3.353 Ausschnitte), 8 Epochen je Stufe. Ergebnis: `results/e4/lernkurve.json` und `lernkurve.png`. Mit `--seed N --stufen 25 50 150 --ziel …_seedN` werden Stufen mit anderem Seed wiederholt (Colab-Abschnitt 10d).
+
+### 8. Demonstrator
+
+```powershell
+.\venv\Scripts\python scripts/demo/app.py --modell <Ordner>/multitask_v2/modell.pth   # dann http://127.0.0.1:7860
+```
+
+Web-App (Gradio, läuft auf der CPU): Foto laden, den Schildmast zuschneiden, „Erkennen“. Ausgabe: die drei wahrscheinlichsten Hauptschilder, Zusatzschild ja/nein, Zusatzzeichen ab 50 %, die Regel nach der StVO-Tabelle (gilt für / ausgenommen / nicht betroffen) und eine Grad-CAM-Heatmap. Bei unsicheren Ergebnissen erscheint ein Hinweis; unten Beispiele aus dem echten Testsatz. Das Modell erwartet Ausschnitte, keine ganzen Straßenfotos. Logik in `src/demo/vorhersage.py`, Tests in `tests/test_demo.py`.
 
 ---
 
@@ -178,6 +191,10 @@ Rohdaten: [`multitask_ergebnisse/`](multitask_ergebnisse/) (JSON, Logs, Verlaufs
 
 Häufige Zusatzzeichen (Rad frei, LKW/Bus/Anhänger, PKW, Schwerbehinderte) erreichen F1 ≥ 0,94; seltene (Straßenbahn, Umweltzone, Text, Bei Nässe, Zeitangabe, Abschleppen; je 1–7 Testbeispiele) F1 = 0. Auf den echten Validierungsregionen mit vielen seltenen Zielgruppen liegt „Zielgruppe korrekt“ nur bei 0,70; das motiviert E4.
 
+Der niedrige Makro-F1 liegt an Klassen ohne echte Trainingsbilder: Text, Bei Nässe, Zeitangabe und Abschleppen haben keins, Straßenbahn und Umweltzone frei nur 5–7 (Synset liefert keine Zusatzzeichen-Labels). Ohne die vier Klassen ohne Trainingsbilder liegt Makro-F1 bei etwa 0,70; neue Läufe schreiben dafür `zusatz_macro_f1_trainierbar`. Die Klassenliste bleibt trotzdem: Zusammenlegen würde die Zielgruppen-Wahrheit verfälschen.
+
+Gegenprobe „keins“ begrenzen (A mit höchstens 300 Ausschnitten ohne Zusatzzeichen, 15 Epochen): Zusatz exakt 88,2 %, Zielgruppe 95,2 %, Makro-F1 0,57, also +0,6 bis +1,4 Punkte und damit im Bereich der Seed-Schwankung. Die volle Trainingsmenge bleibt.
+
 **E1**, ResNet-18 (48×48) auf den 43 gemeinsamen Klassen, Accuracy (Makro-F1):
 
 | trainiert auf ↓ / getestet auf → | Synset-Validierung (n = 4.300) | GTSRB-Test (n = 12.630) |
@@ -198,7 +215,17 @@ Synthetisches Training überträgt sich besser auf echte Bilder (−6,5 Pp.) als
 | 150 | 1.571 | **88,2 %** | **95,9 %** | 0,57 | 95,7 % |
 | alle (unbegrenzt) | 3.353 | 83,6 % | 92,3 % | 0,49 | 97,1 % |
 
-Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf echten Fotos (das Zusatzschild ist in Synset abgeschnitten) und nur die Hälfte der Hauptschilder. Schon 25 echte Bilder je Zusatzzeichen heben „Zielgruppe korrekt“ auf 87 %, ab etwa 50 flacht die Kurve ab (93–96 %). Mehr Bilder ohne Begrenzung helfen dem Hauptschild, schaden aber den Zusatzzeichen: der unbegrenzte Satz ist unausgewogen (1.766 × „keins“, 298 × LKW/Bus/Anhänger, seltene Klassen mit wenigen Beispielen). Der Makro-F1 bleibt auf allen Stufen bei etwa 0,56, weil seltene Klassen auch mit Begrenzung kaum Beispiele haben.
+Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf echten Fotos (das Zusatzschild ist in Synset abgeschnitten) und nur die Hälfte der Hauptschilder. Schon 25 echte Bilder je Zusatzzeichen heben „Zielgruppe korrekt“ auf 87 %, ab etwa 50 flacht die Kurve ab (93–96 %). Die Stufe „alle“ liegt bei 8 Epochen unter 150: Über die Hälfte der echten Ausschnitte ist „keins“, der Zusatz-Kopf sieht je Epoche weniger Zusatzzeichen. Mit 15 Epochen verschwindet der Unterschied (siehe Gegenprobe oben); das Übergewicht bremst also das Lernen, begrenzt aber nicht das Ergebnis. Der Makro-F1 bleibt auf allen Stufen bei etwa 0,56, weil seltene Klassen auch mit Begrenzung kaum Beispiele haben.
+
+Wiederholung mit 3 Seeds (Colab-Abschnitt 10d; Mittelwert ± Standardabweichung):
+
+| echte Bilder je Zusatzzeichen | Zusatz exakt | Zielgruppe korrekt | Zusatz Makro-F1 |
+|---|---|---|---|
+| 25 | 81,4 ± 2,6 % | 89,3 ± 2,5 % | 0,548 |
+| 50 | 85,9 ± 0,8 % | 93,7 ± 0,5 % | 0,572 |
+| 150 | 87,1 ± 1,0 % | 95,1 ± 0,7 % | 0,555 |
+
+Von 25 auf 50 steigen die Werte um 4–5 Punkte und die Streuung fällt unter einen Punkt; von 50 auf 150 kommen nur noch 1,2–1,4 Punkte dazu.
 
 **Architektur B** (optional): U-Net mIoU 0,89 auf Synset, Klassifikator 89 % auf echten Einzelschildern, als Pipeline auf dem echten Test aber nur Zusatz exakt 46 %, Zielgruppe 49 % (Fehler beim Übergang Maske → Boxen auf echten Fotos).
 
@@ -219,12 +246,15 @@ Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf e
 │   │   ├── train_multitask.py    Architektur A trainieren und auswerten
 │   │   ├── train_zweistufig.py   Architektur B (Ausblick)
 │   │   └── train_gtsrb.py        GTSRB-Baseline: Training
-│   └── auswertung/
-│       ├── experiment_e1.py      E1: Synset gegen GTSRB beim Hauptschild
-│       ├── experiment_e4.py      E4: Lernkurve über die Zahl echter Bilder
-│       ├── evaluate_gtsrb.py     GTSRB-Baseline: Auswertung
-│       ├── export_onnx_gtsrb.py  GTSRB-Baseline: ONNX-Export
-│       └── demo_video.py         Live-Demo der GTSRB-Baseline (Video/Webcam)
+│   ├── auswertung/
+│   │   ├── experiment_e1.py      E1: Synset gegen GTSRB beim Hauptschild
+│   │   ├── experiment_e4.py      E4: Lernkurve über die Zahl echter Bilder
+│   │   ├── evaluate_gtsrb.py     GTSRB-Baseline: Auswertung
+│   │   ├── export_onnx_gtsrb.py  GTSRB-Baseline: ONNX-Export
+│   │   ├── demo_video.py         Live-Demo der GTSRB-Baseline (Video/Webcam)
+│   │   └── zwischenpraesentation_bauen.py  erzeugt praesentationen/02_zwischenpraesentation.pptx
+│   └── demo/
+│       └── app.py                Demonstrator für Architektur A (Gradio)
 ├── multitask_ergebnisse/      Ergebnisse von Colab (JSON, Logs, Plots; ohne Gewichte)
 ├── configs/
 │   ├── multitask.yaml         Konfiguration Architektur A
@@ -239,9 +269,12 @@ Antwort auf die Forschungsfrage: Synset allein erkennt keine Zusatzzeichen auf e
 │   ├── models/
 │   │   ├── multitask.py       MultiTaskResNet und maskierter Verlust
 │   │   └── resnet_gtsrb.py    GTSRB-Baseline
-│   ├── training/              Trainer und Metriken der Baseline
+│   ├── training/              Trainer und Metriken der Baseline; zusatz_metriken.py für Zusatzzeichen und Zielgruppe
+│   ├── demo/
+│   │   └── vorhersage.py      Vorhersage, Regel und Grad-CAM für den Demonstrator
 │   └── utils/
 │       └── zielgruppen.py     Zielgruppen-Tabelle nach StVO, Regel als Text
+├── tests/                     Unit-Tests (Metriken, Zielgruppen, Demonstrator)
 ├── notebooks/
 │   ├── train_multitask_colab.ipynb
 │   └── train_gtsrb_colab.ipynb
