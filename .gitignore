@@ -95,3 +95,6 @@ kurs/
 
 # Modellgewichte aus Colab (zu groß fürs Repo)
 multitask_ergebnisse/**/*.pth
+
+# Lokale Arbeitsregeln für Claude
+CLAUDE.md
