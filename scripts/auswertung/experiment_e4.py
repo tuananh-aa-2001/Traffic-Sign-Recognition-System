@@ -39,6 +39,8 @@ def lauf(stufe, args):
                "--epochen", str(args.epochen)]
         if stufe != "alle":
             cmd += ["--echte-je-klasse", stufe]
+        if args.seed is not None:
+            cmd += ["--seed", str(args.seed)]
         if args.smoke:
             cmd.append("--smoke")
         print(f"\n=== Stufe {stufe}: {' '.join(cmd)}", flush=True)
@@ -91,6 +93,7 @@ if __name__ == "__main__":
     p.add_argument("--stufen", nargs="+", default=STUFEN)
     p.add_argument("--epochen", type=int, default=8, help="je Stufe (A selbst: 15)")
     p.add_argument("--neu", action="store_true", help="vorhandene Stufen neu trainieren")
+    p.add_argument("--seed", type=int, default=None, help="Seed je Lauf; für Wiederholungen eigenen --ziel nutzen")
     p.add_argument("--smoke", action="store_true")
     a = p.parse_args()
     if a.smoke:
