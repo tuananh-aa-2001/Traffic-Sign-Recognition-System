@@ -270,5 +270,17 @@ for e in [alt[0], alt[2], alt[4]] + neu + [alt[5], alt[6]]:
     lst.append(e)
 for e in (alt[1], alt[3]):
     p.part.drop_rel(e.rId)
+# Quellen: [1] GTSRB wird nur auf der weggelassenen Problemfolie zitiert -> streichen, Rest nach IEEE neu nummerieren
+quellen = [sh for sh in p.slides[9].shapes if sh.has_text_frame and sh.text_frame.text.startswith("[1]")][0]
+erste = quellen.text_frame.paragraphs[0]
+erste._p.getparent().remove(erste._p)
+for folie in p.slides:
+    for sh in folie.shapes:
+        if not sh.has_text_frame:
+            continue
+        for para in sh.text_frame.paragraphs:
+            for r in para.runs:
+                for n in range(2, 7):
+                    r.text = r.text.replace(f"[{n}]", f"[{n - 1}]")
 p.save(OUT)
 print("ok", len(p.slides))
