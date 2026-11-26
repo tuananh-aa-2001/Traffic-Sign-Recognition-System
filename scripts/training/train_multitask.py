@@ -49,7 +49,7 @@ def set_seed(seed):
 # ---------------------------------------------------------------- Auswertung
 
 @torch.no_grad()
-def evaluate(model, loader, device, max_batches=None):
+def evaluate(model, loader, device, max_batches=None, trainierbar=None):
     """Kennzahlen je Kopf. Zusatzzeichen: Schwelle 0,5; 'keins' = keine Klasse über der Schwelle."""
     model.eval()
     k = len(MODELL_KLASSEN)
@@ -73,7 +73,7 @@ def evaluate(model, loader, device, max_batches=None):
             gefahren.extend(t["gefahr"][m].cpu().numpy().tolist())
     res = {"haupt_acc": c_h / n_h if n_h else None, "n_haupt": n_h,
            "da_acc": c_d / n_d if n_d else None, "n_da": n_d}
-    res.update(zusatz_kennzahlen(np.concatenate(preds), np.concatenate(trues), gefahren, MODELL_KLASSEN))
+    res.update(zusatz_kennzahlen(np.concatenate(preds), np.concatenate(trues), gefahren, MODELL_KLASSEN, trainierbar))
     return res
 
 
@@ -140,6 +140,7 @@ def build_data(cfg, smoke):
     if os.path.exists(os.path.join("data", "synset", f"{d['synset_val']}_bilder.npy")):
         sets["syn_val"] = SynsetDataset(d["synset_val"], size, False, clahe, max_n)
     sets["real_train"] = RealCropDataset(real["train"], size, True, clahe)
+    sets["trainierbar"] = {k for r in real["train"] for k in r["klassen"]}   # Zusatzzeichen mit echten Trainingsbildern
     sets["real_val"] = RealCropDataset(real["val"], size, False, clahe)
     sets["real_test"] = RealCropDataset(real["test"], size, False, clahe)
     return sets
@@ -254,7 +255,7 @@ def main(args):
     ergebnis = {"epoche": state["epoche"], "echte_je_klasse": cfg["data"].get("echte_je_klasse"),
                 "max_keins": cfg["data"].get("max_keins"), "seed": cfg["seed"],
                 "n_echt_train": len(sets["real_train"]),
-                "echt_test": evaluate(model, eval_loader(sets["real_test"], cfg, args.smoke), device, max_eval)
+                "echt_test": evaluate(model, eval_loader(sets["real_test"], cfg, args.smoke), device, max_eval, sets["trainierbar"])
                 if len(sets["real_test"]) else {},
                 "synset_val": evaluate(model, eval_loader(sets["syn_val"], cfg, args.smoke), device, max_eval)
                 if "syn_val" in sets else {}}

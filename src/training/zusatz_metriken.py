@@ -10,7 +10,9 @@ import numpy as np
 from src.utils.zielgruppen import regel, zielgruppe_gleich
 
 
-def zusatz_kennzahlen(pred, true, gefahr, klassen):
+def zusatz_kennzahlen(pred, true, gefahr, klassen, trainierbar=None):
+    """trainierbar: Klassen mit echten Trainingsbildern (nur Synset liefert kein Zusatz-Label);
+    None = Kennzahl zusatz_macro_f1_trainierbar entfällt."""
     pred, true = np.asarray(pred, dtype=float), np.asarray(true, dtype=float)
     n = len(true)
     if n == 0:
@@ -35,5 +37,8 @@ def zusatz_kennzahlen(pred, true, gefahr, klassen):
             "n_zielgruppe_relevant": n_rel,
             "zusatz_micro_f1": float(2 * tp.sum() / max(2 * tp.sum() + fp.sum() + fn.sum(), 1)),
             "zusatz_macro_f1": float(np.nanmean(f1[support > 0])) if (support > 0).any() else None,
+            # Makro-F1 nur über Klassen, die das Modell aus echten Trainingsbildern lernen konnte
+            "zusatz_macro_f1_trainierbar": (float(np.nanmean(f1[maske])) if (maske := (support > 0) & np.array(
+                [k in trainierbar for k in klassen])).any() else None) if trainierbar is not None else None,
             "zusatz_f1_je_klasse": {klassen[i]: {"f1": round(float(f1[i]), 3), "anzahl": int(support[i])}
                                     for i in range(len(klassen)) if support[i] > 0}}

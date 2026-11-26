@@ -42,3 +42,13 @@ def test_zu_viele_klassen_nie_exakt():
 
 def test_leer():
     assert run(np.zeros((0, 3)), np.zeros((0, 3)))["zusatz_exakt"] is None
+
+
+def test_macro_f1_trainierbar_ignoriert_klassen_ohne_trainingsbilder():
+    klassen = ["A", "B"]
+    true = [[1, 0], [0, 1]]
+    pred = [[1, 0], [0, 0]]          # A richtig, B nie erkannt (F1 0)
+    r = zusatz_kennzahlen(pred, true, [False, False], klassen, trainierbar={"A"})
+    assert r["zusatz_macro_f1"] == 0.5
+    assert r["zusatz_macro_f1_trainierbar"] == 1.0
+    assert zusatz_kennzahlen(pred, true, [False, False], klassen)["zusatz_macro_f1_trainierbar"] is None
