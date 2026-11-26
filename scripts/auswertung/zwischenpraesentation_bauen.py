@@ -162,7 +162,9 @@ s = neue_folie("Antwort: ab etwa 50 echten Bildern",
     "oder allen echten Bildern je Zusatzzeichen. Ohne echte Bilder geht gar nichts: Synset allein kennt die "
     "Zusatzzeichen nicht. Von 25 auf 50 steigt die Zielgruppe von 89 auf 94 Prozent, danach kommt kaum noch etwas "
     "dazu. 25, 50 und 150 habe ich mit drei Seeds wiederholt: ab 50 schwanken die Werte um weniger als einen Punkt. "
-    "„Alle“ ist schlechter, weil dann die Klasse ohne Zusatzzeichen dominiert.")
+    "„Alle“ liegt etwas tiefer: Diese Stufen laufen nur 8 Epochen, und bei „alle“ ist über die Hälfte der echten "
+    "Bilder ohne Zusatzzeichen. Jede Epoche zeigt dann weniger Zusatzzeichen-Beispiele. Mit 15 Epochen verschwindet "
+    "der Effekt: Modell A mit allen Bildern und A mit höchstens 300 Bildern ohne Zusatz liegen gleichauf.")
 cd = CategoryChartData()
 cd.categories = ["25", "50", "100", "150", "alle"]
 cd.add_series("Zielgruppe korrekt¹", (0.893, 0.937, 0.945, 0.951, 0.923))
