@@ -19,3 +19,4 @@ fsspec>=2024.2.0
 aiohttp>=3.9.0
 mapbox-vector-tile>=2.0.0
 pytest
+gradio>=5
