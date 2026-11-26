@@ -95,6 +95,27 @@ def stil(chart):
     chart.legend.include_in_layout = False
 
 
+
+# Standardabweichung über 3 Seeds (nur 25, 50, 150; übrige Stufen ein Lauf -> 0)
+STD = [(0.025, 0.005, 0, 0.007, 0), (0.026, 0.008, 0, 0.010, 0)]
+
+
+def fehlerbalken(ser, werte):
+    """Fehlerbalken ± werte als natives c:errBars (python-pptx kann das nicht direkt)."""
+    from lxml import etree
+    C = "http://schemas.openxmlformats.org/drawingml/2006/chart"
+    A = "http://schemas.openxmlformats.org/drawingml/2006/main"
+    lit = "".join(f'<c:pt idx="{k}"><c:v>{v}</c:v></c:pt>' for k, v in enumerate(werte))
+    num = f'<c:numLit><c:formatCode>General</c:formatCode><c:ptCount val="{len(werte)}"/>{lit}</c:numLit>'
+    xml = (f'<c:errBars xmlns:c="{C}" xmlns:a="{A}"><c:errDir val="y"/><c:errBarType val="both"/>'
+           f'<c:errValType val="cust"/><c:noEndCap val="0"/><c:plus>{num}</c:plus><c:minus>{num}</c:minus>'
+           f'<c:spPr><a:ln w="19050"><a:solidFill><a:schemeClr val="tx1"/></a:solidFill></a:ln></c:spPr></c:errBars>')
+    e = etree.fromstring(xml)
+    sx = ser._element
+    nach = sx.find(f"{{{C}}}cat")          # Schema: errBars steht vor c:cat
+    nach.addprevious(e)
+
+
 L, B = 825500, 10541000   # linker Rand, Inhaltsbreite
 
 # 1) Daten aufbereitet
@@ -143,13 +164,14 @@ s = neue_folie("Antwort: ab etwa 50 echten Bildern",
     "dazu. 25, 50 und 150 habe ich mit drei Seeds wiederholt: ab 50 schwanken die Werte um weniger als einen Punkt. "
     "„Alle“ ist schlechter, weil dann die Klasse ohne Zusatzzeichen dominiert.")
 cd = CategoryChartData()
-cd.categories = ["0", "25", "50", "100", "150", "alle"]
-cd.add_series("Zielgruppe korrekt¹", (0.0, 0.893, 0.937, 0.945, 0.951, 0.923))
-cd.add_series("Zusatzzeichen exakt", (0.0, 0.814, 0.859, 0.871, 0.871, 0.836))
+cd.categories = ["25", "50", "100", "150", "alle"]
+cd.add_series("Zielgruppe korrekt¹", (0.893, 0.937, 0.945, 0.951, 0.923))
+cd.add_series("Zusatzzeichen exakt", (0.814, 0.859, 0.871, 0.871, 0.836))
 gf = s.shapes.add_chart(XL_CHART_TYPE.LINE_MARKERS, Emu(L), Emu(1400000), Emu(7000000), Emu(4500000), cd)
 ch = gf.chart
 stil(ch)
-ch.value_axis.maximum_scale, ch.value_axis.minimum_scale = 1.0, 0.0
+ch.value_axis.maximum_scale, ch.value_axis.minimum_scale = 1.0, 0.75
+ch.value_axis.major_unit = 0.05
 ch.value_axis.tick_labels.number_format, ch.value_axis.tick_labels.number_format_is_linked = "0%", False
 ch.value_axis.has_major_gridlines = True
 ch.category_axis.has_title = True
@@ -164,10 +186,11 @@ for i, ser in enumerate(ch.plots[0].series):
     ser.data_labels.number_format, ser.data_labels.number_format_is_linked = "0%", False
     ser.data_labels.font.size = Pt(10)
     ser.data_labels.show_value = True
+    fehlerbalken(ser, STD[i])
 pl = ch.plots[0]
 karte(s, L + 7200000, 1400000, B - 7200000, 4500000, "3 Seeds (25 / 50 / 150)",
-      ["Streuung Zielgruppe:", "25: ± 2,5 Punkte", "50: ± 0,5 Punkte", "150: ± 0,7 Punkte",
-       "0, 100, alle: ein Lauf", "¹ Zielgruppe nur bei Schildern, deren Zusatz sie ändert"], 13)
+      ["Fehlerbalken: ± 1 Std über 3 Seeds", "Streuung Zielgruppe:", "25: ± 2,5 Punkte", "50: ± 0,5 Punkte", "150: ± 0,7 Punkte",
+       "0, 100, alle: ein Lauf", "0 echte Bilder: 0 % (Synset allein reicht nicht)", "Achse beginnt bei 75 %", "¹ Zielgruppe nur bei Schildern, deren Zusatz sie ändert"], 13)
 
 # 4) Klassenanalyse
 s = neue_folie("Warum Makro-F1 nur 0,56 ist",
